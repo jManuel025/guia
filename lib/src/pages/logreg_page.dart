@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guiaestudiante/src/blocs/login_bloc.dart';
 import 'package:guiaestudiante/src/blocs/provider.dart';
 
 class LogRegPage extends StatelessWidget{
@@ -93,14 +94,17 @@ Widget _login(context){
                 SizedBox(height: 30.0,),
                 _username(bloc),
                 SizedBox(height: 30.0,),
-                _password('Contraseña'),
+                _password('Contraseña', bloc),
                 SizedBox(height: 30.0,),
                 _boton('Iniciar', context),
               ],
             ),
           ),
-          Text('¿Olvido su contraseña?', style: TextStyle(color: Colors.blueGrey),),
-          SizedBox(height: 60.0),
+          FlatButton(
+            child: Text('¿Olvido su contraseña?', style: TextStyle(color: Colors.blueGrey)),
+            onPressed: () => Navigator.pushNamed(context, 'recuperacionContraseña'),
+          ),
+          // SizedBox(height: 60.0),
           Icon(Icons.keyboard_arrow_down, size: 50.0, color: Colors.grey)
         ],
       ),
@@ -118,22 +122,30 @@ Widget _login(context){
                 labelText: 'Nombre de usuario',
                 counterText: snapshot.data,
               ),
-              onChanged: (value) => bloc.usernameStream,
+              onChanged: bloc.changeUsername,
             ),
           );
         }
       );
     }
-    Widget _password(String placeholder){
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: TextField(
-          obscureText: true,
-          decoration: InputDecoration(
-            icon: Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
-            labelText: placeholder,
-          ),
-        ),
+    Widget _password(String placeholder, LoginBloc bloc){
+      return StreamBuilder(
+        stream: bloc.passwordStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                icon: Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
+                labelText: placeholder,
+                counterText: snapshot.data,
+                errorText: snapshot.error
+              ),
+              onChanged: bloc.changePassword,
+            ),
+          );
+        },
       );
     }
     Widget _boton(String placeholder, BuildContext context){
@@ -195,9 +207,9 @@ Widget _registro(context){
                 SizedBox(height: 10.0,),
                 _email(),
                 SizedBox(height: 10.0,),
-                _password('Contraseña'),
+                _password('Contraseña', bloc),
                 SizedBox(height: 10.0,),
-                _password('Confirma contraseña'),
+                _password('Confirma contraseña', bloc),
                 SizedBox(height: 10.0,),
                 _birthday(),
                 SizedBox(height: 20.0,),
