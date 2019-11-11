@@ -60,7 +60,7 @@ Widget _login(context){
       ],
     );
   }
-  Widget _formulario(context){
+  Widget _formulario(BuildContext context){
     final bloc = Provider.of(context);
     final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
@@ -95,7 +95,7 @@ Widget _login(context){
                 SizedBox(height: 30.0,),
                 _password('Contraseña'),
                 SizedBox(height: 30.0,),
-                _boton('Iniciar'),
+                _boton('Iniciar', context),
               ],
             ),
           ),
@@ -136,7 +136,7 @@ Widget _login(context){
         ),
       );
     }
-    Widget _boton(placeholder){
+    Widget _boton(String placeholder, BuildContext context){
       return RaisedButton(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
@@ -148,7 +148,7 @@ Widget _login(context){
         elevation: 0.0,
         color: Color.fromRGBO(20, 136, 204, 1.0),
         textColor: Colors.white,
-        onPressed: (){},
+        onPressed: () => Navigator.pushReplacementNamed(context, 'home'),
       );
     }
 
@@ -201,7 +201,7 @@ Widget _registro(context){
                 SizedBox(height: 10.0,),
                 _birthday(),
                 SizedBox(height: 20.0,),
-                _boton('Registrar'),
+                _boton('Registrar', context),
               ],
             ),
           ),
