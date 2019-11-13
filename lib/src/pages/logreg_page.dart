@@ -62,7 +62,6 @@ Widget _login(context){
     );
   }
   Widget _formulario(BuildContext context){
-    final bloc = Provider.of(context);
     final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
@@ -92,9 +91,9 @@ Widget _login(context){
               children: <Widget>[
                 Text('Iniciar sesión', style: TextStyle(color: Colors.blueGrey, fontSize: 25.0, )),
                 SizedBox(height: 30.0,),
-                _username(bloc),
+                _usernamel(),
                 SizedBox(height: 30.0,),
-                _password('Contraseña', bloc),
+                _passwordl(),
                 SizedBox(height: 30.0,),
                 _boton('Iniciar', context),
               ],
@@ -110,42 +109,27 @@ Widget _login(context){
       ),
     );
   }
-    Widget _username(LoginBloc bloc){
-      return StreamBuilder(
-        stream: bloc.usernameStream,
-        builder: (BuildContext context, AsyncSnapshot snapshot){
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextField(
-              decoration: InputDecoration(
-                icon: Icon(Icons.person, color: Color.fromRGBO(20, 136, 204, 1.0)),
-                labelText: 'Nombre de usuario',
-                counterText: snapshot.data,
-              ),
-              onChanged: bloc.changeUsername,
-            ),
-          );
-        }
+    Widget _usernamel(){
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        child: TextField(
+          decoration: InputDecoration(
+            icon: Icon(Icons.person, color: Color.fromRGBO(20, 136, 204, 1.0)),
+            labelText: 'Nombre de usuario',
+          ),
+        ),
       );
     }
-    Widget _password(String placeholder, LoginBloc bloc){
-      return StreamBuilder(
-        stream: bloc.passwordStream,
-        builder: (BuildContext context, AsyncSnapshot snapshot){
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                icon: Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
-                labelText: placeholder,
-                counterText: snapshot.data,
-                errorText: snapshot.error
-              ),
-              onChanged: bloc.changePassword,
-            ),
-          );
-        },
+    Widget _passwordl(){
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        child: TextField(
+          obscureText: true,
+          decoration: InputDecoration(
+            icon: Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
+            labelText: 'Contraseña',
+          ),
+        ),
       );
     }
     Widget _boton(String placeholder, BuildContext context){
@@ -207,9 +191,9 @@ Widget _registro(context){
                 SizedBox(height: 10.0,),
                 _email(),
                 SizedBox(height: 10.0,),
-                _password('Contraseña', bloc),
+                _password(bloc),
                 SizedBox(height: 10.0,),
-                _password('Confirma contraseña', bloc),
+                _passwordc(bloc),
                 SizedBox(height: 10.0,),
                 _birthday(),
                 SizedBox(height: 20.0,),
@@ -221,6 +205,64 @@ Widget _registro(context){
       ),
     );
   }
+    Widget _username(LoginBloc bloc){
+      return StreamBuilder(
+        stream: bloc.usernameStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: TextField(
+              decoration: InputDecoration(
+                icon: Icon(Icons.person, color: Color.fromRGBO(20, 136, 204, 1.0)),
+                labelText: 'Nombre de usuario',
+                counterText: snapshot.data,
+              ),
+              onChanged: bloc.changeUsername,
+            ),
+          );
+        }
+      );
+    }
+    Widget _password(LoginBloc bloc){
+      return StreamBuilder(
+        stream: bloc.passwordStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                icon: Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
+                labelText: 'Contraseña',
+                counterText: snapshot.data,
+                errorText: snapshot.error
+              ),
+              onChanged: bloc.changePassword,
+            ),
+          );
+        },
+      );
+    }
+    Widget _passwordc(LoginBloc bloc){
+      return StreamBuilder(
+        stream: bloc.passwordStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                icon: Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
+                labelText: 'Confirma tu contraseña',
+                counterText: snapshot.data,
+                errorText: snapshot.error
+              ),
+              onChanged: bloc.changePassword,
+            ),
+          );
+        },
+      );
+    }
     Widget _email(){
       return Container(
         padding: EdgeInsets.symmetric(horizontal: 20.0),
