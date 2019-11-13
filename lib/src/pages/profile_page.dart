@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ProjectsPage extends StatelessWidget {
+class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Proyectos'),
+        title: Text('Perfil'),
         centerTitle: true,
       )
     );
