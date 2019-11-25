@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class RecipesPage extends StatelessWidget {
@@ -16,82 +17,95 @@ class RecipesPage extends StatelessWidget {
 }
 
 Widget _tarjetas(BuildContext context){
-  return SingleChildScrollView(
-    child: Table(
-      children: [
-        TableRow(
-          children: [
-            _tarjeta('Categoria1', 'assets/recetas.png', context, 'recipes'),
-            _tarjeta('Categoria2', 'assets/proyectos.png', context, 'projects'),
-          ]
-        ),
-        TableRow(
-          children: [
-            _tarjeta('Categoria3', 'assets/consejos.png', context, 'advices'),
-            _tarjeta('Categoria4', 'assets/usuario.png', context, 'profile'),
-          ]
-        ),
-        TableRow(
-          children: [
-            _tarjeta('Categoria1', 'assets/recetas.png', context, 'recipes'),
-            _tarjeta('Categoria2', 'assets/proyectos.png', context, 'projects'),
-          ]
-        ),
-        TableRow(
-          children: [
-            _tarjeta('Categoria3', 'assets/consejos.png', context, 'advices'),
-            _tarjeta('Categoria4', 'assets/usuario.png', context, 'profile'),
-          ]
-        ),
-        TableRow(
-          children: [
-            _tarjeta('Categoria1', 'assets/recetas.png', context, 'recipes'),
-            _tarjeta('Categoria2', 'assets/proyectos.png', context, 'projects'),
-          ]
-        ),
-        TableRow(
-          children: [
-            _tarjeta('Categoria3', 'assets/consejos.png', context, 'advices'),
-            _tarjeta('Categoria4', 'assets/usuario.png', context, 'profile'),
-          ]
-        ),
-      ]
+  return SafeArea(
+    child: SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(top: 20.0),
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text('Selecciona una categoría', style: TextStyle(color: Colors.blueGrey, fontSize: 17.5),),
+          ),
+            Table(
+            children: [
+              TableRow(
+                children: [
+                  _tarjeta('Categoria1', 'https://www.animalgourmet.com/wp-content/uploads/2017/09/cel-lisboa-60315-e1504660981599.jpg', context, 'recipes_list'),
+                  _tarjeta('Categoria2', 'https://www.animalgourmet.com/wp-content/uploads/2017/09/cel-lisboa-60315-e1504660981599.jpg', context, 'recipes_list'),
+                ]
+              ),
+              TableRow(
+                children: [
+                  _tarjeta('Categoria3', 'https://www.animalgourmet.com/wp-content/uploads/2017/09/cel-lisboa-60315-e1504660981599.jpg', context, 'recipes_list'),
+                  _tarjeta('Categoria4', 'https://www.animalgourmet.com/wp-content/uploads/2017/09/cel-lisboa-60315-e1504660981599.jpg', context, 'recipes_list'),
+                ]
+              ),
+              TableRow(
+                children: [
+                  _tarjeta('Categoria1', 'https://www.animalgourmet.com/wp-content/uploads/2017/09/cel-lisboa-60315-e1504660981599.jpg', context, 'recipes_list'),
+                  _tarjeta('Categoria2', 'https://www.animalgourmet.com/wp-content/uploads/2017/09/cel-lisboa-60315-e1504660981599.jpg', context, 'recipes_list'),
+                ]
+              ),
+              TableRow(
+                children: [
+                  _tarjeta('Categoria3', 'https://www.animalgourmet.com/wp-content/uploads/2017/09/cel-lisboa-60315-e1504660981599.jpg', context, 'recipes_list'),
+                  _tarjeta('Categoria4', 'https://www.animalgourmet.com/wp-content/uploads/2017/09/cel-lisboa-60315-e1504660981599.jpg', context, 'recipes_list'),
+                ]
+              ),
+              TableRow(
+                children: [
+                  _tarjeta('Categoria1', 'https://www.animalgourmet.com/wp-content/uploads/2017/09/cel-lisboa-60315-e1504660981599.jpg', context, 'recipes_list'),
+                  _tarjeta('Categoria2', 'https://www.animalgourmet.com/wp-content/uploads/2017/09/cel-lisboa-60315-e1504660981599.jpg', context, 'recipes_list'),
+                ]
+              ),
+              TableRow(
+                children: [
+                  _tarjeta('Categoria3', 'https://www.animalgourmet.com/wp-content/uploads/2017/09/cel-lisboa-60315-e1504660981599.jpg', context, 'recipes_list'),
+                  _tarjeta('Categoria4', 'https://www.animalgourmet.com/wp-content/uploads/2017/09/cel-lisboa-60315-e1504660981599.jpg', context, 'recipes_list'),
+                ]
+              ),
+            ]
+          )
+        ],
+      ),
     ),
   );
 }
   Widget _tarjeta(String texto, String rutaImagen, BuildContext context, String pantalla){
     return Container(
-      height: 180.0,
-      margin: EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(197, 216, 217, 0.20),
-        borderRadius: BorderRadius.circular(15.0)
-      ),
-      child: Stack(
-        children: <Widget>[
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                SizedBox(height: 5.0),
-                Image(
-                  image: AssetImage(rutaImagen),
-                  height: 80.0,
-                ),
-                Text(texto, style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 17.5)),
-                SizedBox(height: 5.0),
-              ],
+      height: 150.0,
+      margin: EdgeInsets.all(15.0),
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+        elevation: 5.0,
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Image(
+              image: NetworkImage(rutaImagen),
+              fit: BoxFit.cover,
             ),
-          ), 
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            child: FlatButton(
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              color: Color.fromRGBO(124, 130, 130, .7),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.fastfood, size: 50.0, color: Colors.white),
+                  SizedBox(height: 10.0,),
+                  Text('Categoria', style: TextStyle(color: Colors.white, fontSize: 17.5, fontWeight: FontWeight.bold)),
+                ],
+              )
+            ),
+            FlatButton(
               child: SizedBox(),
               onPressed: () => Navigator.pushNamed(context, pantalla),
             ),
-          )
-        ],
+          ],
+        ),
       )
     );
   }

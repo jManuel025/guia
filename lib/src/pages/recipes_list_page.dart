@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
-class ProjectsPage extends StatelessWidget {
+class RecipesListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Proyectos'),
+        title: Text('Listado de recetas'),
         centerTitle: true,
       ),
       body: Container(),
-      floatingActionButton: _btnCrearProyecto(context),
+      floatingActionButton: _btnCrearReceta(context),
     );
   }
-  _btnCrearProyecto(BuildContext context){
+  _btnCrearReceta(BuildContext context){
     return FloatingActionButton(
       child: Icon(Icons.add),
-      onPressed: () => Navigator.pushNamed(context, 'projects_form'),
+      onPressed: () => Navigator.pushNamed(context, 'recipes_form'),
     ); 
   }
 }
+

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:guiaestudiante/src/blocs/validators.dart';
 
-class LoginBloc with Validators{
+class RegisterBloc with Validators{
   final _usernameController = StreamController<String>.broadcast();
   final _passwordController = StreamController<String>.broadcast();
   // final _password = StreamController<String>.broadcast();
