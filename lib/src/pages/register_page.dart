@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:guiaestudiante/src/blocs/register_bloc.dart';
 import 'package:guiaestudiante/src/blocs/provider.dart';
+import 'package:guiaestudiante/src/providers/user_provider.dart';
 
 class RegisterPage extends StatelessWidget{
+
+  final userProvider = new UserProvider();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,6 +19,10 @@ class RegisterPage extends StatelessWidget{
     );
   }
 }
+
+// _register(RegisterBloc bloc, BuildContext context){
+//   userProvider.
+// }
 
 Widget _registro(context){
   return Stack(
@@ -93,15 +101,15 @@ Widget _registro(context){
                   SizedBox(height: 10.0,),
                   _username(bloc),
                   SizedBox(height: 10.0,),
-                  _email(),
+                  _email(bloc),
                   SizedBox(height: 10.0,),
                   _password(bloc),
                   SizedBox(height: 10.0,),
-                  _passwordc(bloc),
-                  SizedBox(height: 10.0,),
+                  // _passwordc(bloc),
+                  // SizedBox(height: 10.0,),
                   _birthday(),
                   SizedBox(height: 20.0,),
-                  _boton(context),
+                  _boton(context, bloc),
                 ],
               ),
             ),
@@ -120,7 +128,7 @@ Widget _registro(context){
               decoration: InputDecoration(
                 icon: Icon(Icons.person, color: Color.fromRGBO(20, 136, 204, 1.0)),
                 labelText: 'Nombre de usuario',
-                counterText: snapshot.data,
+                // counterText: snapshot.data,
               ),
               onChanged: bloc.changeUsername,
             ),
@@ -139,7 +147,7 @@ Widget _registro(context){
               decoration: InputDecoration(
                 icon: Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
                 labelText: 'Contraseña',
-                counterText: snapshot.data,
+                // counterText: snapshot.data,
                 errorText: snapshot.error
               ),
               onChanged: bloc.changePassword,
@@ -148,36 +156,44 @@ Widget _registro(context){
         },
       );
     }
-    Widget _passwordc(RegisterBloc bloc){
+    // Widget _passwordc(RegisterBloc bloc){
+    //   return StreamBuilder(
+    //     stream: bloc.passwordStream,
+    //     builder: (BuildContext context, AsyncSnapshot snapshot){
+    //       return Container(
+    //         padding: EdgeInsets.symmetric(horizontal: 20.0),
+    //         child: TextField(
+    //           obscureText: true,
+    //           decoration: InputDecoration(
+    //             icon: Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
+    //             labelText: 'Confirma tu contraseña',
+    //             counterText: snapshot.data,
+    //             errorText: snapshot.error
+    //           ),
+    //           onChanged: bloc.changePassword,
+    //         ),
+    //       );
+    //     },
+    //   );
+    // }
+    Widget _email(RegisterBloc bloc){
       return StreamBuilder(
-        stream: bloc.passwordStream,
+        stream: bloc.emailStream,
         builder: (BuildContext context, AsyncSnapshot snapshot){
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: TextField(
-              obscureText: true,
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                icon: Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
-                labelText: 'Confirma tu contraseña',
-                counterText: snapshot.data,
+                icon: Icon(Icons.alternate_email, color: Color.fromRGBO(20, 136, 204, 1.0)),
+                labelText: 'Correo electrónico',
+                // counterText: snapshot.data,
                 errorText: snapshot.error
               ),
-              onChanged: bloc.changePassword,
+              onChanged: bloc.changeEmail,
             ),
           );
         },
-      );
-    }
-    Widget _email(){
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: TextField(
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            icon: Icon(Icons.alternate_email, color: Color.fromRGBO(20, 136, 204, 1.0)),
-            labelText: 'Correo electrónico',
-          ),
-        ),
       );
     }
     Widget _birthday(){
@@ -194,21 +210,31 @@ Widget _registro(context){
         ),
       );
     }
-    Widget _boton(BuildContext context){
-      return RaisedButton(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-          child: Text('Registrarme'),
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        elevation: 0.0,
-        color: Color.fromRGBO(20, 136, 204, 1.0),
-        textColor: Colors.white,
-        onPressed: () => Navigator.pushReplacementNamed(context, 'home'),
+    Widget _boton(BuildContext context, RegisterBloc bloc){
+      return StreamBuilder(
+        stream: bloc.formValidStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return RaisedButton(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+              child: Text('Registrarme'),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            elevation: 0.0,
+            color: Color.fromRGBO(20, 136, 204, 1.0),
+            textColor: Colors.white,
+            onPressed: snapshot.hasData ? () => Navigator.pushReplacementNamed(context, 'home') : null,
+          );
+        }
       );
     }
+
+      _register(){
+        
+      }
+
     Widget _botonAlt(String accion, BuildContext context, String pantalla){
       return FlatButton(
         child: Text(accion, style: TextStyle(color: Colors.blueGrey)),
