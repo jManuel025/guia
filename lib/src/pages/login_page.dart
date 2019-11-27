@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:guiaestudiante/src/blocs/register_bloc.dart';
+import 'package:guiaestudiante/src/blocs/provider.dart';
+import 'package:guiaestudiante/src/providers/user_provider.dart';
 
 class LoginPage extends StatelessWidget{
+
+  final userProvider = new UserProvider();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +18,6 @@ class LoginPage extends StatelessWidget{
       ),
     );
   }
-}
 
 Widget _login(context){
   return Stack(
@@ -59,6 +64,7 @@ Widget _login(context){
     );
   }
   Widget _formulario(BuildContext context){
+    final bloc = Provider.de(context);
     final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
@@ -88,11 +94,12 @@ Widget _login(context){
               children: <Widget>[
                 Text('Iniciar sesión', style: TextStyle(color: Colors.blueGrey, fontSize: 20.0, )),
                 SizedBox(height: 30.0,),
-                _username(),
+                // _username(bloc),
+                _email(bloc),
                 SizedBox(height: 30.0,),
-                _password(),
+                _password(bloc),
                 SizedBox(height: 30.0,),
-                _boton(context),
+                _boton(context, bloc),
               ],
             ),
           ),
@@ -103,47 +110,91 @@ Widget _login(context){
       ),
     );
   }
-    Widget _username(){
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: TextField(
-          decoration: InputDecoration(
-            icon: Icon(Icons.person, color: Color.fromRGBO(20, 136, 204, 1.0)),
-            labelText: 'Nombre de usuario',
-          ),
-        ),
+    // Widget _username(LoginBloc bloc){
+    //   return StreamBuilder(
+    //     stream: bloc.usernameStream,
+    //     builder: (BuildContext context, AsyncSnapshot snapshot){
+    //       return Container(
+    //         padding: EdgeInsets.symmetric(horizontal: 20.0),
+    //         child: TextField(
+    //           decoration: InputDecoration(
+    //             icon: Icon(Icons.person, color: Color.fromRGBO(20, 136, 204, 1.0)),
+    //             labelText: 'Nombre de usuario',
+    //           ),
+    //           onChanged: bloc.changeUsername,
+    //         ),
+    //       );
+    //     },
+    //   );
+    // }
+
+    Widget _email(LoginBloc bloc){
+      return StreamBuilder(
+        stream: bloc.emailStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: TextField(
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                icon: Icon(Icons.alternate_email, color: Color.fromRGBO(20, 136, 204, 1.0)),
+                labelText: 'Correo electrónico',
+                // counterText: snapshot.data,
+                errorText: snapshot.error
+              ),
+              onChanged: bloc.changeEmail,
+            ),
+          );
+        },
       );
     }
-    Widget _password(){
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: TextField(
-          obscureText: true,
-          decoration: InputDecoration(
-            icon: Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
-            labelText: 'Contraseña',
-          ),
-        ),
+    Widget _password(LoginBloc bloc){
+      return StreamBuilder(
+        stream: bloc.passwordStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                icon: Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
+                labelText: 'Contraseña',
+              ),
+              onChanged: bloc.changePassword,
+            ),
+          );
+        },
       );
     }
-    Widget _boton(BuildContext context){
-      return RaisedButton(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-          child: Text('Iniciar'),
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        elevation: 0.0,
-        color: Color.fromRGBO(20, 136, 204, 1.0),
-        textColor: Colors.white,
-        onPressed: () => Navigator.pushReplacementNamed(context, 'home'),
+    Widget _boton(BuildContext context, LoginBloc bloc){
+      return StreamBuilder(
+        stream: bloc.formValidStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return RaisedButton(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+              child: Text('Iniciar'),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            elevation: 0.0,
+            color: Color.fromRGBO(20, 136, 204, 1.0),
+            textColor: Colors.white,
+            onPressed: snapshot.hasData ? () => _signin(bloc, context): null,
+            // Navigator.pushReplacementNamed(context, 'home')
+          );
+        }
       );
     }
+      _signin(LoginBloc bloc, BuildContext context){
+        userProvider.login(bloc.email, bloc.password);
+      }
+
     Widget _botonAlt(String accion, BuildContext context, String pantalla){
       return FlatButton(
         child: Text(accion, style: TextStyle(color: Colors.blueGrey)),
         onPressed: () => Navigator.pushReplacementNamed(context, pantalla),
       );
     }
+}
