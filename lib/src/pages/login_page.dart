@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:guiaestudiante/src/blocs/register_bloc.dart';
 import 'package:guiaestudiante/src/blocs/provider.dart';
+import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 import 'package:guiaestudiante/src/providers/user_provider.dart';
+import 'package:guiaestudiante/src/utils/utils.dart';
 
 class LoginPage extends StatelessWidget{
 
   final userProvider = new UserProvider();
+  final prefs = new PreferenciasUsuario();
 
   @override
   Widget build(BuildContext context) {
+    prefs.ultimaPagina = 'login';
     return Scaffold(
       body: PageView(
         scrollDirection: Axis.vertical,
@@ -182,13 +186,19 @@ Widget _login(context){
             color: Color.fromRGBO(20, 136, 204, 1.0),
             textColor: Colors.white,
             onPressed: snapshot.hasData ? () => _signin(bloc, context): null,
-            // Navigator.pushReplacementNamed(context, 'home')
+            // 
           );
         }
       );
     }
-      _signin(LoginBloc bloc, BuildContext context){
-        userProvider.login(bloc.email, bloc.password);
+      _signin(LoginBloc bloc, BuildContext context) async {
+        Map info = await userProvider.login(bloc.email, bloc.password);
+        if(info['ok']){
+          Navigator.pushReplacementNamed(context, 'home');
+        }
+        else{
+          mostrarAlerta(context, info['mensaje']);
+        }
       }
 
     Widget _botonAlt(String accion, BuildContext context, String pantalla){

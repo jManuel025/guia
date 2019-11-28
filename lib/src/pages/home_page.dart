@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 
 class HomePage extends StatelessWidget {
+  final prefs = new PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
+    // esto se ´pondría en cada pagina para que al cerrar la aplicación regrese al mismo lugar
+    prefs.ultimaPagina = 'home'; 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inicio'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text('Inicio'),
+            FlatButton.icon(
+              label: Text(''),
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
+            )
+          ],
+        ),
         centerTitle: true,
       ),
       body: Center(

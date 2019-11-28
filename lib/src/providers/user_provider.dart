@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 import 'package:http/http.dart' as http;
 
 class UserProvider{
 
   final String firebaseToken = 'AIzaSyBH70jUe7V4fJpvI1FauyZWvMID9HKx2v4';
-
+  final _preferencias = new PreferenciasUsuario();
 
   Future<Map<String, dynamic>> login(String email, String password) async{
     final authData = {
@@ -23,6 +24,8 @@ class UserProvider{
     print(decodedResp);
     if(decodedResp.containsKey('idToken')){
       // guardar en storage
+      _preferencias.token = decodedResp['idToken'];
+      return {'ok': true, 'token': decodedResp['idToken']};
     }
     else{ //mostrar error
       return {'ok': false, 'mensaje': decodedResp['error']['message']};
@@ -46,6 +49,8 @@ class UserProvider{
     print(decodedResp);
     if(decodedResp.containsKey('idToken')){
       // guardar en storage
+      _preferencias.token = decodedResp['idToken'];
+      return {'ok': true, 'token': decodedResp['idToken']};
     }
     else{ //mostrar error
       return {'ok': false, 'mensaje': decodedResp['error']['message']};

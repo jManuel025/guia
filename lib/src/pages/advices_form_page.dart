@@ -44,8 +44,8 @@ class _AdvicesFormPageState extends State<AdvicesFormPage> {
                     children: [
                       TableRow(
                         children: [
-                          _btnAccion('Cancelar'),
-                          _btnAccion('Publicar'),
+                          _btnCancel(),
+                          _btnAccion(),
                         ]
                       )
                     ],
@@ -82,7 +82,7 @@ class _AdvicesFormPageState extends State<AdvicesFormPage> {
       ),
     );
   }
-  Widget _btnAccion(String texto){
+  Widget _btnAccion(){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
       child: RaisedButton(
@@ -91,12 +91,25 @@ class _AdvicesFormPageState extends State<AdvicesFormPage> {
         ),
         textColor: Colors.white,
         color: Colors.blueAccent,
-        child: Text(texto),
+        child: Text('Aceptar'),
         onPressed: _submit,
       ),
     );
   }
-
+  Widget _btnCancel(){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        textColor: Colors.white,
+        color: Colors.blueAccent,
+        child: Text('Cancelar'),
+        onPressed: () => Navigator.pop(context),
+      ),
+    );
+  }
   void _submit(){
     if(formKey.currentState.validate()){
       // Dispara los onsave

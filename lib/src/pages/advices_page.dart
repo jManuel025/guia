@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:guiaestudiante/src/blocs/provider.dart';
 import 'package:guiaestudiante/src/models/advices_model.dart';
-import 'package:guiaestudiante/src/providers/advice_provider.dart';
 
 class AdvicesPage extends StatelessWidget {
-  final advicesProvider = new AdvicesProvider(); 
+  // final advicesProvider = new AdvicesProvider(); ya no se usa esto si se pone el bloc
+  
   @override
   Widget build(BuildContext context) {
+    // esto es hacia el provider
+    final advicesbloc = Provider.advicesBloc(context);
+    advicesbloc.loadingAdvices();
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('Consejos'),
         centerTitle: true,
       ),
-      body: _listado(),
+      body: _listado(advicesbloc),
       floatingActionButton: _btnCrearConsejo(context),
     );
   }
-  Widget _listado(){ 
-    return FutureBuilder(
-      future: advicesProvider.loadAdvices(),
+  Widget _listado(AdvicesBloc advicesBloc){ 
+    return StreamBuilder(
+      stream: advicesBloc.advicesStream,
       builder: (BuildContext context, AsyncSnapshot<List<AdviceModel>> snapshot){
         if(snapshot.hasData){
           final consejos = snapshot.data;
@@ -42,7 +47,7 @@ class AdvicesPage extends StatelessWidget {
   _btnCrearConsejo(BuildContext context){
     return FloatingActionButton(
       child: Icon(Icons.add),
-      onPressed: () => Navigator.pushNamed(context, 'advices_form'),
+      onPressed: () => Navigator.pop(context, 'advices_form'),
     ); 
   }
 }

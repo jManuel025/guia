@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:guiaestudiante/src/blocs/provider.dart';
 import 'package:guiaestudiante/src/pages/advices_form_page.dart';
 import 'package:guiaestudiante/src/pages/advices_page.dart';
@@ -11,15 +12,27 @@ import 'package:guiaestudiante/src/pages/recipes_form_page.dart';
 import 'package:guiaestudiante/src/pages/recipes_list_page.dart';
 import 'package:guiaestudiante/src/pages/recipes_page.dart';
 import 'package:guiaestudiante/src/pages/register_page.dart';
+import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 
 class MyApp extends StatelessWidget{
+  final prefs = new PreferenciasUsuario();
+  // await prefs.initPrefs();
   @override
   Widget build(BuildContext context) {
     return Provider(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          // ... app-specific localization delegate[s] here
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', 'EN'), // English
+          const Locale('es', 'ES'), 
+        ],
         title: 'Guía del estudiante',
-        initialRoute: 'login',
+        initialRoute: prefs.ultimaPagina,
         routes: {
           'login'   : (BuildContext context) => LoginPage(),
           'register': (BuildContext context) => RegisterPage(),
