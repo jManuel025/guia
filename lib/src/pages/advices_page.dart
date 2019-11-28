@@ -47,7 +47,7 @@ class AdvicesPage extends StatelessWidget {
   _btnCrearConsejo(BuildContext context){
     return FloatingActionButton(
       child: Icon(Icons.add),
-      onPressed: () => Navigator.pop(context, 'advices_form'),
+      onPressed: () => Navigator.pushNamed(context, 'advices_form'),
     ); 
   }
 }
