@@ -11,11 +11,18 @@ class ProjectsFormPage extends StatefulWidget {
 class _ProjectsFormPageState extends State<ProjectsFormPage> {
   final projectsProvider = new ProjectsProvider();
   final formKey = GlobalKey<FormState>();
+  final scaffolkey = GlobalKey<ScaffoldState>();
   ProjectModel project = ProjectModel();
 
   @override
   Widget build(BuildContext context) {
+
+    final ProjectModel projectData = ModalRoute.of(context).settings.arguments;
+    if(projectData != null){
+      project = projectData;
+    }
     return Scaffold(
+      key: scaffolkey,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -93,8 +100,8 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
                     children: [
                       TableRow(
                         children: [
-                          _btnAccion('Cancelar'),
-                          _btnAccion('Publicar'),
+                          _btnCancel(),
+                          _btnAccion(),
                         ]
                       )
                     ],
@@ -120,7 +127,7 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
       onSaved: (value) => project.titulo = value,
       validator: (value){
         if(value.length < 5){
-          return 'Ingresa el nombre de la receta';
+          return 'Ingresa un nombre para el proyecto';
         }
         else{
           return null;
@@ -136,8 +143,10 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           icon: Icon(Icons.description),
-          labelText: 'describe el proyecto',
+          labelText: 'Describe el proyecto',
+          border: OutlineInputBorder()
         ),
+        maxLines: 5,
       onSaved: (value) => project.descripcion = value,
       validator: (value){
         if(value.length < 5){
@@ -195,7 +204,7 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
     );
   }
 
-  Widget _btnAccion(String texto){
+  Widget _btnAccion(){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
       child: RaisedButton(
@@ -204,19 +213,36 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
         ),
         textColor: Colors.white,
         color: Colors.blueAccent,
-        child: Text(texto),
+        child: Text('Aceptar'),
         onPressed: _submit,
       ),
     );
   }
-
+  Widget _btnCancel(){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        textColor: Colors.white,
+        color: Colors.blueAccent,
+        child: Text('Cancelar'),
+        onPressed: () => Navigator.pop(context),
+      ),
+    );
+  }
   void _submit(){
     if(formKey.currentState.validate()){
       // Dispara los onsave
       formKey.currentState.save();
-      // print(recipe.nombreReceta);
-      // print(recipe.costo);
-      projectsProvider.createProject(project);
+      if(project.id == null){
+        projectsProvider.createProject(project);
+      }
+      // else{
+      //   projectsProvider.updateProject(project);
+      // }
+      Navigator.pop(context);
     }
   }
 }
