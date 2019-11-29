@@ -20,7 +20,6 @@ class _AdvicesFormPageState extends State<AdvicesFormPage> {
     if(adviceData != null){
       advice = adviceData;
     }
-
     return Scaffold(
       key: scaffoldKey,
       body: SafeArea(

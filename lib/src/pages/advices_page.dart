@@ -3,7 +3,6 @@ import 'package:guiaestudiante/src/blocs/provider.dart';
 import 'package:guiaestudiante/src/models/advices_model.dart';
 
 class AdvicesPage extends StatelessWidget {
-  // final advicesProvider = new AdvicesProvider(); ya no se usa esto si se pone el bloc
   
   @override
   Widget build(BuildContext context) {
@@ -38,11 +37,16 @@ class AdvicesPage extends StatelessWidget {
     );
   }
   Widget _elemento(BuildContext context, AdviceModel advice){
-    return ListTile(
-      title: Text('${advice.detalle}'),
-      subtitle: Text(advice.usuario),
-      onTap: () =>  Navigator.pushNamed(context, 'advices_form', arguments: advice),
-    );
+    if(advice.aprobado){
+      return ListTile(
+        title: Text('${advice.detalle}'),
+        subtitle: Text(advice.usuario),
+        onTap: () =>  Navigator.pushNamed(context, 'advices_form', arguments: advice),
+      );
+    }
+    else{
+      return Container();
+    }
   }
   _btnCrearConsejo(BuildContext context){
     return FloatingActionButton(
