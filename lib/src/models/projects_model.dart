@@ -14,6 +14,7 @@ class ProjectModel {
     int duracion;
     // PuestosSolicitados puestosSolicitados;
     String fechaCreacion;
+    bool aprobado;
 
     ProjectModel({
         this.id,
@@ -25,6 +26,7 @@ class ProjectModel {
         this.duracion = 0,
         // this.puestosSolicitados,
         this.fechaCreacion = '',
+        this.aprobado = false,
     });
 
     factory ProjectModel.fromJson(Map<String, dynamic> json) => ProjectModel(
@@ -37,6 +39,7 @@ class ProjectModel {
         duracion: json["duracion"],
         // puestosSolicitados: PuestosSolicitados.fromJson(json["puestos_solicitados"]),
         fechaCreacion: json["fecha_creacion"],
+        aprobado: json["aprobado"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -49,6 +52,7 @@ class ProjectModel {
         "duracion": duracion,
         // "puestos_solicitados": puestosSolicitados.toJson(),
         "fecha_creacion": fechaCreacion,
+        "aprobado": aprobado,
     };
 }
 

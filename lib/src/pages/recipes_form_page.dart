@@ -12,10 +12,17 @@ class RecipesFormPage extends StatefulWidget {
 class _RecipesFormPageState extends State<RecipesFormPage> {
   final recipesProvider = new RecipesProvider();
   final formKey = GlobalKey<FormState>();
+  final scaffoldkey = GlobalKey<ScaffoldState>();
   RecipeModel recipe = RecipeModel();
 
   @override
   Widget build(BuildContext context) {
+
+    final RecipeModel recipeData = ModalRoute.of(context).settings.arguments;
+    if(recipeData != null){
+      recipe = recipeData;
+    }
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -71,8 +78,8 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              _elemento('Ingrediente','remove'),
-                              _elemento('Ingrediente', 'add'),
+                              // _elemento('Ingrediente','remove'),
+                              // _elemento('Ingrediente', 'add'),
                             ],
                           ),
                         )
@@ -96,8 +103,8 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              _elemento('Paso','remove'),
-                              _elemento('Paso', 'add'),
+                              // _elemento('Paso','remove'),
+                              // _elemento('Paso', 'add'),
                             ],
                           ),
                         )
@@ -246,7 +253,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           icon: Icon(Icons.list),
-          labelText: 'Cantidad y nombre del ingrediente',
+          labelText: 'Ingresa los ingredientes separados por comas',
         ),
       validator: (value){
         if(value.length < 5){
@@ -266,7 +273,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           icon: Icon(Icons.description),
-          labelText: 'Describe aqui un paso',
+          labelText: 'Describe aqui los pasos separados por un punto',
         ),
         validator: (value){
         if(value.length < 10){
