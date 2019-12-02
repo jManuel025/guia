@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:guiaestudiante/src/models/recipes_model.dart';
 import 'package:guiaestudiante/src/providers/recipe_provider.dart';
-import 'package:guiaestudiante/src/utils/icon_string_util.dart';
 import 'package:guiaestudiante/src/utils/utils.dart' as utils;
+import 'package:image_picker/image_picker.dart';
 
 class RecipesFormPage extends StatefulWidget {
   @override
@@ -14,6 +16,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
   final formKey = GlobalKey<FormState>();
   final scaffoldkey = GlobalKey<ScaffoldState>();
   RecipeModel recipe = RecipeModel();
+  File foto;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +40,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
                     width: double.infinity,
                     child: Text('Nueva Receta', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.blueGrey)),
                   ),
+                  _showPhoto(),
                   // FOTOGRAFÍA photo_size_select_actual
                   Container(
                     child: Table(
@@ -45,11 +49,11 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
                           children: [
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: 10.0),
-                              child: _fotografia('Seleccionar foto' ,'photo_size_select_actual'),
+                              child: _fotografiaSlc(),
                             ),
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: 10.0),
-                              child: _fotografia('Tomar foto' ,'photo_camera'),
+                              child: _fotografiaCam(),
                             )
                           ]
                         ),
@@ -210,18 +214,56 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
     );
   }
 
-  Widget _fotografia(String texto, String icono){
+  Widget _fotografiaSlc(){
     return RaisedButton.icon(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
       textColor: Colors.white,
       color: Colors.blue,
-      label: Text(texto),
-      icon: getIcon(icono),
-      onPressed:(){},
+      label: Text('Seleccionar foto'),
+      icon: Icon(Icons.photo),
+      onPressed: _selectPhoto,
     );
   }
+  Widget _fotografiaCam(){
+    return RaisedButton.icon(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      textColor: Colors.white,
+      color: Colors.blue,
+      label: Text('Tomar una foto'),
+      icon: Icon(Icons.camera_alt),
+      onPressed: _takePhoto,
+    );
+  }
+    Widget _showPhoto(){
+      if(recipe.fotoUrl != null && recipe.fotoUrl != ''){
+        return Container();
+      }
+      else{
+        return Image(
+          image: AssetImage(foto?.path??'assets/no-image.png'),
+          height: 300.0,
+          width: double.infinity,
+          // TODO Redondear esto
+          fit: BoxFit.cover,
+        );
+      }
+    }
+    _selectPhoto() async{
+      foto = await ImagePicker.pickImage(
+        source: ImageSource.gallery
+      );
+      if(foto != null){
+        // hacer limpieza
+      }
+      setState(() {});
+    }
+    _takePhoto(){
+
+    }
 
   Widget _nombreReceta(){
     return Container(
@@ -287,18 +329,18 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
     );
   }
 
-    Widget _elemento(String elemento, String icono){
-      return RaisedButton.icon(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0)
-        ),
-        textColor: Colors.white,
-        color: Colors.blue,
-        label: Text(elemento),
-        icon: getIcon(icono),
-        onPressed:() => _ingrediente(),
-      );
-    }
+    // Widget _elemento(String elemento, String icono){
+    //   return RaisedButton.icon(
+    //     shape: RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.circular(10.0)
+    //     ),
+    //     textColor: Colors.white,
+    //     color: Colors.blue,
+    //     label: Text(elemento),
+    //     icon: getIcon(icono),
+    //     onPressed:() => _ingrediente(),
+    //   );
+    // }
 
   Widget _costo(){
     return TextFormField(
