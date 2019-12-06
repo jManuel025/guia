@@ -12,10 +12,15 @@ class AdvicesPage extends StatelessWidget {
     
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(26, 49, 99, 39),
         title: Text('Consejos'),
         centerTitle: true,
       ),
-      body: _listado(advicesbloc),
+      body: Container(
+        padding: EdgeInsets.symmetric(vertical: 15.0),
+        color: Color.fromRGBO(255, 251, 249, 100),
+        child: _listado(advicesbloc),
+      ),
       floatingActionButton: _btnCrearConsejo(context),
     );
   }
@@ -26,9 +31,9 @@ class AdvicesPage extends StatelessWidget {
         if(snapshot.hasData){
           final consejos = snapshot.data;
           return ListView.builder(
-            itemCount: consejos.length,
-            itemBuilder: (context, i) => _elemento(context, consejos[i]),
-          );
+              itemCount: consejos.length,
+              itemBuilder: (context, i) => _elemento(context, consejos[i]),
+            );
         }
         else{
           return Center(child: CircularProgressIndicator());
@@ -36,12 +41,33 @@ class AdvicesPage extends StatelessWidget {
       },
     );
   }
+    // Future<Null> refreshPage() async{
+    //   final duration = new Duration(seconds: 2);
+    //   new Timer(duration, () {
+    //     snapshot.da
+    //   });
+    // }
   Widget _elemento(BuildContext context, AdviceModel advice){
     if(advice.aprobado){
-      return ListTile(
-        title: Text('${advice.detalle}'),
-        subtitle: Text(advice.usuario),
-        onTap: () =>  Navigator.pushNamed(context, 'advices_form', arguments: advice),
+      // return ListTile(
+      //   title: Text('${advice.detalle}'),
+      //   subtitle: Text(advice.usuario),
+      //   onTap: () =>  Navigator.pushNamed(context, 'advices_form', arguments: advice),
+      // );
+      return Card(
+        margin: EdgeInsets.only(top: 7.5, bottom: 7.5, left: 15.0, right: 15.0),
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+        child: Container(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text('"' + advice.detalle + '"', style: TextStyle(color: Color.fromRGBO(26, 49, 99, 39), fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: 17), textAlign: TextAlign.center,),
+              Text('Autor: ' + advice.usuario, style: TextStyle(color: Color.fromRGBO(92, 111, 138, 54)), textAlign: TextAlign.left,),
+            ],
+          ),
+        )
       );
     }
     else{
@@ -50,6 +76,7 @@ class AdvicesPage extends StatelessWidget {
   }
   _btnCrearConsejo(BuildContext context){
     return FloatingActionButton(
+      backgroundColor: Color.fromRGBO(26, 49, 99, 39),
       child: Icon(Icons.add),
       onPressed: () => Navigator.pushNamed(context, 'advices_form'),
     ); 
