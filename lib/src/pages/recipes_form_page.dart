@@ -36,7 +36,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 30.0),
+                    padding: EdgeInsets.only(top: 30.0, bottom: 15.0),
                     width: double.infinity,
                     child: Text('Nueva Receta', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.blueGrey)),
                   ),
@@ -48,11 +48,11 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
                         TableRow(
                           children: [
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10.0),
+                              padding: EdgeInsets.symmetric(horizontal: 5.0),
                               child: _fotografiaSlc(),
                             ),
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10.0),
+                              padding: EdgeInsets.symmetric(horizontal: 5.0),
                               child: _fotografiaCam(),
                             )
                           ]
@@ -199,8 +199,8 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
                     children: [
                       TableRow(
                         children: [
-                          _btnAccion('Cancelar'),
-                          _btnAccion('Publicar'),
+                          _btnCancel(),
+                          _btnAccion(),
                         ]
                       )
                     ],
@@ -221,7 +221,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       ),
       textColor: Colors.white,
       color: Colors.blue,
-      label: Text('Seleccionar foto'),
+      label: Text('Seleccionar'),
       icon: Icon(Icons.photo),
       onPressed: _selectPhoto,
     );
@@ -233,7 +233,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       ),
       textColor: Colors.white,
       color: Colors.blue,
-      label: Text('Tomar una foto'),
+      label: Text('Tomar'),
       icon: Icon(Icons.camera_alt),
       onPressed: _takePhoto,
     );
@@ -243,12 +243,16 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
         return Container();
       }
       else{
-        return Image(
-          image: AssetImage(foto?.path??'assets/no-image.png'),
-          height: 300.0,
-          width: double.infinity,
-          // TODO Redondear esto
-          fit: BoxFit.cover,
+        return Card(
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          child: Image(
+            image: AssetImage(foto?.path??'assets/no-image.png'),
+            height: 250.0,
+            width: double.infinity,
+            // TODO Redondear esto
+            fit: BoxFit.cover,
+          ),
         );
       }
     }
@@ -261,10 +265,15 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       }
       setState(() {});
     }
-    _takePhoto(){
-
+    _takePhoto() async{
+      foto = await ImagePicker.pickImage(
+        source: ImageSource.camera
+      );
+      if(foto != null){
+        // hacer limpieza
+      }
+      setState(() {});
     }
-
   Widget _nombreReceta(){
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
@@ -287,7 +296,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       ),
     );
   }
-
   Widget _ingrediente(){
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5.0),
@@ -308,7 +316,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       ),
     );
   }
-
   Widget _procedimiento(){
     return Container(
       child: TextFormField(
@@ -361,7 +368,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       },
     );
   }
-
   Widget _porciones(){
     return TextFormField(
       keyboardType: TextInputType.number,
@@ -380,7 +386,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       },
     );
   }
-
   Widget _tiempoPreparacion(){
     return TextFormField(
       keyboardType: TextInputType.number,
@@ -399,7 +404,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       },
     );
   }
-
   Widget _categoria(){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 5.0),
@@ -415,8 +419,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       ),
     );
   }
-
-  Widget _btnAccion(String texto){
+  Widget _btnAccion(){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
       child: RaisedButton(
@@ -425,16 +428,35 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
         ),
         textColor: Colors.white,
         color: Colors.blueAccent,
-        child: Text(texto),
+        child: Text('Aceptar'),
         onPressed: _submit,
       ),
     );
   }
+  Widget _btnCancel(){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        textColor: Colors.white,
+        color: Colors.blueAccent,
+        child: Text('Cancelar'),
+        onPressed: () => Navigator.pop(context),
+      ),
+    );
+  }
 
-  void _submit(){
+  void _submit() async{
     if(formKey.currentState.validate()){
       // Dispara los onsave
       formKey.currentState.save();
+
+      if(foto != null){
+        recipe.fotoUrl = await recipesProvider.uploadImage(foto);
+      }
+
       print(recipe.nombreReceta);
       print(recipe.costo);
       recipesProvider.createRecipe(recipe);
