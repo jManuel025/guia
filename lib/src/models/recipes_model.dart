@@ -25,7 +25,7 @@ class RecipeModel {
         this.ingredientes = '',
         this.procedimiento = '',
         this.tiempo = 60,
-        this.fotoUrl = 'https://res.cloudinary.com/dyjyvrwrj/image/upload/v1575597909/pscgve1x9cb2gyegi5tf.png',
+        this.fotoUrl = '',
         this.costo = 0.0,
         this.porciones = 1,
         // this.etiquetas,

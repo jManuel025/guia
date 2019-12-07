@@ -112,8 +112,6 @@ Widget _registro(context){
                 SizedBox(height: 10.0,),
                 _password(bloc),
                 SizedBox(height: 10.0,),
-                // _passwordc(bloc),
-                // SizedBox(height: 10.0,),
                 _birthday(context),
                 SizedBox(height: 20.0,),
                 _boton(context, bloc),

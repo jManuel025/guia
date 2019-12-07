@@ -24,6 +24,14 @@ class PreferenciasUsuario {
   set token( String value ) {
     _prefs.setString('token', value);
   }
+
+  get uid {
+    return _prefs.getString('uid') ?? '';
+  }
+
+  set uid( String value ) {
+    _prefs.setString('uid', value);
+  }
   
 
   // GET y SET de la última página

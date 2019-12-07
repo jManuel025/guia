@@ -21,9 +21,10 @@ class UserProvider{
     );
 
     Map<String, dynamic> decodedResp = json.decode(resp.body);
-    print(decodedResp);
+    // print(decodedResp);
     if(decodedResp.containsKey('idToken')){
       // guardar en storage
+      _preferencias.uid = decodedResp['localId'];
       _preferencias.token = decodedResp['idToken'];
       return {'ok': true, 'token': decodedResp['idToken']};
     }
@@ -44,6 +45,14 @@ class UserProvider{
       'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=$firebaseToken', 
       body: jsonEncode(authData)
     );
+
+    // agregar a bd
+    // final String _url = 'https://guiaest-is.firebaseio.com';
+    // final url = '$_url/usuarios.json';
+    // final newResp = await http.post(url, body: authData);
+    // final newDecodedData = json.decode(newResp.body);
+    // print(newDecodedData);
+
 
     Map<String, dynamic> decodedResp = json.decode(resp.body);
     print(decodedResp);

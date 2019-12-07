@@ -25,15 +25,4 @@ class Validators{
       }
     }
   );
-  // final validarPasswordc = StreamTransformer<String, String>.fromHandlers(
-  //   handleData: (passwordc, sink){
-  //     if(passwordc.length >= 6){
-  //       sink.add(passwordc);
-  //     }
-  //     else{
-  //       sink.addError('Las contraseñas no coinciden');
-  //     }
-  //   }
-  // );
-
 }
