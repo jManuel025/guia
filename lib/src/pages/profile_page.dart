@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 import 'package:guiaestudiante/src/utils/icon_string_util.dart';
 
 class ProfilePage extends StatelessWidget {
+  final prefs = new PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: SafeArea(
+    return SafeArea(
         child: Column(
           children: <Widget>[
             Container(
@@ -40,7 +41,7 @@ class ProfilePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text('Nombre de usuario', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.5)),
-                            Text('Correo', style: TextStyle(fontSize: 15, color: Colors.blueGrey))
+                            Text(prefs.email, style: TextStyle(fontSize: 15, color: Colors.blueGrey))
                           ],
                         ),
                       ),
@@ -68,7 +69,7 @@ class ProfilePage extends StatelessWidget {
             ),
             Container(
               color: Colors.blue,
-              height: (size.height * 0.75) - 24.0,
+              height: (size.height * 0.75) - 80.0,
               width: double.infinity,
               child: DefaultTabController(
                 length: 3,
@@ -99,8 +100,7 @@ class ProfilePage extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
+      );
   }
 
   Widget _favCreSection(BuildContext context){

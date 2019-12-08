@@ -1,8 +1,11 @@
 import 'dart:convert';
 
-AdviceModel adviceModelFromJson(String str) => AdviceModel.fromJson(json.decode(str));
+import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 
+AdviceModel adviceModelFromJson(String str) => AdviceModel.fromJson(json.decode(str));
 String adviceModelToJson(AdviceModel data) => json.encode(data.toJson());
+
+final prefs = new PreferenciasUsuario();
 
 class AdviceModel {
     String id;
@@ -12,7 +15,7 @@ class AdviceModel {
 
     AdviceModel({
         this.id,
-        this.usuario = 'default',
+        this.usuario = '',
         this.detalle = '',
         this.aprobado = false,
     });

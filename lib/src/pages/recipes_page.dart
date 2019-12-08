@@ -5,10 +5,10 @@ class RecipesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Recetas'),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   title: Text('Recetas'),
+      //   centerTitle: true,
+      // ),
       body: Center(
         child: _tarjetas(context),
       ),

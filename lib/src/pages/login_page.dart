@@ -114,23 +114,6 @@ Widget _login(context){
       ),
     );
   }
-    // Widget _username(LoginBloc bloc){
-    //   return StreamBuilder(
-    //     stream: bloc.usernameStream,
-    //     builder: (BuildContext context, AsyncSnapshot snapshot){
-    //       return Container(
-    //         padding: EdgeInsets.symmetric(horizontal: 20.0),
-    //         child: TextField(
-    //           decoration: InputDecoration(
-    //             icon: Icon(Icons.person, color: Color.fromRGBO(20, 136, 204, 1.0)),
-    //             labelText: 'Nombre de usuario',
-    //           ),
-    //           onChanged: bloc.changeUsername,
-    //         ),
-    //       );
-    //     },
-    //   );
-    // }
 
     Widget _email(LoginBloc bloc){
       return StreamBuilder(

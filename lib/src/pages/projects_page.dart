@@ -4,10 +4,10 @@ class ProjectsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Proyectos'),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   title: Text('Proyectos'),
+      //   centerTitle: true,
+      // ),
       body: Container(),
       floatingActionButton: _btnCrearProyecto(context),
     );
