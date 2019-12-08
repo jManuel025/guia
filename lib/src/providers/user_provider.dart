@@ -65,7 +65,7 @@ class UserProvider{
     final url = '$_url/usuarios.json?auth=${_preferencias.token}';
     final resp = await http.post(url, body: userModelToJson(user));
     final decodedData = jsonDecode(resp.body);
-    // print('ID DEL USUARIO' + decodedData['name']);
+    print('ID DEL USUARIO' + decodedData['name']);
     return true;
   }
 

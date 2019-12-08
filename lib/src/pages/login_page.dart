@@ -204,7 +204,7 @@ Widget _login(context){
     Widget _botonAlt(String accion, BuildContext context, String pantalla){
       return FlatButton(
         child: Text(accion, style: TextStyle(color: Colors.blueGrey)),
-        onPressed: () => Navigator.pushReplacementNamed(context, pantalla),
+        onPressed: () => Navigator.pushNamed(context, pantalla),
       );
     }
 }

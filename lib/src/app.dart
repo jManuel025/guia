@@ -47,7 +47,8 @@ class MyApp extends StatelessWidget{
           'profile' : (BuildContext context) => ProfilePage(),
         },
         theme: ThemeData(
-          primaryColor: Color.fromRGBO(20, 136, 204, 1.0)
+          primaryColor: Color.fromRGBO(20, 136, 204, 1.0),
+          // backgroundColor: Colors.white
         ),
       ),
     );
