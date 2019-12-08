@@ -27,10 +27,9 @@ class UserProvider{
     // print(decodedResp);
     if(decodedResp.containsKey('idToken')){
       // guardar en storage
-      _preferencias.uid = decodedResp['localId'];
-      print('LOCAL ID ' + _preferencias.uid);
+      _preferencias.email = decodedResp['email'];
+      // print('EMAIL ' + _preferencias.email);
       _preferencias.token = decodedResp['idToken'];
-      print('TOKEN DE LOGIN ');
       return {'ok': true, 'token': decodedResp['idToken']};
     }
     else{ //mostrar error
@@ -54,7 +53,7 @@ class UserProvider{
     if(decodedResp.containsKey('idToken')){
       // guardar en storage
       _preferencias.token = decodedResp['idToken'];
-      print('TOKEN DE REGISTRO ' + _preferencias.token);
+      // print('TOKEN DE REGISTRO ' + _preferencias.token);
       return {'ok': true, 'token': decodedResp['idToken']};
     }
     else{ //mostrar error
@@ -66,7 +65,7 @@ class UserProvider{
     final url = '$_url/usuarios.json?auth=${_preferencias.token}';
     final resp = await http.post(url, body: userModelToJson(user));
     final decodedData = jsonDecode(resp.body);
-    print('ID DEL USUARIO' + decodedData['name']);
+    // print('ID DEL USUARIO' + decodedData['name']);
     return true;
   }
 
