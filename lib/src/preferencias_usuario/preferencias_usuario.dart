@@ -25,12 +25,12 @@ class PreferenciasUsuario {
     _prefs.setString('token', value);
   }
 
-  get uid {
-    return _prefs.getString('uid') ?? '';
+  get email {
+    return _prefs.getString('email') ?? '';
   }
 
-  set uid( String value ) {
-    _prefs.setString('uid', value);
+  set email( String value ) {
+    _prefs.setString('email', value);
   }
   
 

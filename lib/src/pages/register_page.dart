@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guiaestudiante/src/models/users_model.dart';
 import 'package:intl/intl.dart';
 import 'package:guiaestudiante/src/blocs/register_bloc.dart';
 import 'package:guiaestudiante/src/blocs/provider.dart';
@@ -16,6 +17,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final userProvider = new UserProvider();
 
   TextEditingController _dateInputController = new TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
+  UserModel user = new UserModel();
 
   @override
   Widget build(BuildContext context) {
@@ -102,21 +106,24 @@ Widget _registro(context){
               )
               ]
             ),
-            child: Column(
-              children: <Widget>[
-                Text('Registro', style: TextStyle(color: Colors.blueGrey, fontSize: 20.0, )),
-                SizedBox(height: 10.0,),
-                _username(bloc),
-                SizedBox(height: 10.0,),
-                _email(bloc),
-                SizedBox(height: 10.0,),
-                _password(bloc),
-                SizedBox(height: 10.0,),
-                _birthday(context),
-                SizedBox(height: 20.0,),
-                _boton(context, bloc),
-              ],
-            ),
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: <Widget>[
+                  Text('Registro', style: TextStyle(color: Colors.blueGrey, fontSize: 20.0, )),
+                  SizedBox(height: 10.0,),
+                  _username(bloc),
+                  SizedBox(height: 10.0,),
+                  _email(bloc),
+                  SizedBox(height: 10.0,),
+                  _password(bloc),
+                  SizedBox(height: 10.0,),
+                  _birthday(context),
+                  SizedBox(height: 20.0,),
+                  _boton(context, bloc),
+                ],
+              ),
+            )
           ),
           _botonAlt('Ya tengo una cuenta', context, 'login'),
         ],
@@ -130,12 +137,22 @@ Widget _registro(context){
       builder: (BuildContext context, AsyncSnapshot snapshot){
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: TextField(
+          child: TextFormField(
+            initialValue: user.nombre,
             decoration: InputDecoration(
               icon: Icon(Icons.person, color: Color.fromRGBO(20, 136, 204, 1.0)),
               labelText: 'Nombre de usuario',
               // counterText: snapshot.data,
             ),
+            onSaved: (value) => user.nombre = value,
+            validator: (value){
+              if(value.length < 3){
+                return 'Ingresa un nombre';
+              }
+              else{
+                return null;
+              }
+            }, 
             onChanged: bloc.changeUsername,
           ),
         );
@@ -149,7 +166,8 @@ Widget _registro(context){
       builder: (BuildContext context, AsyncSnapshot snapshot){
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: TextField(
+          child: TextFormField(
+            // initialValue: user.password,
             obscureText: true,
             decoration: InputDecoration(
               icon: Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
@@ -157,6 +175,7 @@ Widget _registro(context){
               // counterText: snapshot.data,
               errorText: snapshot.error
             ),
+            // onSaved: (value) => user.password = value,
             onChanged: bloc.changePassword,
           ),
         );
@@ -170,7 +189,8 @@ Widget _registro(context){
       builder: (BuildContext context, AsyncSnapshot snapshot){
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: TextField(
+          child: TextFormField(
+            initialValue: user.correo,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               icon: Icon(Icons.alternate_email, color: Color.fromRGBO(20, 136, 204, 1.0)),
@@ -178,6 +198,7 @@ Widget _registro(context){
               // counterText: snapshot.data,
               errorText: snapshot.error
             ),
+            onSaved: (value) => user.correo = value,
             onChanged: bloc.changeEmail,
           ),
         );
@@ -188,16 +209,23 @@ Widget _registro(context){
   Widget _birthday(BuildContext context){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: TextField(
+      child: TextFormField(
         enableInteractiveSelection: false,
         controller: _dateInputController,
-        // keyboardType: TextInputType.datetime,
-        // maxLength: 10,
         decoration: InputDecoration(
           icon: Icon(Icons.calendar_today, color: Color.fromRGBO(20, 136, 204, 1.0)),
           labelText: 'Fecha de nacimiento',
           // hintText: 'DD/MM/AAAA'
         ),
+        onSaved: (value) => user.fechaNacimiento = value,
+        validator: (value){
+          if(value == null || value == ''){
+            return 'Ingresa tu fecha de nacimiento';
+          }
+          else{
+            return null;
+          }
+        }, 
         onTap: (){
           FocusScope.of(context).requestFocus(new FocusNode());
           _selectDate(context);
@@ -247,14 +275,19 @@ Widget _registro(context){
 
   _signup(RegisterBloc bloc, BuildContext context) async{
     Map info = await userProvider.newUser(bloc.username, bloc.email, bloc.password);
-
     if(info['ok']){
-      Navigator.pushReplacementNamed(context, 'home');
+      Navigator.pushReplacementNamed(context, 'login');
+      _submit();
     }
     else{
       mostrarAlerta(context, info['mensaje']);
     }
-    // Navigator.pushReplacementNamed(context, 'home');
+  }
+
+  _submit(){
+    if(!formKey.currentState.validate()) return;
+    formKey.currentState.save();
+    userProvider.createUser(user);
   }
 
   Widget _botonAlt(String accion, BuildContext context, String pantalla){
