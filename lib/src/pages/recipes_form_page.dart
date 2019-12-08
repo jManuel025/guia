@@ -250,7 +250,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
             image: AssetImage(foto?.path??'assets/no-image.png'),
             height: 250.0,
             width: double.infinity,
-            // TODO Redondear esto
             fit: BoxFit.cover,
           ),
         );
