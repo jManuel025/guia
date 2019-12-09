@@ -112,7 +112,7 @@ class _AdvicesFormPageState extends State<AdvicesFormPage> {
   void _submit(){
     if(formKey.currentState.validate()){
       // Dispara los onsave
-      advice.usuario = prefs.email;
+      advice.usuario = prefs.name;
       formKey.currentState.save();
       if(advice.id == null){
         advicesProvider.createAdvice(advice);
