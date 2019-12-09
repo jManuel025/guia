@@ -13,12 +13,17 @@ import 'package:guiaestudiante/src/pages/recipes_list_page.dart';
 import 'package:guiaestudiante/src/pages/recipes_page.dart';
 import 'package:guiaestudiante/src/pages/register_page.dart';
 import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
+import 'package:flutter/services.dart';
 
 class MyApp extends StatelessWidget{
   final prefs = new PreferenciasUsuario();
   // await prefs.initPrefs();
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Provider(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "369750964678",
+    "firebase_url": "https://guiaest-is.firebaseio.com",
+    "project_id": "guiaest-is",
+    "storage_bucket": "guiaest-is.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369750964678:android:8545e4bc49811f71dadac7",
+        "android_client_info": {
+          "package_name": "com.example.guiaestudiante"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369750964678-kapnsa1an08km0upbma1ngofi1drm1sk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARfH-QusRPLReGTHeFV9QksW83SYIppc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369750964678-kapnsa1an08km0upbma1ngofi1drm1sk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

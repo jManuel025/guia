@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // prefs.ultimaPagina = 'home'; 
+    prefs.ultimaPagina = 'home'; 
     return Scaffold(
       body: _loadPage(currentIndex),
       bottomNavigationBar: _bottomBar(),
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
           title: Text('Proyectos')
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.add_comment),
+          icon: Icon(Icons.comment),
           title: Text('Consejos')
         ),
         BottomNavigationBarItem(
