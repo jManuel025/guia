@@ -52,11 +52,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
               key: formKey,
               child: Column(
                 children: <Widget>[
-                  // Container(
-                  //   padding: EdgeInsets.only(top: 30.0, bottom: 15.0),
-                  //   width: double.infinity,
-                  //   child: Text('Nueva Receta', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.blueGrey)),
-                  // ),
                   _showPhoto(),
                   // FOTOGRAFÍA photo_size_select_actual
                   Container(

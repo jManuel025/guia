@@ -7,7 +7,15 @@ final _icons = <String, IconData>{
   'photo_camera'              : Icons.photo_camera,
   'local_dining'              : Icons.local_dining,
   'work'                      : Icons.work,
-  'add_comment'               : Icons.add_comment     
+  'add_comment'               : Icons.add_comment,     
+  'free_breakfast'            : Icons.free_breakfast,
+  'fastfood'                  : Icons.fastfood,
+  'brightness_2'              : Icons.brightness_2,
+  'local_drink'               : Icons.local_drink,
+  'healing'                   : Icons.healing,
+  'cake'                      : Icons.cake,
+  'whatshot'                  : Icons.whatshot,
+  'search'                    : Icons.search
 };
 
 Icon getIcon(String nombreIcono){
