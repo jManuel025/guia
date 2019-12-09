@@ -1,12 +1,12 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:guiaestudiante/src/models/advices_model.dart';
 import 'package:guiaestudiante/src/models/recipes_model.dart';
 import 'package:guiaestudiante/src/providers/recipe_provider.dart';
 import 'package:guiaestudiante/src/utils/utils.dart' as utils;
-import 'package:image_picker/image_picker.dart';
 
 class RecipesFormPage extends StatefulWidget {
   @override
@@ -40,6 +40,10 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Nueva receta'),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -48,11 +52,11 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
               key: formKey,
               child: Column(
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(top: 30.0, bottom: 15.0),
-                    width: double.infinity,
-                    child: Text('Nueva Receta', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.blueGrey)),
-                  ),
+                  // Container(
+                  //   padding: EdgeInsets.only(top: 30.0, bottom: 15.0),
+                  //   width: double.infinity,
+                  //   child: Text('Nueva Receta', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.blueGrey)),
+                  // ),
                   _showPhoto(),
                   // FOTOGRAFÍA photo_size_select_actual
                   Container(
@@ -260,16 +264,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
                               },
                               selectedColor: Color.fromRGBO(24, 128, 192, .30),
                             ),
-                            // _chipEtiqueta('Saludable', saludable),
-                            // _chipEtiqueta('Fácil', facil),
-                            // _chipEtiqueta('Barato', barato),
-                            // _chipEtiqueta('Rápido', rapido),
-                            // _chipEtiqueta('Inusual', inusual),
-                            // chipEtiquetas(chipName: 'Saludable'),
-                            // chipEtiquetas(chipName: 'Fácil'),
-                            // chipEtiquetas(chipName: 'Barato'),
-                            // chipEtiquetas(chipName: 'Rápido'),
-                            // chipEtiquetas(chipName: 'Inusual'),
                           ],
                         )
                       ],
@@ -295,22 +289,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       )
     );
   }
-
-
-  // Widget _chipEtiqueta(String etiqueta, bool value){
-  //   return FilterChip(
-  //     label: Text(etiqueta),
-  //     labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-  //     selected: value,
-  //     backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-  //     onSelected: (valor){
-  //       setState(() {
-  //         value = valor;
-  //       });
-  //     },
-  //     selectedColor: Color.fromRGBO(24, 128, 192, .30),
-  //   );
-  // }
 
   Widget _fotografiaSlc(){
     return RaisedButton.icon(
@@ -544,9 +522,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
   }
 
   void _submit() async{
-    
     if(formKey.currentState.validate()){
-      // Dispara los onsave
       formKey.currentState.save();
       if(foto != null){
         recipe.fotoUrl = await recipesProvider.uploadImage(foto);
@@ -575,35 +551,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
         "calificacion": recipe.calificacion,
       };
       Firestore.instance.collection('recetas').add(datos);
-      // final recetas = await Firestore.instance.collection('recetas').getDocuments();
-      // print(recetas);
       Navigator.pop(context);
     }
-  }
-}
-
-class chipEtiquetas extends StatefulWidget {
-  final String chipName;
-  chipEtiquetas({Key key, this.chipName}) : super(key:key);
-  @override
-  _chipEtiquetasState createState() => _chipEtiquetasState();
-}
-
-class _chipEtiquetasState extends State<chipEtiquetas> {
-  var _isSelected = false;
-  @override
-  Widget build(BuildContext context) {
-    return FilterChip(
-      label: Text(widget.chipName),
-      labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-      selected: _isSelected,
-      backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-      onSelected: (valor){
-        setState(() {
-          _isSelected = valor;
-        });
-      },
-      selectedColor: Color.fromRGBO(24, 128, 192, .30),
-    );
   }
 }
