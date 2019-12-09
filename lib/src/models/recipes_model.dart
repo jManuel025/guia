@@ -15,6 +15,7 @@ class RecipeModel {
     double costo;
     int porciones;
     // Etiquetas etiquetas;
+    Map etiquetas;
     double calificacion;
     bool aprobado;
 
@@ -29,6 +30,7 @@ class RecipeModel {
         this.costo = 0.0,
         this.porciones = 1,
         // this.etiquetas,
+        this.etiquetas,
         this.calificacion = 0.0,
         this.aprobado = false,
     });
@@ -44,6 +46,7 @@ class RecipeModel {
         costo: json["costo"],
         porciones: json["porciones"],
         // etiquetas: Etiquetas.fromJson(json["etiquetas"]),
+        etiquetas: json["etiquetas"],
         calificacion: json["calificacion"],
         aprobado: json["aprobado"],
     );
@@ -59,6 +62,7 @@ class RecipeModel {
         "costo": costo,
         "porciones": porciones,
         // "etiquetas": etiquetas.toJson(),
+        "etiquetas": etiquetas,
         "calificacion": calificacion,
         "aprobado": aprobado,
     };

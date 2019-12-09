@@ -150,7 +150,6 @@ class ProfilePage extends StatelessWidget {
               FlatButton(
                 child: SizedBox(),
                 onPressed: () {},
-                // TODO Crear la ruta para estos botones
               ),
             ],
           ),

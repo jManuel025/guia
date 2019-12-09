@@ -448,16 +448,16 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
   }
 
   void _submit() async{
+    recipe.etiquetas = {
+      "e1": true,
+      "e2": false,
+    };
     if(formKey.currentState.validate()){
       // Dispara los onsave
       formKey.currentState.save();
-
       if(foto != null){
         recipe.fotoUrl = await recipesProvider.uploadImage(foto);
       }
-
-      print(recipe.nombreReceta);
-      print(recipe.costo);
       recipesProvider.createRecipe(recipe);
     }
   }
