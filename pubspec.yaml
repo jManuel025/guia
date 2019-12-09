@@ -30,6 +30,8 @@ dependencies:
   shared_preferences:
   image_picker:  ^0.6.0+2
   mime_type:
+  firebase_core: ^0.1.0
+  firebase_database: ^0.4.0
 
 dev_dependencies:
   flutter_test:

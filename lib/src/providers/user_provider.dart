@@ -28,7 +28,6 @@ class UserProvider{
     if(decodedResp.containsKey('idToken')){
       // guardar en storage
       _preferencias.email = decodedResp['email'];
-      // print('EMAIL ' + _preferencias.email);
       _preferencias.token = decodedResp['idToken'];
       return {'ok': true, 'token': decodedResp['idToken']};
     }
@@ -53,7 +52,7 @@ class UserProvider{
     if(decodedResp.containsKey('idToken')){
       // guardar en storage
       _preferencias.token = decodedResp['idToken'];
-      // print('TOKEN DE REGISTRO ' + _preferencias.token);
+      _preferencias.uid = decodedResp['localId'];
       return {'ok': true, 'token': decodedResp['idToken']};
     }
     else{ //mostrar error
