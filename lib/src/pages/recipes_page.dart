@@ -12,8 +12,16 @@ class RecipesPage extends StatelessWidget {
       body: Center(
         child: _tarjetas(context),
       ),
+      floatingActionButton: _btnCrearReceta(context),
     );
   }
+}
+
+_btnCrearReceta(BuildContext context){
+  return FloatingActionButton(
+    child: Icon(Icons.add),
+    onPressed: () => Navigator.pushNamed(context, 'recipes_form'),
+  ); 
 }
 
 Widget _tarjetas(BuildContext context){

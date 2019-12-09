@@ -9,14 +9,8 @@ class RecipesListPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Container(),
-      floatingActionButton: _btnCrearReceta(context),
     );
   }
-  _btnCrearReceta(BuildContext context){
-    return FloatingActionButton(
-      child: Icon(Icons.add),
-      onPressed: () => Navigator.pushNamed(context, 'recipes_form'),
-    ); 
-  }
+  
 }
 

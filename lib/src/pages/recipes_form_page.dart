@@ -20,8 +20,16 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
   RecipeModel recipe = RecipeModel();
   File foto;
 
-  List<String> _categorias = ['cat1', 'cat2', 'cat3', 'cat4', 'cat5', 'cat6'];
-  String _slctdOpt = 'cat1';
+  bool saludable = false;
+  bool facil = false;
+  bool barato = false;
+  bool rapido = false;
+  bool inusual = false;
+
+  
+
+  List<String> _categorias = ['Desayuno', 'Comida', 'Cena', 'Bebidas', 'Ensaladas', 'Postres'];
+  String _slctdOpt = 'Desayuno';
 
   @override
   Widget build(BuildContext context) {
@@ -185,40 +193,85 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
                         Container(
                           padding: EdgeInsets.symmetric(vertical: 10.0),
                           width: double.infinity,
-                          child: Text('Escoje una o varias etiquetas', style: TextStyle(fontSize: 15.0)),
+                          child: Text('Marca las etiquetas que consideres adecuadas', style: TextStyle(fontSize: 15.0)),
                         ),
-                        Table(
-                          children: [
-                            TableRow(
-                              children: [
-                                _etiquetas(),
-                                _etiquetas(),
-                                _etiquetas(),
-                              ]
+                        Wrap(
+                          spacing: 10.0,
+                          runSpacing: 2.0,
+
+                          children: <Widget>[
+                            FilterChip(
+                              label: Text('Saludable'),
+                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                              selected: saludable,
+                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                              onSelected: (valor){
+                                setState(() {
+                                  saludable = valor;
+                                });
+                              },
+                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
                             ),
-                            TableRow(
-                              children: [
-                                _etiquetas(),
-                                _etiquetas(),
-                                _etiquetas(),
-                              ]
+                            FilterChip(
+                              label: Text('Fácil'),
+                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                              selected: facil,
+                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                              onSelected: (valor){
+                                setState(() {
+                                  facil = valor;
+                                });
+                              },
+                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
                             ),
-                            TableRow(
-                              children: [
-                                _etiquetas(),
-                                _etiquetas(),
-                                _etiquetas(),
-                              ]
+                            FilterChip(
+                              label: Text('Barato'),
+                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                              selected: barato,
+                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                              onSelected: (valor){
+                                setState(() {
+                                  barato = valor;
+                                });
+                              },
+                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
                             ),
-                            TableRow(
-                              children: [
-                                _etiquetas(),
-                                _etiquetas(),
-                                _etiquetas(),
-                              ]
+                            FilterChip(
+                              label: Text('Rápido'),
+                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                              selected: rapido,
+                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                              onSelected: (valor){
+                                setState(() {
+                                  rapido = valor;
+                                });
+                              },
+                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
                             ),
+                            FilterChip(
+                              label: Text('Inusual'),
+                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                              selected: inusual,
+                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                              onSelected: (valor){
+                                setState(() {
+                                  inusual = valor;
+                                });
+                              },
+                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
+                            ),
+                            // _chipEtiqueta('Saludable', saludable),
+                            // _chipEtiqueta('Fácil', facil),
+                            // _chipEtiqueta('Barato', barato),
+                            // _chipEtiqueta('Rápido', rapido),
+                            // _chipEtiqueta('Inusual', inusual),
+                            // chipEtiquetas(chipName: 'Saludable'),
+                            // chipEtiquetas(chipName: 'Fácil'),
+                            // chipEtiquetas(chipName: 'Barato'),
+                            // chipEtiquetas(chipName: 'Rápido'),
+                            // chipEtiquetas(chipName: 'Inusual'),
                           ],
-                        ),
+                        )
                       ],
                     )
                   ),
@@ -242,6 +295,22 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       )
     );
   }
+
+
+  // Widget _chipEtiqueta(String etiqueta, bool value){
+  //   return FilterChip(
+  //     label: Text(etiqueta),
+  //     labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+  //     selected: value,
+  //     backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+  //     onSelected: (valor){
+  //       setState(() {
+  //         value = valor;
+  //       });
+  //     },
+  //     selectedColor: Color.fromRGBO(24, 128, 192, .30),
+  //   );
+  // }
 
   Widget _fotografiaSlc(){
     return RaisedButton.icon(
@@ -366,8 +435,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
     );
   }
 
-  
-  
   List<DropdownMenuItem<String>> getOpts(){
     List<DropdownMenuItem<String>> lista = new List();
     _categorias.forEach((categoria){
@@ -391,19 +458,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       },
     );
   }
-
-    // Widget _elemento(String elemento, String icono){
-    //   return RaisedButton.icon(
-    //     shape: RoundedRectangleBorder(
-    //       borderRadius: BorderRadius.circular(10.0)
-    //     ),
-    //     textColor: Colors.white,
-    //     color: Colors.blue,
-    //     label: Text(elemento),
-    //     icon: getIcon(icono),
-    //     onPressed:() => _ingrediente(),
-    //   );
-    // }
 
   Widget _costo(){
     return TextFormField(
@@ -448,7 +502,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       initialValue: recipe.tiempo.toString(),
       decoration: InputDecoration(
         icon: Icon(Icons.timer),
-        labelText: 'Tiempo (min)',
+        labelText: 'Minutos',
       ),
       validator: (value){
         if(utils.isNumber(value)){
@@ -458,21 +512,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
           return 'Solo numeros';
         }
       },
-    );
-  }
-  Widget _etiquetas(){
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 5.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        color: Colors.blue,
-        textColor: Colors.white,
-        disabledColor: Colors.grey,
-        child: Text('Categoria 1'),
-        onPressed: (){},
-      ),
     );
   }
   Widget _btnAccion(){
@@ -514,6 +553,14 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       }
       recipesProvider.createRecipe(recipe);
 
+      Map<String, bool> etiquetas = {
+        'Saludable': saludable,
+        'Fácil': facil,
+        'Barato': barato,
+        'Rápido': rapido,
+        'Inusual': inusual,
+      };
+
       Map<String, dynamic> datos = {
         "autor": prefs.name,
         "nombreReceta": recipe.nombreReceta,
@@ -524,18 +571,39 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
         "foto_url": recipe.fotoUrl,
         "costo": recipe.costo,
         "porciones": recipe.porciones,
-        "etiquetas": {
-          "e1": false,
-          "e2": false,
-          "e3": false,
-          "e4": false,
-          "e5": false
-        },
+        "etiquetas": etiquetas,
         "calificacion": recipe.calificacion,
-        "aprobado": recipe.aprobado,
       };
       Firestore.instance.collection('recetas').add(datos);
+      // final recetas = await Firestore.instance.collection('recetas').getDocuments();
+      // print(recetas);
       Navigator.pop(context);
     }
+  }
+}
+
+class chipEtiquetas extends StatefulWidget {
+  final String chipName;
+  chipEtiquetas({Key key, this.chipName}) : super(key:key);
+  @override
+  _chipEtiquetasState createState() => _chipEtiquetasState();
+}
+
+class _chipEtiquetasState extends State<chipEtiquetas> {
+  var _isSelected = false;
+  @override
+  Widget build(BuildContext context) {
+    return FilterChip(
+      label: Text(widget.chipName),
+      labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+      selected: _isSelected,
+      backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+      onSelected: (valor){
+        setState(() {
+          _isSelected = valor;
+        });
+      },
+      selectedColor: Color.fromRGBO(24, 128, 192, .30),
+    );
   }
 }

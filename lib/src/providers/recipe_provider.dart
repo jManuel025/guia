@@ -19,6 +19,12 @@ class RecipesProvider{
     return true;
   }
 
+  
+  // Read recipes
+  // Future<List<RecipeModel>> loadRecipes(){
+
+  // }
+
   Future<String> uploadImage(File image) async{
     final url = Uri.parse('https://api.cloudinary.com/v1_1/dyjyvrwrj/image/upload?upload_preset=sqvpftqy');
     final mimeType = mime(image.path).split('/');
