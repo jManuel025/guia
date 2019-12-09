@@ -10,6 +10,7 @@ class RecipeModel {
     String nombreReceta;
     String ingredientes;
     String procedimiento;
+    String categoria;
     int tiempo;
     String fotoUrl;
     double costo;
@@ -25,13 +26,14 @@ class RecipeModel {
         this.nombreReceta = '',
         this.ingredientes = '',
         this.procedimiento = '',
+        this.categoria = '',
         this.tiempo = 60,
         this.fotoUrl = '',
         this.costo = 0.0,
         this.porciones = 1,
         // this.etiquetas,
         this.etiquetas,
-        this.calificacion = 0.0,
+        this.calificacion = 5.0,
         this.aprobado = false,
     });
 
@@ -41,6 +43,7 @@ class RecipeModel {
         nombreReceta: json["nombreReceta"],
         ingredientes: json["ingredientes"],
         procedimiento: json["procedimiento"],
+        categoria: json["categoria"],
         tiempo: json["tiempo_preparacion"],
         fotoUrl: json["foto_url"],
         costo: json["costo"],
@@ -57,6 +60,7 @@ class RecipeModel {
         "nombreReceta": nombreReceta,
         "ingredientes": ingredientes,
         "procedimiento": procedimiento,
+        "categoria": categoria,
         "tiempo_preparacion": tiempo,
         "foto_url": fotoUrl,
         "costo": costo,
