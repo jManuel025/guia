@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:guiaestudiante/src/models/advices_model.dart';
 import 'package:guiaestudiante/src/models/users_model.dart';
 import 'package:intl/intl.dart';
 import 'package:guiaestudiante/src/blocs/register_bloc.dart';
@@ -287,7 +289,23 @@ Widget _registro(context){
   _submit(){
     if(!formKey.currentState.validate()) return;
     formKey.currentState.save();
-    userProvider.createUser(user);
+    // userProvider.createUser(user);
+    // Agrega a firestore --sin modelo--
+    Map<String, dynamic> datos = {
+      'nombre': user.nombre,
+      'correo': user.correo,
+      'fechaNacimiento': user.fechaNacimiento,
+      'correoAlt': '',
+      "expediente": '',
+      "universidad": '',
+      "carrera": '',
+      "sexo": false, //mujer
+      "habilidades": {},
+      "intereses": {},
+      "tipoUsuario": false, //normal
+      "puntuacion": 5.0
+    };
+    Firestore.instance.collection('usuarios').document(prefs.uid).setData(datos);
   }
 
   Widget _botonAlt(String accion, BuildContext context, String pantalla){

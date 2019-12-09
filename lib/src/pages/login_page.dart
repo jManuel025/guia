@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:guiaestudiante/src/blocs/register_bloc.dart';
 import 'package:guiaestudiante/src/blocs/provider.dart';
@@ -178,6 +179,9 @@ Widget _login(context){
         Map info = await userProvider.login(bloc.email, bloc.password);
         if(info['ok']){
           Navigator.pushReplacementNamed(context, 'home');
+          final userData = await Firestore.instance.collection('usuarios').document(prefs.uid).get();
+          prefs.name = userData['nombre'];
+          prefs.score = userData['puntuacion'].toString();
         }
         else{
           mostrarAlerta(context, info['mensaje']);
