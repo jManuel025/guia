@@ -40,7 +40,7 @@ class ProfilePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text('Nombre de usuario', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.5)),
+                            Text(prefs.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.5)),
                             Text(prefs.email, style: TextStyle(fontSize: 15, color: Colors.blueGrey))
                           ],
                         ),
@@ -51,11 +51,11 @@ class ProfilePage extends StatelessWidget {
                     children: <Widget>[
                       Container(
                         alignment: Alignment(-1.0, 0.0),
-                        padding: EdgeInsets.only(left: 25.0),
+                        padding: EdgeInsets.only(left: 50.0),
                         // color: Colors.blue,
                         width: size.width * 0.5,
                         height: size.height * 0.05,
-                        child: Text('Puntuacion', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                        child: Text(prefs.score, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                       ),
                       Container(
                         // color: Colors.yellow,
@@ -92,7 +92,7 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       _favCreSection(context),
                       _favCreSection(context),
-                      _infoSection(),
+                      _infoSection(context),
                     ],
                   ),
                 ),
@@ -156,15 +156,32 @@ class ProfilePage extends StatelessWidget {
         )
       );
     }
-  Widget _infoSection(){
+  Widget _infoSection(BuildContext context){
     return Container(
       child: Center(
         child: Column(
           children: <Widget>[
-
+            FlatButton(
+              child: Text('Salir'),
+              onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
+            )
           ],
         ),
       ),
     );
-  }                   
+  }       
+    // _salir(BuildContext context){
+    //   prefs.uid = '';
+    //   prefs.token = '';
+    //   prefs.name = '';
+    //   prefs.email = '';
+    //   prefs.score = '';
+
+    //   if(prefs.uid == '' && prefs.token == '' && prefs.name == '' && prefs.email == '' && prefs.score == ''){
+    //     Navigator.pushReplacementNamed(context, 'login');
+    //   }
+    //   else{
+    //     print('ocurrio un error');
+    //   }
+    // }            
 }

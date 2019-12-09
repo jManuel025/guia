@@ -41,6 +41,22 @@ class PreferenciasUsuario {
     _prefs.setString('uid', value);
   }
 
+  get name {
+    return _prefs.getString('name') ?? '';
+  }
+
+  set name( String value ) {
+    _prefs.setString('name', value);
+  }
+
+  get score {
+    return _prefs.getString('score') ?? '';
+  }
+
+  set score( String value ) {
+    _prefs.setString('score', value);
+  }
+
   // GET y SET de la última página
   get ultimaPagina {
     return _prefs.getString('ultimaPagina') ?? 'login';

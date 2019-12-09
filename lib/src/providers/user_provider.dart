@@ -29,6 +29,7 @@ class UserProvider{
       // guardar en storage
       _preferencias.email = decodedResp['email'];
       _preferencias.token = decodedResp['idToken'];
+      _preferencias.uid = decodedResp['localId'];
       return {'ok': true, 'token': decodedResp['idToken']};
     }
     else{ //mostrar error
@@ -59,6 +60,8 @@ class UserProvider{
       return {'ok': false, 'mensaje': decodedResp['error']['message']};
     }
   }
+
+
 
   Future<bool> createUser(UserModel user) async{
     final url = '$_url/usuarios.json?auth=${_preferencias.token}';
