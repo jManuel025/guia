@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guiaestudiante/src/providers/recipe_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RecipesListPage extends StatefulWidget {
@@ -8,41 +7,41 @@ class RecipesListPage extends StatefulWidget {
 }
 
 class _RecipesListPageState extends State<RecipesListPage> {
-  // bool recipesFlag = false;
-  // var recipes;
 
-  // @override
-  // void initState(){
-  //   super.initState();
-  //   RecipeService()
-  //   .getRecipes('Desayuno')
-  //   .then((QuerySnapshot docs){
-  //     if(docs.documents.isNotEmpty){
-  //       recipesFlag = true;
-  //       recipes = docs.documents[0].data;
-  //     }
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
+    
+    dynamic categoria = ModalRoute.of(context).settings.arguments;
+    
     return Scaffold(
       appBar: AppBar(
-        title: Text('Desayunos'),
+        title: Text(categoria),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            _cardReceta('https://image.freepik.com/foto-gratis/detalle-tortilla-huevo-desayuno_1232-4474.jpg', 'Huevo duro con pan de centeno', 'Manuel Castillo', '1'),
-            _cardReceta('https://estaticos.miarevista.es/media/cache/1140x_thumb/uploads/images/gallery/59e727615bafe8398bddb88d/desayunossanos-int.jpg', 'Yogur natural con frutos rojos', 'Alberto Lemus', '2'),
-            _cardReceta('http://www.cubahora.cu/uploads/imagen/2018/03/27/desayunar-huevo.jpg', 'Huevo revuelto', 'Cynthia Ramirez', '3'),
-            _cardReceta('https://www.clara.es/medio/2018/02/06/desayunos-saludables11_4a84c0b5_600x900.jpg', 'Omelette de jamón y tocino', 'Pedro Pablo', '4'),
-          ],
+      body: Container(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: Firestore.instance.collection('recetas').where('categoria', isEqualTo: categoria).snapshots(),
+          builder: (BuildContext context, AsyncSnapshot snapshot){
+            if(snapshot.hasError)
+              return Text('${snapshot.error}');
+            switch(snapshot.connectionState){
+              case ConnectionState.waiting: return Center(child: CircularProgressIndicator());
+              default: 
+                return ListView(
+                  children: snapshot.data.documents.map<Widget>((DocumentSnapshot document){
+                    return Container(
+                      child: _cardReceta(document['foto_url'], document['nombreReceta'], document['autor'], "$document"),
+                    );
+                  }).toList(),
+                );
+            }
+          }
         ),
-      )
+      ),
     );
   }
+
     Widget _cardReceta(String urlImage, String nombre, String autor, String heroID){
       return Container(
         decoration: BoxDecoration(
@@ -89,27 +88,16 @@ class _RecipesListPageState extends State<RecipesListPage> {
         )
       );
     }
-
-  // Widget _listado(){
-  //   return StreamBuilder<QuerySnapshot>(
-  //     stream: Firestore.instance.collection('recetas').getDocuments().then(QuerySnapshot snapshot).snapshots(),
-  //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-  //       if (snapshot.hasError)
-  //         return Text('Error: ${snapshot.error}');
-  //       switch (snapshot.connectionState) {
-  //         case ConnectionState.waiting: return Text('Loading...');
-  //         default:
-  //           return ListView(
-  //             children: snapshot.data.documents.map((DocumentSnapshot document) {
-  //               return ListTile(
-  //                 title: Text(document['nombre']),
-  //                 subtitle: Text(document['categoria']),
-  //               );
-  //             }).toList(),
-  //           );
-  //       }
-  //     },
-  //   );
-  // }
 }
 
+
+      // body: SingleChildScrollView(
+      //   child: Column(
+      //     children: <Widget>[
+      //       // _cardReceta('https://image.freepik.com/foto-gratis/detalle-tortilla-huevo-desayuno_1232-4474.jpg', 'Huevo duro con pan de centeno', 'Manuel Castillo', '1'),
+      //       // _cardReceta('https://estaticos.miarevista.es/media/cache/1140x_thumb/uploads/images/gallery/59e727615bafe8398bddb88d/desayunossanos-int.jpg', 'Yogur natural con frutos rojos', 'Alberto Lemus', '2'),
+      //       // _cardReceta('http://www.cubahora.cu/uploads/imagen/2018/03/27/desayunar-huevo.jpg', 'Huevo revuelto', 'Cynthia Ramirez', '3'),
+      //       // _cardReceta('https://www.clara.es/medio/2018/02/06/desayunos-saludables11_4a84c0b5_600x900.jpg', 'Omelette de jamón y tocino', 'Pedro Pablo', '4'),
+      //     ],
+      //   ),
+      // )
