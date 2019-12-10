@@ -22,11 +22,13 @@ class ProfilePage extends StatelessWidget {
                       Container(
                         alignment: Alignment(-1.0, 0.0),
                         padding: EdgeInsets.all(5.0),
-                        // color: Colors.black,
                         width: size.width * 0.30,
                         height: size.height * 0.10,
                         child: CircleAvatar(
-                          child: Text('LS', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
+                          child: Image(
+                            image: AssetImage('assets/usuario.png'),
+                            height: 50.0,
+                          ),
                           radius: 60.0,
                         ),
                       ),
@@ -184,11 +186,11 @@ class ProfilePage extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      IconButton(
-                                        padding: EdgeInsets.only(bottom: 20.0),
-                                        icon: Icon(Icons.settings),
-                                        onPressed: (){},
-                                      ),
+                                      // IconButton(
+                                      //   padding: EdgeInsets.only(bottom: 20.0),
+                                      //   icon: Icon(Icons.settings),
+                                      //   onPressed: (){},
+                                      // ),
                                       IconButton(
                                         padding: EdgeInsets.only(bottom: 20.0),
                                         icon: Icon(Icons.edit),
