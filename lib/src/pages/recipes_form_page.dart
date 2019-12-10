@@ -197,7 +197,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
                         Wrap(
                           spacing: 10.0,
                           runSpacing: 2.0,
-
                           children: <Widget>[
                             FilterChip(
                               label: Text('Saludable'),
