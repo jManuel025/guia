@@ -295,7 +295,7 @@ Widget _registro(context){
       'nombre': user.nombre,
       'correo': user.correo,
       'fechaNacimiento': user.fechaNacimiento,
-      'correoAlt': '',
+      // 'correoAlt': '',
       "expediente": '',
       "universidad": '',
       "carrera": '',

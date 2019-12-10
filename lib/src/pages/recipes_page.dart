@@ -29,12 +29,6 @@ Widget _tarjetas(BuildContext context){
     child: SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          // Container(
-          //   width: double.infinity,
-          //   margin: EdgeInsets.only(bottom: 10.0, top: 30.0),
-          //   padding: EdgeInsets.symmetric(horizontal: 20.0),
-          //   child: Text('Selecciona una categoría', style: TextStyle(color: Colors.blueGrey, fontSize: 17.5),),
-          // ),
             Table(
             children: [
               TableRow(
@@ -90,7 +84,6 @@ Widget _tarjetas(BuildContext context){
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  // Icon(Icons.fastfood, size: 50.0, color: Colors.white),
                   getIcon(icono),
                   SizedBox(height: 10.0,),
                   Text(texto, style: TextStyle(color: Colors.white, fontSize: 17.5, fontWeight: FontWeight.bold)),

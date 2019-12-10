@@ -12,7 +12,7 @@ class ProfilePage extends StatelessWidget {
           children: <Widget>[
             Container(
               // color: Colors.white,
-              height: size.height * 0.25,
+              height: size.height * 0.20,
               width: double.infinity,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -47,23 +47,23 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        alignment: Alignment(-1.0, 0.0),
-                        padding: EdgeInsets.only(left: 50.0),
-                        // color: Colors.blue,
-                        width: size.width * 0.5,
-                        height: size.height * 0.05,
-                        child: Text(prefs.score, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                      ),
-                      Container(
-                        // color: Colors.yellow,
-                        width: size.width * 0.5,
-                        height: size.height * 0.05,
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: <Widget>[
+                  //     Container(
+                  //       alignment: Alignment(-1.0, 0.0),
+                  //       padding: EdgeInsets.only(left: 50.0),
+                  //       // color: Colors.blue,
+                  //       width: size.width * 0.5,
+                  //       height: size.height * 0.05,
+                  //       child: Text(prefs.score, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  //     ),
+                  //     Container(
+                  //       // color: Colors.yellow,
+                  //       width: size.width * 0.5,
+                  //       height: size.height * 0.05,
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               )
             ),
@@ -159,17 +159,135 @@ class ProfilePage extends StatelessWidget {
   Widget _infoSection(BuildContext context){
     return Container(
       child: Center(
-        child: Column(
-          children: <Widget>[
-            FlatButton(
-              child: Text('Salir'),
-              onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
-            )
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                // color: Colors.red,
+                width: double.infinity,
+                // height: MediaQuery.of(context).size.height * 0.50,
+                child: Column(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0)
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.all(20.0),
+                              child: Column(
+                                // crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      IconButton(
+                                        padding: EdgeInsets.only(bottom: 20.0),
+                                        icon: Icon(Icons.settings),
+                                        onPressed: (){},
+                                      ),
+                                      IconButton(
+                                        padding: EdgeInsets.only(bottom: 20.0),
+                                        icon: Icon(Icons.edit),
+                                        onPressed: (){},
+                                      )
+                                    ],
+                                  ),
+                                  Text('Universidad', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                                  Text('Universidad Autónoma Querétaro'),
+                                  Divider(height: 30.0,),
+                                  Text('Carrera', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                                  Text('Ingeniería de Software'),
+                                  Divider(height: 30.0,),
+                                  Text('Expediente', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                                  Text('267795'),
+                                  Divider(height: 30.0,),
+                                  Text('Fecha de nacimiento', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                                  Text('25/08/1999'),
+                                  Divider(height: 30.0,),
+                                  Text('Sexo', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                                  Text('Masculino'),
+                                  Divider(height: 30.0,),
+                                  Text('Habilidades', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                                  Wrap(
+                                    direction: Axis.horizontal,
+                                    alignment: WrapAlignment.center,
+                                    spacing: 5.0,
+                                    children: <Widget>[
+                                      Chip(
+                                        label: Text('Comunicación', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                      Chip(
+                                        label: Text('Confianza', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                      Chip(
+                                        label: Text('Empatía', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                      Chip(
+                                        label: Text('Razonamiento', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                      Chip(
+                                        label: Text('Creatividad', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                    ],
+                                  ),
+                                  //   ],
+                                  // ),
+                                  Divider(height: 30.0,),
+                                  Text('Intereses', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                                  Wrap(
+                                    direction: Axis.horizontal,
+                                    alignment: WrapAlignment.center,
+                                    spacing: 5.0,
+                                    children: <Widget>[
+                                      Chip(
+                                        label: Text('Arte', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                      Chip(
+                                        label: Text('Ciencia ficción', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                      Chip(
+                                        label: Text('Tecnología', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                      Chip(
+                                        label: Text('Deportes', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              FlatButton(
+                child: Text('Salir', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),),
+                onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
+              )
+            ],
+          ),
         ),
       ),
     );
-  }       
+  }   
+
+      
     // _salir(BuildContext context){
     //   prefs.uid = '';
     //   prefs.token = '';

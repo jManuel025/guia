@@ -5,6 +5,7 @@ import 'package:guiaestudiante/src/models/recipes_model.dart';
 import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RecipesProvider{
   final String _url = 'https://guiaest-is.firebaseio.com';
@@ -18,12 +19,6 @@ class RecipesProvider{
     print(decodedData);
     return true;
   }
-
-  
-  // Read recipes
-  // Future<List<RecipeModel>> loadRecipes(){
-
-  // }
 
   Future<String> uploadImage(File image) async{
     final url = Uri.parse('https://api.cloudinary.com/v1_1/dyjyvrwrj/image/upload?upload_preset=sqvpftqy');
@@ -54,4 +49,21 @@ class RecipesProvider{
     print(respData);
     return respData['secure_url'];
   }
+  
+  // getRecipes(String catName){
+  //   return Firestore.instance
+  //     .collection('recetas')
+  //     .where('categoria', isEqualTo: catName)
+  //     .getDocuments();
+  // }
 }
+
+// class RecipeService {
+//   getRecipes(String catName){
+//     return Firestore.instance
+//       .collection('recetas')
+//       .where('categoria', isEqualTo: catName)
+//       .snapshots()
+//       .listen((data) => data.documents.forEach((doc) => print(doc["nombre"])));
+//   }
+// }

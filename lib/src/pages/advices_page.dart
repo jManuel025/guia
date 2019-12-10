@@ -14,7 +14,7 @@ class AdvicesPage extends StatelessWidget {
       appBar: AppBar(
         // backgroundColor: Color.fromRGBO(26, 49, 99, 39),
         title: Text('Consejos'),
-        centerTitle: true,
+        // centerTitle: true,
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 15.0),
@@ -42,7 +42,7 @@ class AdvicesPage extends StatelessWidget {
     );
   }
   Widget _elemento(BuildContext context, AdviceModel advice){
-    if(advice.aprobado){
+    // if(advice.aprobado){
       return Card(
         elevation: 1.0,
         margin: EdgeInsets.only(top: 7.5, bottom: 7.5, left: 15.0, right: 15.0),
@@ -60,10 +60,10 @@ class AdvicesPage extends StatelessWidget {
           ),
         )
       );
-    }
-    else{
-      return Container();
-    }
+    // }
+    // else{
+    //   return Container();
+    // }
   }
   _btnCrearConsejo(BuildContext context){
     return FloatingActionButton(

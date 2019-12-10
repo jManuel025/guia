@@ -25,11 +25,11 @@ class _HomePageState extends State<HomePage> {
   }
   Widget _loadPage(int currentPage){
     switch (currentPage) {
-      case 0: return RecipesPage();
+      case 0: return ProfilePage();
       case 1: return ProjectsPage();
       case 2: return AdvicesPage();
       default: 
-        return ProfilePage();
+        return RecipesPage();
     }
   }
 
@@ -44,8 +44,8 @@ class _HomePageState extends State<HomePage> {
       },
       items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.local_dining),
-          title: Text('Recetas')
+          icon: Icon(Icons.person),
+          title: Text('Perfil')
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.work),
@@ -56,8 +56,8 @@ class _HomePageState extends State<HomePage> {
           title: Text('Consejos')
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          title: Text('Perfil')
+          icon: Icon(Icons.local_dining),
+          title: Text('Recetas')
         )
       ],
     );
