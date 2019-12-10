@@ -18,6 +18,8 @@ class _RecipesListPageState extends State<RecipesListPage> {
       appBar: AppBar(
         title: Text(categoria),
         centerTitle: true,
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () => Navigator.pop(context)),
+        automaticallyImplyLeading: false,
       ),
       body: Container(
         child: StreamBuilder<QuerySnapshot>(
@@ -31,7 +33,7 @@ class _RecipesListPageState extends State<RecipesListPage> {
                 return ListView(
                   children: snapshot.data.documents.map<Widget>((DocumentSnapshot document){
                     return Container(
-                      child: _cardReceta(document['foto_url'], document['nombreReceta'], document['autor'], "$document"),
+                      child: _cardReceta(document['foto_url'], document['nombreReceta'], document['autor'], "$document", document),
                     );
                   }).toList(),
                 );
@@ -42,7 +44,7 @@ class _RecipesListPageState extends State<RecipesListPage> {
     );
   }
 
-    Widget _cardReceta(String urlImage, String nombre, String autor, String heroID){
+    Widget _cardReceta(String urlImage, String nombre, String autor, String heroID, dynamic document){
       return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
@@ -61,28 +63,32 @@ class _RecipesListPageState extends State<RecipesListPage> {
           tag: heroID, //receta.id
           child: ClipRRect(
           borderRadius: BorderRadius.circular(15.0),
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Image(
-                    image: NetworkImage(urlImage),
-                    width: double.infinity,
-                    height: 175.0,
-                    fit: BoxFit.cover,
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(15.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(nombre, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.5)),
-                        Text(autor, style: TextStyle(color: Colors.blueGrey),)
-                      ],
-                    )
-                  ),
-                ],
+            child: FlatButton(
+              padding: EdgeInsets.all(0.0),
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Image(
+                      image: NetworkImage(urlImage),
+                      width: double.infinity,
+                      height: 175.0,
+                      fit: BoxFit.cover,
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(15.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(nombre, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.5)),
+                          Text(autor, style: TextStyle(color: Colors.blueGrey),)
+                        ],
+                      )
+                    ),
+                  ],
+                ),
               ),
+              onPressed: () => Navigator.pushNamed(context, 'recipe_detail', arguments: document),
             ),
           ),
         )
@@ -90,14 +96,3 @@ class _RecipesListPageState extends State<RecipesListPage> {
     }
 }
 
-
-      // body: SingleChildScrollView(
-      //   child: Column(
-      //     children: <Widget>[
-      //       // _cardReceta('https://image.freepik.com/foto-gratis/detalle-tortilla-huevo-desayuno_1232-4474.jpg', 'Huevo duro con pan de centeno', 'Manuel Castillo', '1'),
-      //       // _cardReceta('https://estaticos.miarevista.es/media/cache/1140x_thumb/uploads/images/gallery/59e727615bafe8398bddb88d/desayunossanos-int.jpg', 'Yogur natural con frutos rojos', 'Alberto Lemus', '2'),
-      //       // _cardReceta('http://www.cubahora.cu/uploads/imagen/2018/03/27/desayunar-huevo.jpg', 'Huevo revuelto', 'Cynthia Ramirez', '3'),
-      //       // _cardReceta('https://www.clara.es/medio/2018/02/06/desayunos-saludables11_4a84c0b5_600x900.jpg', 'Omelette de jamón y tocino', 'Pedro Pablo', '4'),
-      //     ],
-      //   ),
-      // )

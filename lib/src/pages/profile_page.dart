@@ -109,13 +109,15 @@ class ProfilePage extends StatelessWidget {
     return Container(
       color: Colors.white,
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _cardSection(context, 'Recetas', 'assets/wallRecipes.jpg', 'local_dining'),
-            _cardSection(context, 'Proyectos', 'assets/wallProjects.jpg', 'work'),
-            _cardSection(context, 'Consejos', 'assets/wallAdvices.jpg', 'add_comment'),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _cardSection(context, 'Recetas', 'assets/wallRecipes.jpg', 'local_dining'),
+              _cardSection(context, 'Proyectos', 'assets/wallProjects.jpg', 'work'),
+              _cardSection(context, 'Consejos', 'assets/wallAdvices.jpg', 'add_comment'),
+            ],
+          ),
         ),
       ),
     );

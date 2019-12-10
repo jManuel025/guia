@@ -5,7 +5,7 @@ import 'package:guiaestudiante/src/models/recipes_model.dart';
 import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RecipesProvider{
   final String _url = 'https://guiaest-is.firebaseio.com';

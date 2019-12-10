@@ -16,6 +16,8 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
       appBar: AppBar(
         title: Text('Información'),
         centerTitle: true,
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () => Navigator.pop(context)),
+        automaticallyImplyLeading: false,
       ),
       body: Container(
         margin: EdgeInsets.all(15.0),

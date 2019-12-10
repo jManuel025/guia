@@ -9,6 +9,7 @@ import 'package:guiaestudiante/src/pages/profile_page.dart';
 import 'package:guiaestudiante/src/pages/projects_detail_page.dart';
 import 'package:guiaestudiante/src/pages/projects_form_page.dart';
 import 'package:guiaestudiante/src/pages/projects_page.dart';
+import 'package:guiaestudiante/src/pages/recipes_detail_page.dart';
 import 'package:guiaestudiante/src/pages/recipes_form_page.dart';
 import 'package:guiaestudiante/src/pages/recipes_list_page.dart';
 import 'package:guiaestudiante/src/pages/recipes_page.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget{
           'recipes' : (BuildContext context) => RecipesPage(),
           'recipes_list' : (BuildContext context) => RecipesListPage(),
           'recipes_form' : (BuildContext context) => RecipesFormPage(),
+          'recipe_detail': (BuildContext context) => RecipeDetailPage(),
           'projects': (BuildContext context) => ProjectsPage(),
           'projects_form' : (BuildContext context) => ProjectsFormPage(),
           'project_detail': (BuildContext context) => ProjectDetailPage(),
