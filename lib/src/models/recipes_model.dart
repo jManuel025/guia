@@ -6,56 +6,92 @@ String recipeModelToJson(RecipeModel data) => json.encode(data.toJson());
 
 class RecipeModel {
     String id;
+    String autor;
     String nombreReceta;
-    List<String> ingredientes;
-    List<String> procedimiento;
-    String foto;
-    int porciones;
+    String ingredientes;
+    String procedimiento;
+    String categoria;
     int tiempo;
+    String fotoUrl;
     double costo;
+    int porciones;
+    // Etiquetas etiquetas;
+    Map etiquetas;
     double calificacion;
-    List<String> categorias;
-    String creador;
+    bool aprobado;
 
     RecipeModel({
         this.id,
+        this.autor = '',
         this.nombreReceta = '',
-        this.ingredientes,
-        this.procedimiento,
-        this.foto,
-        this.porciones = 0,
-        this.tiempo = 0,
+        this.ingredientes = '',
+        this.procedimiento = '',
+        this.categoria = '',
+        this.tiempo = 60,
+        this.fotoUrl = '',
         this.costo = 0.0,
-        this.calificacion,
-        this.categorias,
-        this.creador,
+        this.porciones = 1,
+        // this.etiquetas,
+        this.etiquetas,
+        this.calificacion = 5.0,
+        this.aprobado = false,
     });
 
     factory RecipeModel.fromJson(Map<String, dynamic> json) => RecipeModel(
         id: json["id"],
-        nombreReceta: json["nombre_receta"],
-        ingredientes: List<String>.from(json["ingredientes"].map((x) => x)),
-        procedimiento: List<String>.from(json["procedimiento"].map((x) => x)),
-        foto: json["foto"],
-        porciones: json["porciones"],
-        tiempo: json["tiempo"],
+        autor: json["autor"],
+        nombreReceta: json["nombreReceta"],
+        ingredientes: json["ingredientes"],
+        procedimiento: json["procedimiento"],
+        categoria: json["categoria"],
+        tiempo: json["tiempo_preparacion"],
+        fotoUrl: json["foto_url"],
         costo: json["costo"],
-        calificacion: json["calificacion"].toDouble(),
-        categorias: List<String>.from(json["categorias"].map((x) => x)),
-        creador: json["creador"],
+        porciones: json["porciones"],
+        // etiquetas: Etiquetas.fromJson(json["etiquetas"]),
+        etiquetas: json["etiquetas"],
+        calificacion: json["calificacion"],
+        aprobado: json["aprobado"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
-        "nombre_receta": nombreReceta,
-        "ingredientes": List<dynamic>.from(ingredientes.map((x) => x)),
-        "procedimiento": List<dynamic>.from(procedimiento.map((x) => x)),
-        "foto": foto,
-        "porciones": porciones,
-        "tiempo": tiempo,
+        "autor": autor,
+        "nombreReceta": nombreReceta,
+        "ingredientes": ingredientes,
+        "procedimiento": procedimiento,
+        "categoria": categoria,
+        "tiempo_preparacion": tiempo,
+        "foto_url": fotoUrl,
         "costo": costo,
+        "porciones": porciones,
+        // "etiquetas": etiquetas.toJson(),
+        "etiquetas": etiquetas,
         "calificacion": calificacion,
-        "categorias": List<dynamic>.from(categorias.map((x) => x)),
-        "creador": creador,
+        "aprobado": aprobado,
     };
 }
+
+// class Etiquetas {
+//     bool e1;
+//     bool e2;
+//     bool e3;
+
+//     Etiquetas({
+//         this.e1,
+//         this.e2,
+//         this.e3,
+//     });
+
+//     factory Etiquetas.fromJson(Map<String, dynamic> json) => Etiquetas(
+//         e1: json["e1"],
+//         e2: json["e2"],
+//         e3: json["e3"],
+//     );
+
+//     Map<String, dynamic> toJson() => {
+//         "e1": e1,
+//         "e2": e2,
+//         "e3": e3,
+//     };
+// }

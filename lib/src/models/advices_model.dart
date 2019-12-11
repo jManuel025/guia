@@ -1,34 +1,36 @@
-// To parse this JSON data, do
-//
-//     final adviceModel = adviceModelFromJson(jsonString);
-
 import 'dart:convert';
 
-AdviceModel adviceModelFromJson(String str) => AdviceModel.fromJson(json.decode(str));
+import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 
+AdviceModel adviceModelFromJson(String str) => AdviceModel.fromJson(json.decode(str));
 String adviceModelToJson(AdviceModel data) => json.encode(data.toJson());
+
+final prefs = new PreferenciasUsuario();
 
 class AdviceModel {
     String id;
     String usuario;
     String detalle;
+    bool aprobado;
 
     AdviceModel({
         this.id,
-        this.usuario = 'default',
-        this.detalle,
+        this.usuario = '',
+        this.detalle = '',
+        this.aprobado = false,
     });
 
     factory AdviceModel.fromJson(Map<String, dynamic> json) => AdviceModel(
         id: json["id"],
         usuario: json["usuario"],
         detalle: json["detalle"],
+        aprobado: json["aprobado"],
     );
 
     Map<String, dynamic> toJson() => {
-        // comentar el id para que no se duplique en el registro
-        // "id": id,
+        // "id": id, se omite para que no se duplique al actualizar
         "usuario": usuario,
         "detalle": detalle,
+        "aprobado": aprobado,
     };
 }

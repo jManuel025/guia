@@ -1,7 +1,11 @@
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+import 'package:guiaestudiante/src/models/advices_model.dart';
 import 'package:guiaestudiante/src/models/recipes_model.dart';
 import 'package:guiaestudiante/src/providers/recipe_provider.dart';
-import 'package:guiaestudiante/src/utils/icon_string_util.dart';
 import 'package:guiaestudiante/src/utils/utils.dart' as utils;
 
 class RecipesFormPage extends StatefulWidget {
@@ -12,11 +16,34 @@ class RecipesFormPage extends StatefulWidget {
 class _RecipesFormPageState extends State<RecipesFormPage> {
   final recipesProvider = new RecipesProvider();
   final formKey = GlobalKey<FormState>();
+  final scaffoldkey = GlobalKey<ScaffoldState>();
   RecipeModel recipe = RecipeModel();
+  File foto;
+
+  bool saludable = false;
+  bool facil = false;
+  bool barato = false;
+  bool rapido = false;
+  bool inusual = false;
+
+  
+
+  List<String> _categorias = ['Desayuno', 'Comida', 'Cena', 'Bebidas', 'Ensaladas', 'Postres'];
+  String _slctdOpt = 'Desayuno';
 
   @override
   Widget build(BuildContext context) {
+
+    final RecipeModel recipeData = ModalRoute.of(context).settings.arguments;
+    if(recipeData != null){
+      recipe = recipeData;
+    }
+
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Nueva receta'),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -25,11 +52,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
               key: formKey,
               child: Column(
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 30.0),
-                    width: double.infinity,
-                    child: Text('Nueva Receta', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.blueGrey)),
-                  ),
+                  _showPhoto(),
                   // FOTOGRAFÍA photo_size_select_actual
                   Container(
                     child: Table(
@@ -37,12 +60,12 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
                         TableRow(
                           children: [
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10.0),
-                              child: _fotografia('Seleccionar foto' ,'photo_size_select_actual'),
+                              padding: EdgeInsets.symmetric(horizontal: 5.0),
+                              child: _fotografiaSlc(),
                             ),
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10.0),
-                              child: _fotografia('Tomar foto' ,'photo_camera'),
+                              padding: EdgeInsets.symmetric(horizontal: 5.0),
+                              child: _fotografiaCam(),
                             )
                           ]
                         ),
@@ -71,8 +94,8 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              _elemento('Ingrediente','remove'),
-                              _elemento('Ingrediente', 'add'),
+                              // _elemento('Ingrediente','remove'),
+                              // _elemento('Ingrediente', 'add'),
                             ],
                           ),
                         )
@@ -96,11 +119,35 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              _elemento('Paso','remove'),
-                              _elemento('Paso', 'add'),
+                              // _elemento('Paso','remove'),
+                              // _elemento('Paso', 'add'),
                             ],
                           ),
                         )
+                      ],
+                    ),
+                  ),
+                  Divider(height: 0.0, thickness: 1.0),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 10.0),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(top: 10.0),
+                          width: double.infinity,
+                          child: Text('Selecciona una categoría', style: TextStyle(fontSize: 15)),
+                        ),
+                        _categoria(),
+                        // Container(
+                        //   padding: EdgeInsets.symmetric(vertical: 10.0),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //     children: <Widget>[
+                        //       // _elemento('Paso','remove'),
+                        //       // _elemento('Paso', 'add'),
+                        //     ],
+                        //   ),
+                        // )
                       ],
                     ),
                   ),
@@ -145,40 +192,74 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
                         Container(
                           padding: EdgeInsets.symmetric(vertical: 10.0),
                           width: double.infinity,
-                          child: Text('Selecciona las categorías a las que pertenece', style: TextStyle(fontSize: 15.0)),
+                          child: Text('Marca las etiquetas que consideres adecuadas', style: TextStyle(fontSize: 15.0)),
                         ),
-                        Table(
-                          children: [
-                            TableRow(
-                              children: [
-                                _categoria(),
-                                _categoria(),
-                                _categoria(),
-                              ]
+                        Wrap(
+                          spacing: 10.0,
+                          runSpacing: 2.0,
+                          children: <Widget>[
+                            FilterChip(
+                              label: Text('Saludable'),
+                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                              selected: saludable,
+                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                              onSelected: (valor){
+                                setState(() {
+                                  saludable = valor;
+                                });
+                              },
+                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
                             ),
-                            TableRow(
-                              children: [
-                                _categoria(),
-                                _categoria(),
-                                _categoria(),
-                              ]
+                            FilterChip(
+                              label: Text('Fácil'),
+                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                              selected: facil,
+                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                              onSelected: (valor){
+                                setState(() {
+                                  facil = valor;
+                                });
+                              },
+                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
                             ),
-                            TableRow(
-                              children: [
-                                _categoria(),
-                                _categoria(),
-                                _categoria(),
-                              ]
+                            FilterChip(
+                              label: Text('Barato'),
+                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                              selected: barato,
+                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                              onSelected: (valor){
+                                setState(() {
+                                  barato = valor;
+                                });
+                              },
+                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
                             ),
-                            TableRow(
-                              children: [
-                                _categoria(),
-                                _categoria(),
-                                _categoria(),
-                              ]
+                            FilterChip(
+                              label: Text('Rápido'),
+                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                              selected: rapido,
+                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                              onSelected: (valor){
+                                setState(() {
+                                  rapido = valor;
+                                });
+                              },
+                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
+                            ),
+                            FilterChip(
+                              label: Text('Inusual'),
+                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                              selected: inusual,
+                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                              onSelected: (valor){
+                                setState(() {
+                                  inusual = valor;
+                                });
+                              },
+                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
                             ),
                           ],
-                        ),
+                        )
                       ],
                     )
                   ),
@@ -188,8 +269,8 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
                     children: [
                       TableRow(
                         children: [
-                          _btnAccion('Cancelar'),
-                          _btnAccion('Publicar'),
+                          _btnCancel(),
+                          _btnAccion(),
                         ]
                       )
                     ],
@@ -203,19 +284,65 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
     );
   }
 
-  Widget _fotografia(String texto, String icono){
+  Widget _fotografiaSlc(){
     return RaisedButton.icon(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
       textColor: Colors.white,
       color: Colors.blue,
-      label: Text(texto),
-      icon: getIcon(icono),
-      onPressed:(){},
+      label: Text('Seleccionar'),
+      icon: Icon(Icons.photo),
+      onPressed: _selectPhoto,
     );
   }
-
+  Widget _fotografiaCam(){
+    return RaisedButton.icon(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      textColor: Colors.white,
+      color: Colors.blue,
+      label: Text('Tomar'),
+      icon: Icon(Icons.camera_alt),
+      onPressed: _takePhoto,
+    );
+  }
+    Widget _showPhoto(){
+      if(recipe.fotoUrl != null && recipe.fotoUrl != ''){
+        return Container();
+      }
+      else{
+        return Card(
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          child: Image(
+            image: AssetImage(foto?.path??'assets/no-image.png'),
+            height: 250.0,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+    }
+    _selectPhoto() async{
+      foto = await ImagePicker.pickImage(
+        source: ImageSource.gallery
+      );
+      if(foto != null){
+        // hacer limpieza
+      }
+      setState(() {});
+    }
+    _takePhoto() async{
+      foto = await ImagePicker.pickImage(
+        source: ImageSource.camera
+      );
+      if(foto != null){
+        // hacer limpieza
+      }
+      setState(() {});
+    }
   Widget _nombreReceta(){
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
@@ -238,7 +365,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       ),
     );
   }
-
   Widget _ingrediente(){
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5.0),
@@ -246,8 +372,9 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           icon: Icon(Icons.list),
-          labelText: 'Cantidad y nombre del ingrediente',
+          labelText: 'Ingresa los ingredientes separados por comas',
         ),
+      onSaved: (value) => recipe.ingredientes = value,
       validator: (value){
         if(value.length < 5){
           return 'Ingresa al menos un ingrediente';
@@ -259,18 +386,18 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       ),
     );
   }
-
   Widget _procedimiento(){
     return Container(
       child: TextFormField(
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           icon: Icon(Icons.description),
-          labelText: 'Describe aqui un paso',
+          labelText: 'Explica detalladamente el procedimiento',
         ),
+        onSaved: (value) => recipe.procedimiento = value,
         validator: (value){
         if(value.length < 10){
-          return 'Describe brevemente el paso';
+          return 'es ncesaria una descripción';
         }
         else{
           return null;
@@ -280,18 +407,29 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
     );
   }
 
-    Widget _elemento(String elemento, String icono){
-      return RaisedButton.icon(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0)
-        ),
-        textColor: Colors.white,
-        color: Colors.blue,
-        label: Text(elemento),
-        icon: getIcon(icono),
-        onPressed:() => _ingrediente(),
-      );
-    }
+  List<DropdownMenuItem<String>> getOpts(){
+    List<DropdownMenuItem<String>> lista = new List();
+    _categorias.forEach((categoria){
+      lista.add(DropdownMenuItem(
+        child: Text(categoria),
+        value: categoria,
+      ));
+    });
+    return lista;
+  }
+  Widget _categoria(){
+    return DropdownButton(
+      isExpanded: true,
+      value: _slctdOpt,
+      items: getOpts(),
+      onChanged: (opt){
+        setState(() {
+          _slctdOpt = opt;
+          recipe.categoria = _slctdOpt;
+        });
+      },
+    );
+  }
 
   Widget _costo(){
     return TextFormField(
@@ -312,7 +450,6 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       },
     );
   }
-
   Widget _porciones(){
     return TextFormField(
       keyboardType: TextInputType.number,
@@ -331,14 +468,13 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       },
     );
   }
-
   Widget _tiempoPreparacion(){
     return TextFormField(
       keyboardType: TextInputType.number,
       initialValue: recipe.tiempo.toString(),
       decoration: InputDecoration(
         icon: Icon(Icons.timer),
-        labelText: 'Tiempo (min)',
+        labelText: 'Minutos',
       ),
       validator: (value){
         if(utils.isNumber(value)){
@@ -350,24 +486,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
       },
     );
   }
-
-  Widget _categoria(){
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 5.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        color: Colors.blue,
-        textColor: Colors.white,
-        disabledColor: Colors.grey,
-        child: Text('Categoria 1'),
-        onPressed: (){},
-      ),
-    );
-  }
-
-  Widget _btnAccion(String texto){
+  Widget _btnAccion(){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
       child: RaisedButton(
@@ -376,19 +495,57 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
         ),
         textColor: Colors.white,
         color: Colors.blueAccent,
-        child: Text(texto),
+        child: Text('Aceptar'),
         onPressed: _submit,
       ),
     );
   }
+  Widget _btnCancel(){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        textColor: Colors.white,
+        color: Colors.blueAccent,
+        child: Text('Cancelar'),
+        onPressed: () => Navigator.pop(context),
+      ),
+    );
+  }
 
-  void _submit(){
+  void _submit() async{
     if(formKey.currentState.validate()){
-      // Dispara los onsave
       formKey.currentState.save();
-      print(recipe.nombreReceta);
-      print(recipe.costo);
+      if(foto != null){
+        recipe.fotoUrl = await recipesProvider.uploadImage(foto);
+      }
       recipesProvider.createRecipe(recipe);
+
+      Map<String, bool> etiquetas = {
+        'Saludable': saludable,
+        'Fácil': facil,
+        'Barato': barato,
+        'Rápido': rapido,
+        'Inusual': inusual,
+      };
+
+      Map<String, dynamic> datos = {
+        "autor": prefs.name,
+        "nombreReceta": recipe.nombreReceta,
+        "ingredientes": recipe.ingredientes,
+        "procedimiento": recipe.procedimiento,
+        "categoria": recipe.categoria,
+        "tiempo_preparacion": recipe.tiempo,
+        "foto_url": recipe.fotoUrl,
+        "costo": recipe.costo,
+        "porciones": recipe.porciones,
+        "etiquetas": etiquetas,
+        "calificacion": recipe.calificacion,
+      };
+      Firestore.instance.collection('recetas').add(datos);
+      Navigator.pop(context);
     }
   }
 }
