@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:guiaestudiante/src/models/advices_model.dart';
 import 'package:guiaestudiante/src/providers/advice_provider.dart';
@@ -111,19 +112,24 @@ class _AdvicesFormPageState extends State<AdvicesFormPage> {
   }
   void _submit(){
     if(formKey.currentState.validate()){
-      // Dispara los onsave
-      advice.usuario = prefs.name;
       formKey.currentState.save();
       if(advice.id == null){
-        advicesProvider.createAdvice(advice);
+        // advicesProvider.createAdvice(advice);
         showSnackbar("Consejo creado exitosamente");
+        Map<String, dynamic> datos = {
+          "detalle": advice.detalle,
+          "usuario": prefs.name
+        };
+        Firestore.instance.collection('consejos').add(datos);
       }
       else{
         advicesProvider.updateAdvice(advice);
         showSnackbar("Consejo actualizado exitosamente");
       }
+      
       Navigator.pop(context);
     }
+    
   }
 
   void showSnackbar(String mensaje){

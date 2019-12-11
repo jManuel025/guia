@@ -1,69 +1,50 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:guiaestudiante/src/blocs/provider.dart';
-import 'package:guiaestudiante/src/models/advices_model.dart';
 
 class AdvicesPage extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
-    // esto es hacia el provider
-    final advicesbloc = Provider.advicesBloc(context);
-    advicesbloc.loadingAdvices();
-    
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Color.fromRGBO(26, 49, 99, 39),
         title: Text('Consejos'),
-        // centerTitle: true,
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 15.0),
-        // color: Color.fromRGBO(255, 251, 249, 100),
-        child: _listado(advicesbloc),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: Firestore.instance.collection('consejos').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot snapshot){
+            if(snapshot.hasError) return Text('${snapshot.error}');
+            switch(snapshot.connectionState){
+              case ConnectionState.waiting: return Center(child: CircularProgressIndicator());
+              default:
+                return ListView(
+                  children: snapshot.data.documents.map<Widget>(
+                    (DocumentSnapshot document){
+                      return Container(
+                      // height: 125.0,
+                      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.5),
+                      child: Card(
+                        child: Container(
+                          padding: EdgeInsets.all(15.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text( '"'+ document['detalle'] + '"', textAlign: TextAlign.center, style: TextStyle(fontSize: 17.5, fontWeight: FontWeight.w500),),
+                                Divider(indent: 60.0, endIndent: 60.0, color: Colors.blueGrey,),
+                                Text(document['usuario'], style: TextStyle(color: Colors.grey),)
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  ).toList(),
+                );
+            }
+          },
+        ),
       ),
       floatingActionButton: _btnCrearConsejo(context),
     );
-  }
-  Widget _listado(AdvicesBloc advicesBloc){ 
-    return StreamBuilder(
-      stream: advicesBloc.advicesStream,
-      builder: (BuildContext context, AsyncSnapshot<List<AdviceModel>> snapshot){
-        if(snapshot.hasData){
-          final consejos = snapshot.data;
-          return ListView.builder(
-              itemCount: consejos.length,
-              itemBuilder: (context, i) => _elemento(context, consejos[i]),
-            );
-        }
-        else{
-          return Center(child: CircularProgressIndicator());
-        }
-      },
-    );
-  }
-  Widget _elemento(BuildContext context, AdviceModel advice){
-    // if(advice.aprobado){
-      return Card(
-        elevation: 1.0,
-        margin: EdgeInsets.only(top: 7.5, bottom: 7.5, left: 15.0, right: 15.0),
-        color: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-        child: Container(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text('"' + advice.detalle + '"', style: TextStyle(color: Color.fromRGBO(26, 49, 99, 39), fontStyle: FontStyle.normal, fontWeight: FontWeight.bold, fontSize: 17), textAlign: TextAlign.center,),
-              Divider(endIndent: 35.0, indent: 35.0,),
-              Text('Autor: ' + advice.usuario, style: TextStyle(color: Color.fromRGBO(92, 111, 138, 54)), textAlign: TextAlign.left,),
-            ],
-          ),
-        )
-      );
-    // }
-    // else{
-    //   return Container();
-    // }
   }
   _btnCrearConsejo(BuildContext context){
     return FloatingActionButton(

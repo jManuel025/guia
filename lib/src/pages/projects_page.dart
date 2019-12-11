@@ -20,7 +20,7 @@ class ProjectsPage extends StatelessWidget {
                 return ListView(
                   children: snapshot.data.documents.map<Widget>((DocumentSnapshot document){
                     return Container(
-                      height: 125.0,
+                      // height: 125.0,
                       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.5),
                       child: Card(
                         child: FlatButton(
