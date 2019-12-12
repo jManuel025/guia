@@ -89,7 +89,6 @@ class _AdvicesPageState extends State<AdvicesPage> {
           ),
         );
       }
-      
     );
   }
   String consejoDetalle = '';

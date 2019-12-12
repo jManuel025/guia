@@ -3,7 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 import 'package:guiaestudiante/src/models/advices_model.dart';
 
-class CreationPage extends StatelessWidget {
+class CreationPage extends StatefulWidget {
+  @override
+  _CreationPageState createState() => _CreationPageState();
+}
+
+class _CreationPageState extends State<CreationPage> {
+
+  final formKey = GlobalKey<FormState>();
+
+  @override
   Widget build(BuildContext context) {
 
     dynamic coleccion = ModalRoute.of(context).settings.arguments;
@@ -50,7 +59,7 @@ class CreationPage extends StatelessWidget {
       ),
     );
   }
-  // CONSEJOS
+
   Widget _consejo(DocumentSnapshot document, BuildContext context){
     final dbRef = Firestore.instance.collection('consejos');
     return Card(
@@ -73,7 +82,7 @@ class CreationPage extends StatelessWidget {
                 FlatButton.icon(
                   icon: Icon(Icons.edit),
                   label: Text('Editar'),
-                  onPressed: (){},
+                  onPressed: () => _update(dbRef, document, context),
                 ),
               ],
             ),
@@ -82,7 +91,7 @@ class CreationPage extends StatelessWidget {
       ),
     );
   }
-  // RECETAS
+
   Widget _receta(String urlImage, String nombre, String autor, String heroID, dynamic document){
     return Dismissible(
       key: UniqueKey(),
@@ -137,8 +146,7 @@ class CreationPage extends StatelessWidget {
       ),
     );
   }
-  
-  // PROYECTOS
+
   Widget _proyecto(DocumentSnapshot document, BuildContext context){
     return Card(
       child: FlatButton(
@@ -170,8 +178,7 @@ class CreationPage extends StatelessWidget {
       )
     );
   }
-  
-  //BORRAR ELEMENTO
+
   _delete(CollectionReference db, DocumentSnapshot document, BuildContext context){
     String idElemento = document.documentID;
     showDialog(
@@ -205,4 +212,81 @@ class CreationPage extends StatelessWidget {
       }
     );
   }
+
+  _update(CollectionReference db, DocumentSnapshot document, BuildContext context){
+    String idElemento = document.documentID;
+    showDialog(
+      context: context,
+      builder: (context){
+        return AlertDialog(
+          title: Text('Editar consejo', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueGrey)),
+          content: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                _detalle(document['detalle']),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    _boton(false, context, document['detalle'], db, idElemento),
+                    _boton(true, context, document['detalle'], db, idElemento),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      }
+    );
+  }
+  String consejoDetalle = '';
+  Widget _detalle(String detalle){
+    return Container(
+      margin: EdgeInsets.only(top: 10.0, bottom: 20.0),
+      child: TextFormField(
+        initialValue: detalle,
+        textCapitalization: TextCapitalization.sentences,
+        decoration: InputDecoration(
+          labelText: 'Describe aqui tu consejo',
+          border: OutlineInputBorder()
+        ),
+        maxLines: 2,
+        onSaved: (value) => consejoDetalle = value,
+        validator: (value){
+          if(value.length < 15){
+            return 'Es necesaria una descripción mas larga';
+          }
+          else{
+            return null;
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _boton(bool crear, BuildContext context, String detalle, CollectionReference db, String idElemento){
+    return Container(
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        textColor: Colors.white,
+        color: Colors.blueAccent,
+        child: (crear) ? Text('Aceptar') : Text('Cancelar'),
+        onPressed: () => {
+          (crear) ? _submit(db, idElemento) : () => Navigator.pop(context)
+        },
+      ),
+    );
+  }
+
+    void _submit(CollectionReference db, String idElemento){
+      if(formKey.currentState.validate()){
+        formKey.currentState.save();
+        db.document(idElemento).updateData({'detalle': consejoDetalle});
+      }
+      Navigator.pop(context);
+    }
+    
 }
