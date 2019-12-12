@@ -315,6 +315,7 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
       };
       Map<String, dynamic> datos = {
         "autor": prefs.name,
+        "usuario_id": prefs.uid,
         "titulo": project.titulo,
         "descripcion": project.descripcion,
         "contacto": project.contacto,

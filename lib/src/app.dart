@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:guiaestudiante/src/blocs/provider.dart';
+import 'package:guiaestudiante/src/pages/advices_favorites_page.dart';
 import 'package:guiaestudiante/src/pages/advices_form_page.dart';
 import 'package:guiaestudiante/src/pages/advices_page.dart';
+import 'package:guiaestudiante/src/pages/creations_page.dart';
 import 'package:guiaestudiante/src/pages/home_page.dart';
 import 'package:guiaestudiante/src/pages/login_page.dart';
 import 'package:guiaestudiante/src/pages/profile_page.dart';
@@ -53,7 +55,9 @@ class MyApp extends StatelessWidget{
           'project_detail': (BuildContext context) => ProjectDetailPage(),
           'advices' : (BuildContext context) => AdvicesPage(),
           'advices_form' : (BuildContext context) => AdvicesFormPage(),
+          'fav_advices_page' : (BuildContext context) => FavAdvicesPage(),
           'profile' : (BuildContext context) => ProfilePage(),
+          'cre_page': (BuildContext context) => CreationPage(),
         },
         theme: ThemeData(
           primaryColor: Color.fromRGBO(20, 136, 204, 1.0),

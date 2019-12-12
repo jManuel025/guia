@@ -533,6 +533,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
 
       Map<String, dynamic> datos = {
         "autor": prefs.name,
+        "usuario_id": prefs.uid,
         "nombreReceta": recipe.nombreReceta,
         "ingredientes": recipe.ingredientes,
         "procedimiento": recipe.procedimiento,

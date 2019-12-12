@@ -118,7 +118,8 @@ class _AdvicesFormPageState extends State<AdvicesFormPage> {
         showSnackbar("Consejo creado exitosamente");
         Map<String, dynamic> datos = {
           "detalle": advice.detalle,
-          "usuario": prefs.name
+          "usuario": prefs.name,
+          "usuario_id": prefs.uid
         };
         Firestore.instance.collection('consejos').add(datos);
       }
