@@ -93,6 +93,7 @@ class _CreationPageState extends State<CreationPage> {
   }
 
   Widget _receta(String urlImage, String nombre, String autor, String heroID, dynamic document){
+    final dbRef = Firestore.instance.collection('recetas');
     return Dismissible(
       key: UniqueKey(),
       child: Container(
@@ -135,6 +136,21 @@ class _CreationPageState extends State<CreationPage> {
                         ],
                       )
                     ),
+                    Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      FlatButton.icon(
+                        icon: Icon(Icons.delete),
+                        label: Text('Borrar'),
+                        onPressed: () => _delete(dbRef, document, context),
+                      ),
+                      // FlatButton.icon(
+                      //   icon: Icon(Icons.edit),
+                      //   label: Text('Editar'),
+                      //   onPressed: () => _update(dbRef, document, context),
+                      // ),
+                    ],
+                  ),
                   ],
                 ),
               ),
@@ -148,6 +164,7 @@ class _CreationPageState extends State<CreationPage> {
   }
 
   Widget _proyecto(DocumentSnapshot document, BuildContext context){
+    final dbRef = Firestore.instance.collection('proyectos');
     return Card(
       child: FlatButton(
         child: Container(
@@ -170,7 +187,23 @@ class _CreationPageState extends State<CreationPage> {
                   SizedBox(width: 5.0,),
                   Text("${document['duracion']} días")
                 ],
-              )
+              ),
+              Divider(indent: 50.0, endIndent: 50.0, color: Colors.blueGrey,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  FlatButton.icon(
+                    icon: Icon(Icons.delete),
+                    label: Text('Borrar'),
+                    onPressed: () => _delete(dbRef, document, context),
+                  ),
+                  // FlatButton.icon(
+                  //   icon: Icon(Icons.edit),
+                  //   label: Text('Editar'),
+                  //   onPressed: () => _update(dbRef, document, context),
+                  // ),
+                ],
+              ),
             ],
           ),
         ),
@@ -275,7 +308,7 @@ class _CreationPageState extends State<CreationPage> {
         color: Colors.blueAccent,
         child: (crear) ? Text('Aceptar') : Text('Cancelar'),
         onPressed: () => {
-          (crear) ? _submit(db, idElemento) : () => Navigator.pop(context)
+          (crear) ? _submit(db, idElemento) : Navigator.pop(context)
         },
       ),
     );
