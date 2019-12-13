@@ -266,7 +266,9 @@ Widget _registro(context){
   bool masculino = false;
   bool femenino = true;
   Widget _sexo(){
-    (masculino) ? femenino = !masculino : null;
+    if(masculino){
+      femenino = !masculino;
+    }
     return Wrap(
       spacing: 50.0,
       children: <Widget>[

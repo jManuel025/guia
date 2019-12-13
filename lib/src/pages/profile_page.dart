@@ -172,7 +172,6 @@ class ProfilePage extends StatelessWidget {
       }
     Widget _infoSection(BuildContext context){
       final dbRef = Firestore.instance.collection('usuarios').document(prefs.uid).snapshots();
-      
       // print(dbRef);
       return Container(
         child: StreamBuilder<DocumentSnapshot>(
@@ -185,7 +184,7 @@ class ProfilePage extends StatelessWidget {
                 dynamic usuario = snapshot.data; 
                 return ListView(
                   children: <Widget>[
-                    _datosUsuario(usuario) 
+                    _datosUsuario(usuario, context) 
                   ],
                 );
             }
@@ -194,7 +193,7 @@ class ProfilePage extends StatelessWidget {
       );
     }  
 
-    Widget _datosUsuario(dynamic usuario){
+    Widget _datosUsuario(dynamic usuario, BuildContext context){
       Map habilidades = usuario['habilidades'];
       Map intereses = usuario['intereses'];
       return Center(
@@ -216,14 +215,13 @@ class ProfilePage extends StatelessWidget {
                             child: Container(
                               padding: EdgeInsets.all(20.0),
                               child: Column(
-                                // crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       IconButton(
                                         icon: Icon(Icons.edit),
-                                        onPressed: (){},
+                                        onPressed: () => _update(context, usuario),
                                       )
                                     ],
                                   ),
@@ -310,13 +308,13 @@ class ProfilePage extends StatelessWidget {
                   ],
                 ),
               ),
-              // FlatButton(
-              //   child: Text('Salir', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),),
-              //   onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
-              // )
             ],
           ),
         ),
       );
-    }       
+    }  
+
+  _update(BuildContext context, DocumentSnapshot usuario){
+    Navigator.pushNamed(context, 'update_profile', arguments: usuario);
+  }
 }

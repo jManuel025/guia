@@ -307,8 +307,8 @@ class _CreationPageState extends State<CreationPage> {
         textColor: Colors.white,
         color: Colors.blueAccent,
         child: (crear) ? Text('Aceptar') : Text('Cancelar'),
-        onPressed: () => {
-          (crear) ? _submit(db, idElemento) : Navigator.pop(context)
+        onPressed: () {
+          (crear) ? _submit(db, idElemento) : Navigator.pop(context);
         },
       ),
     );

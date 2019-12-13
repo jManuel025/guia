@@ -75,71 +75,71 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
                     )
                   ),
                   Wrap(
-                          spacing: 10.0,
-                          runSpacing: 2.0,
-                          children: <Widget>[
-                            FilterChip(
-                              label: Text('Humanidades'),
-                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                              selected: humanidades,
-                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                              onSelected: (valor){
-                                setState(() {
-                                  humanidades = valor;
-                                });
-                              },
-                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                            ),
-                            FilterChip(
-                              label: Text('Ingeniería'),
-                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                              selected: ingenieria,
-                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                              onSelected: (valor){
-                                setState(() {
-                                  ingenieria = valor;
-                                });
-                              },
-                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                            ),
-                            FilterChip(
-                              label: Text('Ciencias sociales'),
-                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                              selected: csociales,
-                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                              onSelected: (valor){
-                                setState(() {
-                                  csociales = valor;
-                                });
-                              },
-                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                            ),
-                            FilterChip(
-                              label: Text('Artes'),
-                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                              selected: artes,
-                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                              onSelected: (valor){
-                                setState(() {
-                                  artes = valor;
-                                });
-                              },
-                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                            ),
-                            FilterChip(
-                              label: Text('Tecnología'),
-                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                              selected: tecnologia,
-                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                              onSelected: (valor){
-                                setState(() {
-                                  tecnologia = valor;
-                                });
-                              },
-                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                            ),
-                          ],
-                        ),
+                    spacing: 10.0,
+                    runSpacing: 2.0,
+                    children: <Widget>[
+                      FilterChip(
+                        label: Text('Humanidades'),
+                        labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                        selected: humanidades,
+                        backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                        onSelected: (valor){
+                          setState(() {
+                            humanidades = valor;
+                          });
+                        },
+                        selectedColor: Color.fromRGBO(24, 128, 192, .30),
+                      ),
+                      FilterChip(
+                        label: Text('Ingeniería'),
+                        labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                        selected: ingenieria,
+                        backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                        onSelected: (valor){
+                          setState(() {
+                            ingenieria = valor;
+                          });
+                        },
+                        selectedColor: Color.fromRGBO(24, 128, 192, .30),
+                      ),
+                      FilterChip(
+                        label: Text('Ciencias sociales'),
+                        labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                        selected: csociales,
+                        backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                        onSelected: (valor){
+                          setState(() {
+                            csociales = valor;
+                          });
+                        },
+                        selectedColor: Color.fromRGBO(24, 128, 192, .30),
+                      ),
+                      FilterChip(
+                        label: Text('Artes'),
+                        labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                        selected: artes,
+                        backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                        onSelected: (valor){
+                          setState(() {
+                            artes = valor;
+                          });
+                        },
+                        selectedColor: Color.fromRGBO(24, 128, 192, .30),
+                      ),
+                      FilterChip(
+                        label: Text('Tecnología'),
+                        labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
+                        selected: tecnologia,
+                        backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                        onSelected: (valor){
+                          setState(() {
+                            tecnologia = valor;
+                          });
+                        },
+                        selectedColor: Color.fromRGBO(24, 128, 192, .30),
+                      ),
+                    ],
+                  ),
                   // BOTONES ACEPTAR - CANCELAR
                   Divider(height: 0.0, thickness: 1.0),
                   Table(
@@ -254,23 +254,6 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
       },
     );
   }
-
-  // Widget _area(){
-  //   return Container(
-  //     padding: EdgeInsets.symmetric(horizontal: 5.0),
-  //     child: RaisedButton(
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(25),
-  //       ),
-  //       color: Colors.blue,
-  //       textColor: Colors.white,
-  //       disabledColor: Colors.grey,
-  //       child: Text('Area 1'),
-  //       onPressed: (){},
-  //     ),
-  //   );
-  // }
-
   Widget _btnAccion(){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
