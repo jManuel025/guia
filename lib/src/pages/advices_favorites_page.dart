@@ -1,6 +1,6 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-// import 'package:guiaestudiante/src/models/advices_model.dart';
+import 'package:guiaestudiante/src/models/advices_model.dart';
 
 class FavAdvicesPage extends StatefulWidget {
   @override
@@ -8,46 +8,49 @@ class FavAdvicesPage extends StatefulWidget {
 }
 
 class _FavAdvicesPageState extends State<FavAdvicesPage> {
+  final favConsejos = Firestore.instance.collection('favConsejos').document(prefs.uid).snapshots();
+  
   @override
   Widget build(BuildContext context){
+    print(favConsejos);
     return Scaffold(
       appBar: AppBar(
         title: Text('Consejos'),
       ),
       body: Container(
-        child: Column(),
+        // child: Column(),
         // child: _favAdvices(),
-        // child: StreamBuilder<DocumentSnapshot>(
-        //   stream: Firestore.instance.collection('fav_consejos').document(prefs.uid).snapshots(),
-        //   builder: (BuildContext context, AsyncSnapshot snapshot){
-        //     if(snapshot.hasError) return Text('${snapshot.error}');
-        //     switch(snapshot.connectionState){
-        //       case ConnectionState.waiting: return Center(child: CircularProgressIndicator());
-        //       default:
-        //         return ListView(
-        //           children: snapshot.data.documents.map<Widget>(
-        //             (DocumentSnapshot document){
-        //               return Container(
-        //               // height: 125.0,
-        //               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.5),
-        //               child: Card(
-        //                 child: Container(
-        //                   padding: EdgeInsets.all(15.0),
-        //                     child: Column(
-        //                       mainAxisAlignment: MainAxisAlignment.center,
-        //                       children: <Widget>[
-        //                         Text(document['claveConsejo'], style: TextStyle(color: Colors.grey),)
-        //                       ],
-        //                     ),
-        //                   ),
-        //                 ),
-        //               );
-        //             }
-        //           ).toList(),
-        //         );
-        //     }
-        //   },
-        // ),
+        child: StreamBuilder<DocumentSnapshot>(
+          stream: favConsejos,
+          builder: (BuildContext context, AsyncSnapshot snapshot){
+            if(snapshot.hasError) return Text('${snapshot.error}');
+            switch(snapshot.connectionState){
+              case ConnectionState.waiting: return Center(child: CircularProgressIndicator());
+              default:
+                return ListView(
+                  children: snapshot.data.documents.map<Widget>(
+                    (DocumentSnapshot document){
+                      return Container(
+                      // height: 125.0,
+                      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.5),
+                      child: Card(
+                        child: Container(
+                          padding: EdgeInsets.all(15.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(document['claveConsejo'], style: TextStyle(color: Colors.grey),)
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  ).toList(),
+                );
+            }
+          },
+        ),
       ),
     );
   }

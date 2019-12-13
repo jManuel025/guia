@@ -56,7 +56,7 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.exit_to_app),
+                icon: Icon(Icons.exit_to_app), 
                 onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
               )
             ],
@@ -68,10 +68,11 @@ class ProfilePage extends StatelessWidget {
   Widget _body(dynamic size, BuildContext context){
     return Container(
       color: Colors.blue,
-      height: (size.height * 0.75) - 80.0,
+      height: (size.height * 0.75) - 50.0,
       width: double.infinity,
       child: DefaultTabController(
-        length: 3,
+        // length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white24,
@@ -81,7 +82,7 @@ class ProfilePage extends StatelessWidget {
               labelColor: Colors.black,
               unselectedLabelColor: Colors.grey,
               tabs: [
-                Tab(text: 'Favoritos'),
+                // Tab(text: 'Favoritos'),
                 Tab(text: 'Aportaciones'),
                 Tab(text: 'Acerca de mi'),
               ],
@@ -89,7 +90,7 @@ class ProfilePage extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              _favSection(context),
+              // _favSection(context),
               _creSection(context),
               _infoSection(context),
             ],
@@ -98,23 +99,23 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
-    Widget _favSection(BuildContext context){
-      return Container(
-        color: Colors.white,
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _cardSection(context, 'Recetas', 'assets/wallRecipes.jpg', 'local_dining', 'fav_advices_page', 'recetas'),
-                _cardSection(context, 'Proyectos', 'assets/wallProjects.jpg', 'work', 'fav_advices_page', 'proyectos'),
-                _cardSection(context, 'Consejos', 'assets/wallAdvices.jpg', 'add_comment', 'fav_advices_page', 'consejos'),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
+    // Widget _favSection(BuildContext context){
+    //   return Container(
+    //     color: Colors.white,
+    //     child: Center(
+    //       child: SingleChildScrollView(
+    //         child: Column(
+    //           mainAxisAlignment: MainAxisAlignment.center,
+    //           children: <Widget>[
+    //             _cardSection(context, 'Recetas', 'assets/wallRecipes.jpg', 'local_dining', 'fav_advices_page', 'recetas'),
+    //             _cardSection(context, 'Proyectos', 'assets/wallProjects.jpg', 'work', 'fav_advices_page', 'proyectos'),
+    //             _cardSection(context, 'Consejos', 'assets/wallAdvices.jpg', 'add_comment', 'fav_advices_page', 'consejos'),
+    //           ],
+    //         ),
+    //       ),
+    //     ),
+    //   );
+    // }
     Widget _creSection(BuildContext context){
       return Container(
         color: Colors.white,

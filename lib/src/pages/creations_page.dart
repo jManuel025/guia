@@ -197,11 +197,11 @@ class _CreationPageState extends State<CreationPage> {
                     label: Text('Borrar'),
                     onPressed: () => _delete(dbRef, document, context),
                   ),
-                  // FlatButton.icon(
-                  //   icon: Icon(Icons.edit),
-                  //   label: Text('Editar'),
-                  //   onPressed: () => _update(dbRef, document, context),
-                  // ),
+                  FlatButton.icon(
+                    icon: Icon(Icons.edit),
+                    label: Text('Editar'),
+                    onPressed: () => _updateProject(document, context),
+                  ),
                 ],
               ),
             ],
@@ -272,6 +272,10 @@ class _CreationPageState extends State<CreationPage> {
         );
       }
     );
+  }
+
+  _updateProject(DocumentSnapshot document, BuildContext context){
+    Navigator.pushNamed(context, 'project_update_form', arguments: document);
   }
   String consejoDetalle = '';
   Widget _detalle(String detalle){

@@ -327,7 +327,7 @@ Widget _registro(context){
       _submit();
     }
     else{
-      mostrarAlerta(context, info['mensaje']);
+      mostrarAlerta(context, (info['mensaje'] == "EMAIL_EXISTS") ? 'Correo no disponible': Container());
     }
   }
 

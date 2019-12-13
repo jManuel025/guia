@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:guiaestudiante/src/models/advices_model.dart';
-import 'package:toast/toast.dart';
+// import 'package:toast/toast.dart';
 
 class AdvicesPage extends StatefulWidget {
   @override
@@ -41,15 +41,15 @@ class _AdvicesPageState extends State<AdvicesPage> {
                                 Text( '"'+ document['detalle'] + '"', textAlign: TextAlign.center, style: TextStyle(fontSize: 17.5, fontWeight: FontWeight.w500)),
                                 Divider(indent: 60.0, endIndent: 60.0, color: Colors.blueGrey),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     Text(document['usuario'], style: TextStyle(color: Colors.grey)),
-                                    IconButton(
-                                      icon: Icon(Icons.bookmark),
-                                      onPressed: () => _addFav(document),
-                                      padding: EdgeInsets.all(0.0),
-                                      splashColor: Colors.blue,
-                                    )
+                                    // IconButton(
+                                    //   icon: Icon(Icons.bookmark),
+                                    //   onPressed: () => _addFav(document),
+                                    //   padding: EdgeInsets.all(0.0),
+                                    //   splashColor: Colors.blue,
+                                    // )
                                   ],
                                 )
                               ],
@@ -68,12 +68,12 @@ class _AdvicesPageState extends State<AdvicesPage> {
     );
   }
 
-  _addFav(DocumentSnapshot document){
-    String id = document.documentID;
-    Map detalle = document.data;
-    Firestore.instance.collection('favConsejos').document(prefs.uid).collection(id).document(id).setData(detalle);
-    Toast.show("Añadido a favoritos", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM, backgroundColor: Colors.blue);
-  }
+  // _addFav(DocumentSnapshot document){
+  //   String id = document.documentID;
+  //   Map detalle = document.data;
+  //   Firestore.instance.collection('favConsejos').document(prefs.uid).collection(id).document(id).setData(detalle);
+  //   Toast.show("Añadido a favoritos", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM, backgroundColor: Colors.blue);
+  // }
 
   _btnCrearConsejo(BuildContext context){
     return FloatingActionButton(
