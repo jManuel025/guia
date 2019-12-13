@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 import 'package:guiaestudiante/src/utils/icon_string_util.dart';
@@ -170,133 +171,152 @@ class ProfilePage extends StatelessWidget {
         );
       }
     Widget _infoSection(BuildContext context){
+      final dbRef = Firestore.instance.collection('usuarios').document(prefs.uid).snapshots();
+      
+      // print(dbRef);
       return Container(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  // color: Colors.red,
-                  width: double.infinity,
-                  // height: MediaQuery.of(context).size.height * 0.50,
-                  child: Column(
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0)
-                              ),
-                              child: Container(
-                                padding: EdgeInsets.all(20.0),
-                                child: Column(
-                                  // crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        // IconButton(
-                                        //   padding: EdgeInsets.only(bottom: 20.0),
-                                        //   icon: Icon(Icons.settings),
-                                        //   onPressed: (){},
-                                        // ),
-                                        IconButton(
-                                          padding: EdgeInsets.only(bottom: 20.0),
-                                          icon: Icon(Icons.edit),
-                                          onPressed: (){},
-                                        )
-                                      ],
-                                    ),
-                                    Text('Universidad', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
-                                    Text('Universidad Autónoma Querétaro'),
-                                    Divider(height: 30.0,),
-                                    Text('Carrera', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
-                                    Text('Ingeniería de Software'),
-                                    Divider(height: 30.0,),
-                                    Text('Expediente', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
-                                    Text('267795'),
-                                    Divider(height: 30.0,),
-                                    Text('Fecha de nacimiento', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
-                                    Text('25/08/1999'),
-                                    Divider(height: 30.0,),
-                                    Text('Sexo', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
-                                    Text('Masculino'),
-                                    Divider(height: 30.0,),
-                                    Text('Habilidades', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
-                                    Wrap(
-                                      direction: Axis.horizontal,
-                                      alignment: WrapAlignment.center,
-                                      spacing: 5.0,
-                                      children: <Widget>[
-                                        Chip(
-                                          label: Text('Comunicación', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-                                          backgroundColor: Colors.blue,
-                                        ),
-                                        Chip(
-                                          label: Text('Confianza', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-                                          backgroundColor: Colors.blue,
-                                        ),
-                                        Chip(
-                                          label: Text('Empatía', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-                                          backgroundColor: Colors.blue,
-                                        ),
-                                        Chip(
-                                          label: Text('Razonamiento', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-                                          backgroundColor: Colors.blue,
-                                        ),
-                                        Chip(
-                                          label: Text('Creatividad', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-                                          backgroundColor: Colors.blue,
-                                        ),
-                                      ],
-                                    ),
-                                    //   ],
-                                    // ),
-                                    Divider(height: 30.0,),
-                                    Text('Intereses', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
-                                    Wrap(
-                                      direction: Axis.horizontal,
-                                      alignment: WrapAlignment.center,
-                                      spacing: 5.0,
-                                      children: <Widget>[
-                                        Chip(
-                                          label: Text('Arte', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-                                          backgroundColor: Colors.blue,
-                                        ),
-                                        Chip(
-                                          label: Text('Ciencia ficción', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-                                          backgroundColor: Colors.blue,
-                                        ),
-                                        Chip(
-                                          label: Text('Tecnología', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-                                          backgroundColor: Colors.blue,
-                                        ),
-                                        Chip(
-                                          label: Text('Deportes', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-                                          backgroundColor: Colors.blue,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )
+        child: StreamBuilder<DocumentSnapshot>(
+          stream: dbRef,
+          builder: (BuildContext context, AsyncSnapshot snapshot){
+            if(snapshot.hasError) return Text('${snapshot.error}');
+            switch(snapshot.connectionState){
+              case ConnectionState.waiting: return Center(child: CircularProgressIndicator());
+              default:
+                dynamic usuario = snapshot.data; 
+                return ListView(
+                  children: <Widget>[
+                    _datosUsuario(usuario) 
+                  ],
+                );
+            }
+          },
+        ),
+      );
+    }  
+
+    Widget _datosUsuario(dynamic usuario){
+      Map habilidades = usuario['habilidades'];
+      Map intereses = usuario['intereses'];
+      return Center(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                child: Column(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0)
                             ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
+                            child: Container(
+                              padding: EdgeInsets.all(20.0),
+                              child: Column(
+                                // crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      IconButton(
+                                        icon: Icon(Icons.edit),
+                                        onPressed: (){},
+                                      )
+                                    ],
+                                  ),
+                                  Text('Universidad', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                                  Text(usuario['universidad']),
+                                  Divider(height: 30.0,),
+                                  Text('Carrera', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                                  Text(usuario['carrera']),
+                                  Divider(height: 30.0,),
+                                  Text('Expediente', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                                  Text(usuario['expediente']),
+                                  Divider(height: 30.0,),
+                                  Text('Fecha de nacimiento', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                                  Text(usuario['fechaNacimiento']),
+                                  Divider(height: 30.0,),
+                                  Text('Sexo', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                                  (usuario['sexo']) ? Text("Masculino") : Text("Femenino"),
+                                  Divider(height: 30.0,),
+                                  Text('Habilidades', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                                  Wrap(
+                                    direction: Axis.horizontal,
+                                    alignment: WrapAlignment.center,
+                                    spacing: 5.0,
+                                    children: <Widget>[
+                                      Chip(
+                                        label: Text('Comunicación', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: (habilidades['Comunicacion']) ? Colors.blue : Colors.grey,
+                                        
+                                      ),
+                                      Chip(
+                                        label: Text('Creatividad', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: (habilidades['Creatividad']) ? Colors.blue : Colors.grey,
+                                      ),
+                                      Chip(
+                                        label: Text('Escucha', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: (habilidades['Escucha']) ? Colors.blue : Colors.grey,
+                                      ),
+                                      Chip(
+                                        label: Text('Liderazgo', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: (habilidades['Liderazgo']) ? Colors.blue : Colors.grey,
+                                      ),
+                                      Chip(
+                                        label: Text('Razonamiento', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: (habilidades['Razonamiento']) ? Colors.blue : Colors.grey,
+                                      ),
+                                    ],
+                                  ),
+                                  Divider(height: 30.0,),
+                                  Text('Intereses', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0)),
+                                  Wrap(
+                                    direction: Axis.horizontal,
+                                    alignment: WrapAlignment.center,
+                                    spacing: 5.0,
+                                    children: <Widget>[
+                                      Chip(
+                                        label: Text('Arte', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: (intereses['Arte']) ? Colors.blue : Colors.grey,
+                                      ),
+                                      Chip(
+                                        label: Text('Ciencia', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: (intereses['Ciencia']) ? Colors.blue : Colors.grey,
+                                      ),
+                                      Chip(
+                                        label: Text('Deportes', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: (intereses['Deportes']) ? Colors.blue : Colors.grey,
+                                      ),
+                                      Chip(
+                                        label: Text('Tecnología', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: (intereses['Tecnología']) ? Colors.blue : Colors.grey,
+                                      ),
+                                      Chip(
+                                        label: Text('Historia', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                        backgroundColor: (intereses['Historia']) ? Colors.blue : Colors.grey,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
-                // FlatButton(
-                //   child: Text('Salir', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),),
-                //   onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
-                // )
-              ],
-            ),
+              ),
+              // FlatButton(
+              //   child: Text('Salir', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),),
+              //   onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
+              // )
+            ],
           ),
         ),
       );
-    }         
+    }       
 }
