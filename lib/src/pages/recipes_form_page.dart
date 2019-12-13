@@ -28,8 +28,8 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
 
   
 
-  List<String> _categorias = ['Desayuno', 'Comida', 'Cena', 'Bebidas', 'Ensaladas', 'Postres'];
-  String _slctdOpt = 'Desayuno';
+  List<String> _categorias = ['Categorías', 'Desayuno', 'Comida', 'Cena', 'Bebidas', 'Ensaladas', 'Postres'];
+  String _slctdOpt = 'Categorías';
 
   @override
   Widget build(BuildContext context) {
@@ -355,7 +355,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
         ),
       onSaved: (value) => recipe.nombreReceta = value,
       validator: (value){
-        if(value.length < 5){
+        if(value.length < 4){
           return 'Ingresa el nombre de la receta';
         }
         else{
@@ -376,7 +376,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
         ),
       onSaved: (value) => recipe.ingredientes = value,
       validator: (value){
-        if(value.length < 5){
+        if(value.length < 3){
           return 'Ingresa al menos un ingrediente';
         }
         else{
@@ -389,10 +389,12 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
   Widget _procedimiento(){
     return Container(
       child: TextFormField(
+        maxLines: 3,
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           icon: Icon(Icons.description),
           labelText: 'Explica detalladamente el procedimiento',
+          // border: OutlineInputBorder()
         ),
         onSaved: (value) => recipe.procedimiento = value,
         validator: (value){

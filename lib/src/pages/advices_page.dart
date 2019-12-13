@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:guiaestudiante/src/models/advices_model.dart';
+import 'package:toast/toast.dart';
 
 class AdvicesPage extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class _AdvicesPageState extends State<AdvicesPage> {
         title: Text('Consejos'),
       ),
       body: Container(
+        // padding: EdgeInsets.only(bottom: 80.0),
         child: StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance.collection('consejos').snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot){
@@ -29,7 +31,6 @@ class _AdvicesPageState extends State<AdvicesPage> {
                   children: snapshot.data.documents.map<Widget>(
                     (DocumentSnapshot document){
                       return Container(
-                      // height: 125.0,
                       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.5),
                       child: Card(
                         child: Container(
@@ -37,9 +38,20 @@ class _AdvicesPageState extends State<AdvicesPage> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Text( '"'+ document['detalle'] + '"', textAlign: TextAlign.center, style: TextStyle(fontSize: 17.5, fontWeight: FontWeight.w500),),
-                                Divider(indent: 60.0, endIndent: 60.0, color: Colors.blueGrey,),
-                                Text(document['usuario'], style: TextStyle(color: Colors.grey),)
+                                Text( '"'+ document['detalle'] + '"', textAlign: TextAlign.center, style: TextStyle(fontSize: 17.5, fontWeight: FontWeight.w500)),
+                                Divider(indent: 60.0, endIndent: 60.0, color: Colors.blueGrey),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(document['usuario'], style: TextStyle(color: Colors.grey)),
+                                    IconButton(
+                                      icon: Icon(Icons.bookmark),
+                                      onPressed: () => _addFav(document),
+                                      padding: EdgeInsets.all(0.0),
+                                      splashColor: Colors.blue,
+                                    )
+                                  ],
+                                )
                               ],
                             ),
                           ),
@@ -54,6 +66,13 @@ class _AdvicesPageState extends State<AdvicesPage> {
       ),
       floatingActionButton: _btnCrearConsejo(context),
     );
+  }
+
+  _addFav(DocumentSnapshot document){
+    String id = document.documentID;
+    Map detalle = document.data;
+    Firestore.instance.collection('favConsejos').document(prefs.uid).collection(id).document(id).setData(detalle);
+    Toast.show("Añadido a favoritos", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM, backgroundColor: Colors.blue);
   }
 
   _btnCrearConsejo(BuildContext context){

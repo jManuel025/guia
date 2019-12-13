@@ -9,11 +9,8 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
   @override
   Widget build(BuildContext context) {
     dynamic receta = ModalRoute.of(context).settings.arguments;
+    Map etiquetas = receta['etiquetas'];
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Información'),
-      //   centerTitle: true,
-      // ),
       body: CustomScrollView(
         slivers: <Widget>[
           _appBar(receta),
@@ -58,7 +55,34 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                             ],
                           ),
                           Divider(height: 30.0),
-                          Text('Etiquetas', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold))
+                          Text('Etiquetas', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+                          Wrap(
+                            direction: Axis.horizontal,
+                            alignment: WrapAlignment.center,
+                            spacing: 5.0,
+                            children: <Widget>[
+                              Chip(
+                                label: Text('Barato', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                backgroundColor: (etiquetas['Barato']) ? Colors.blue : Colors.grey,
+                              ),
+                              Chip(
+                                label: Text('Fácil', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                backgroundColor: (etiquetas['Fácil']) ? Colors.blue : Colors.grey,
+                              ),
+                              Chip(
+                                label: Text('Inusual', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                backgroundColor: (etiquetas['Inusual']) ? Colors.blue : Colors.grey,
+                              ),
+                              Chip(
+                                label: Text('Rápido', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                backgroundColor: (etiquetas['Rápido']) ? Colors.blue : Colors.grey,
+                              ),
+                              Chip(
+                                label: Text('Saludable', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                backgroundColor: (etiquetas['Saludable']) ? Colors.blue : Colors.grey,
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),

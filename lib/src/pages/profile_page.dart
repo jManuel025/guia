@@ -249,7 +249,6 @@ class ProfilePage extends StatelessWidget {
                                       Chip(
                                         label: Text('Comunicación', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
                                         backgroundColor: (habilidades['Comunicacion']) ? Colors.blue : Colors.grey,
-                                        
                                       ),
                                       Chip(
                                         label: Text('Creatividad', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),

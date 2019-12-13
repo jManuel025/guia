@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:guiaestudiante/src/models/advices_model.dart';
+// import 'package:guiaestudiante/src/models/advices_model.dart';
 
 class FavAdvicesPage extends StatefulWidget {
   @override
@@ -15,7 +15,8 @@ class _FavAdvicesPageState extends State<FavAdvicesPage> {
         title: Text('Consejos'),
       ),
       body: Container(
-        child: _favAdvices(),
+        child: Column(),
+        // child: _favAdvices(),
         // child: StreamBuilder<DocumentSnapshot>(
         //   stream: Firestore.instance.collection('fav_consejos').document(prefs.uid).snapshots(),
         //   builder: (BuildContext context, AsyncSnapshot snapshot){
@@ -51,38 +52,38 @@ class _FavAdvicesPageState extends State<FavAdvicesPage> {
     );
   }
 
-    Widget _favAdvices(){
-      Future<dynamic> consejos = _getAdvicesIds();
-      return Container(
-        child: FutureBuilder(
-          future: consejos,
-          builder: (BuildContext context, AsyncSnapshot snapshot){
-            if(snapshot.hasError) return Text('${snapshot.error}');
-            switch(snapshot.connectionState){
-              case ConnectionState.waiting : return Center(child: CircularProgressIndicator());
-              default:
-                List<dynamic> claves = snapshot.data; 
-                for(int x = 0; x <= claves.length; x++){
-                  print(claves[x]);
-                }
-            }
-          },
-        )
-      );
-    }
+    // Widget _favAdvices(){
+      // Future<dynamic> consejos = _getAdvicesIds();
+      // return Container(
+      //   child: FutureBuilder(
+      //     future: consejos,
+      //     builder: (BuildContext context, AsyncSnapshot snapshot){
+      //       if(snapshot.hasError) return Text('${snapshot.error}');
+      //       switch(snapshot.connectionState){
+      //         case ConnectionState.waiting : return Center(child: CircularProgressIndicator());
+      //         default:
+      //           List<dynamic> claves = snapshot.data; 
+      //           for(int x = 0; x <= claves.length; x++){
+      //             print(claves[x]);
+      //           }
+      //       }
+      //     },
+      //   )
+      // );
+    // }
 
-    _getAdvicesIds() async{
-      DocumentSnapshot favConsejos = await Firestore.instance.collection('fav_consejos').document(prefs.uid).get();
-      Map<dynamic, dynamic> mapaConsejos = favConsejos.data;
-      final keyConsejos = [];
-      mapaConsejos.forEach((k,v) => keyConsejos.add(k));
+    // _getAdvicesIds() async{
+      // DocumentSnapshot favConsejos = await Firestore.instance.collection('fav_consejos').document(prefs.uid).get();
+      // Map<dynamic, dynamic> mapaConsejos = favConsejos.data;
+      // final keyConsejos = [];
+      // mapaConsejos.forEach((k,v) => keyConsejos.add(k));
       // List consejosArr = [];
       // for(int x = 0; x <= keyConsejos.length; x++){
       //   DocumentSnapshot elemento = await Firestore.instance.collection('consejos').document(keyConsejos[x]).get();
       //   consejosArr.add(elemento.data);
         
       // }
-      print(keyConsejos);
-      return keyConsejos;
-    }
+      // print(keyConsejos);
+      // return keyConsejos;
+    // }
 }
