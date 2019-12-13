@@ -70,6 +70,7 @@ class _UpdtProfiePageState extends State<UpdtProfiePage> {
       padding: EdgeInsets.only(bottom: 20.0, top: 10.0),
       child: TextFormField(
         textCapitalization: TextCapitalization.words,
+        initialValue: usuario['carrera'],
         decoration: InputDecoration(
           icon: Icon(Icons.school),
           labelText: 'Carrera',
