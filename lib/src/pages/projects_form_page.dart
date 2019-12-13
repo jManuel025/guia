@@ -4,6 +4,7 @@ import 'package:guiaestudiante/src/models/projects_model.dart';
 import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 import 'package:guiaestudiante/src/providers/project_provider.dart';
 import 'package:guiaestudiante/src/utils/utils.dart' as utils;
+import 'package:toast/toast.dart';
 
 class ProjectsFormPage extends StatefulWidget {
   @override
@@ -307,6 +308,7 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
         "areas": areas,
       };
       Firestore.instance.collection('proyectos').add(datos);
+      Toast.show("Creación exitosa", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM, backgroundColor: Colors.blue);
       Navigator.pop(context);
     }
   }

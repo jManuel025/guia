@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:guiaestudiante/src/models/advices_model.dart';
 import 'package:guiaestudiante/src/providers/advice_provider.dart';
+import 'package:toast/toast.dart';
 
 class AdvicesFormPage extends StatefulWidget {
   @override
@@ -129,6 +130,7 @@ class _AdvicesFormPageState extends State<AdvicesFormPage> {
       }
       
       Navigator.pop(context);
+      Toast.show("Creación exitosa", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM, backgroundColor: Colors.blue);
     }
     
   }

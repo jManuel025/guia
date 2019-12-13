@@ -7,6 +7,7 @@ import 'package:guiaestudiante/src/models/advices_model.dart';
 import 'package:guiaestudiante/src/models/recipes_model.dart';
 import 'package:guiaestudiante/src/providers/recipe_provider.dart';
 import 'package:guiaestudiante/src/utils/utils.dart' as utils;
+import 'package:toast/toast.dart';
 
 class RecipesFormPage extends StatefulWidget {
   @override
@@ -548,6 +549,7 @@ class _RecipesFormPageState extends State<RecipesFormPage> {
         "calificacion": recipe.calificacion,
       };
       Firestore.instance.collection('recetas').add(datos);
+      Toast.show("Creación exitosa", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM, backgroundColor: Colors.blue);
       Navigator.pop(context);
     }
   }

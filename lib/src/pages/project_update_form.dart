@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 import 'package:guiaestudiante/src/utils/utils.dart' as utils;
+import 'package:toast/toast.dart';
 
 class ProjectUpdateForm extends StatefulWidget {
   @override
@@ -295,6 +296,7 @@ class _ProjectUpdateFormState extends State<ProjectUpdateForm> {
         "areas": areas
       }; 
       Firestore.instance.collection('proyectos').document(project.documentID).updateData(datos);
+      Toast.show("Actualización exitosa", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM, backgroundColor: Colors.blue);
       Navigator.pop(context);
     }
   }

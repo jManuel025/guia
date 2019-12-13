@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'package:image_picker/image_picker.dart';
 import 'package:guiaestudiante/src/utils/utils.dart' as utils;
+import 'package:toast/toast.dart';
 
 class RecipesUpdtForm extends StatefulWidget {
   @override
@@ -120,16 +121,16 @@ class _RecipesUpdtFormState extends State<RecipesUpdtForm> {
                       ],
                     ),
                   ),
-                  Divider(height: 0.0, thickness: 1.0),
+                  // Divider(height: 0.0, thickness: 1.0),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 10.0),
                     child: Column(
                       children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(top: 10.0),
-                          width: double.infinity,
-                          child: Text('Selecciona una categoría', style: TextStyle(fontSize: 15)),
-                        ),
+                        // Container(
+                        //   padding: EdgeInsets.only(top: 10.0),
+                        //   width: double.infinity,
+                        //   child: Text('Selecciona una categoría', style: TextStyle(fontSize: 15)),
+                        // ),
                         // _categoria(recipeData),
                         // Container(
                         //   padding: EdgeInsets.symmetric(vertical: 10.0),
@@ -549,6 +550,7 @@ class _RecipesUpdtFormState extends State<RecipesUpdtForm> {
         "etiquetas": tags,
       };
       Firestore.instance.collection('recetas').document(receta.documentID).updateData(datos);
+      Toast.show("Actualización exitosa", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM, backgroundColor: Colors.blue);
       Navigator.pop(context);
     }
   }
