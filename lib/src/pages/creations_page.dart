@@ -144,11 +144,11 @@ class _CreationPageState extends State<CreationPage> {
                         label: Text('Borrar'),
                         onPressed: () => _delete(dbRef, document, context),
                       ),
-                      // FlatButton.icon(
-                      //   icon: Icon(Icons.edit),
-                      //   label: Text('Editar'),
-                      //   onPressed: () => _update(dbRef, document, context),
-                      // ),
+                      FlatButton.icon(
+                        icon: Icon(Icons.edit),
+                        label: Text('Editar'),
+                        onPressed: () => Navigator.pushNamed(context, 'recipe_update_form', arguments: document),
+                      ),
                     ],
                   ),
                   ],

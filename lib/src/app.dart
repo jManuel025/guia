@@ -17,6 +17,7 @@ import 'package:guiaestudiante/src/pages/recipes_detail_page.dart';
 import 'package:guiaestudiante/src/pages/recipes_form_page.dart';
 import 'package:guiaestudiante/src/pages/recipes_list_page.dart';
 import 'package:guiaestudiante/src/pages/recipes_page.dart';
+import 'package:guiaestudiante/src/pages/recipes_update_form.dart';
 import 'package:guiaestudiante/src/pages/register_page.dart';
 import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 import 'package:flutter/services.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget{
           'recipes' : (BuildContext context) => RecipesPage(),
           'recipes_list' : (BuildContext context) => RecipesListPage(),
           'recipes_form' : (BuildContext context) => RecipesFormPage(),
+          'recipe_update_form' : (BuildContext context) => RecipesUpdtForm(),
           'recipe_detail': (BuildContext context) => RecipeDetailPage(),
           'projects': (BuildContext context) => ProjectsPage(),
           'projects_form' : (BuildContext context) => ProjectsFormPage(),
