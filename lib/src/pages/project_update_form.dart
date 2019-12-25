@@ -1,40 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:guiaestudiante/src/models/projects_model.dart';
-import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
-import 'package:guiaestudiante/src/providers/project_provider.dart';
+// import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 import 'package:guiaestudiante/src/utils/utils.dart' as utils;
 import 'package:toast/toast.dart';
 
-class ProjectsFormPage extends StatefulWidget {
+class ProjectUpdateForm extends StatefulWidget {
   @override
-  _ProjectsFormPageState createState() => _ProjectsFormPageState();
+  _ProjectUpdateFormState createState() => _ProjectUpdateFormState();
 }
 
-class _ProjectsFormPageState extends State<ProjectsFormPage> {
-  final projectsProvider = new ProjectsProvider();
+class _ProjectUpdateFormState extends State<ProjectUpdateForm> {
   final formKey = GlobalKey<FormState>();
   final scaffolkey = GlobalKey<ScaffoldState>();
-  ProjectModel project = ProjectModel();
-  final prefs = new PreferenciasUsuario();
 
-  bool humanidades = false;
-  bool ingenieria = false;
-  bool csociales = false;
-  bool artes = false;
-  bool tecnologia = false;
 
   @override
   Widget build(BuildContext context) {
 
-    final ProjectModel projectData = ModalRoute.of(context).settings.arguments;
-    if(projectData != null){
-      project = projectData;
-    }
+    DocumentSnapshot projectData = ModalRoute.of(context).settings.arguments;
+    Map areas = projectData['areas'];
     return Scaffold(
       key: scaffolkey,
       appBar: AppBar(
-        title: Text('Nuevo proyecto'),
+        title: Text('Editar proyecto'),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -48,21 +36,21 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
                   // TITULO DEL PROYECTO
                   Container(
                     padding: EdgeInsets.only(bottom: 10.0),
-                    child: _titulo()
+                    child: _titulo(projectData)
                   ),
                   Container(
                     padding: EdgeInsets.only(bottom: 10.0),
-                    child: _descripcion()
+                    child: _descripcion(projectData)
                   ),
                   Container(
                     padding: EdgeInsets.only(bottom: 10.0),
-                    child: _contacto()
+                    child: _contacto(projectData)
                   ),
-                  _remuneracion(),
+                  // _remuneracion(projectData),
                   // Divider(thickness: 1.0),
-                  _duracion(),
+                  _duracion(projectData),
                   // CATEGORIAS
-                  // Divider(thickness: 1.0),
+                  // Divider(height: 0.0, thickness: 1.0),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 10.0),
                     child: Column(
@@ -82,11 +70,11 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
                       FilterChip(
                         label: Text('Humanidades'),
                         labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                        selected: humanidades,
+                        selected: areas['Humanidades'],
                         backgroundColor: Color.fromRGBO(24, 128, 192, .30),
                         onSelected: (valor){
                           setState(() {
-                            humanidades = valor;
+                            areas['Humanidades'] = valor;
                           });
                         },
                         selectedColor: Color.fromRGBO(24, 128, 192, .30),
@@ -94,11 +82,11 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
                       FilterChip(
                         label: Text('Ingeniería'),
                         labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                        selected: ingenieria,
+                        selected: areas['Ingeniería'],
                         backgroundColor: Color.fromRGBO(24, 128, 192, .30),
                         onSelected: (valor){
                           setState(() {
-                            ingenieria = valor;
+                            areas['Ingeniería'] = valor;
                           });
                         },
                         selectedColor: Color.fromRGBO(24, 128, 192, .30),
@@ -106,11 +94,11 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
                       FilterChip(
                         label: Text('Ciencias sociales'),
                         labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                        selected: csociales,
+                        selected: areas['Ciencias sociales'],
                         backgroundColor: Color.fromRGBO(24, 128, 192, .30),
                         onSelected: (valor){
                           setState(() {
-                            csociales = valor;
+                            areas['Ciencias sociales'] = valor;
                           });
                         },
                         selectedColor: Color.fromRGBO(24, 128, 192, .30),
@@ -118,11 +106,11 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
                       FilterChip(
                         label: Text('Artes'),
                         labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                        selected: artes,
+                        selected: areas['Artes'],
                         backgroundColor: Color.fromRGBO(24, 128, 192, .30),
                         onSelected: (valor){
                           setState(() {
-                            artes = valor;
+                            areas['Artes'] = valor;
                           });
                         },
                         selectedColor: Color.fromRGBO(24, 128, 192, .30),
@@ -130,11 +118,11 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
                       FilterChip(
                         label: Text('Tecnología'),
                         labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                        selected: tecnologia,
+                        selected: areas['Tecnología'],
                         backgroundColor: Color.fromRGBO(24, 128, 192, .30),
                         onSelected: (valor){
                           setState(() {
-                            tecnologia = valor;
+                            areas['Tecnología'] = valor;
                           });
                         },
                         selectedColor: Color.fromRGBO(24, 128, 192, .30),
@@ -142,13 +130,12 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
                     ],
                   ),
                   // BOTONES ACEPTAR - CANCELAR
-                  Divider(height: 0.0, thickness: 1.0),
                   Table(
                     children: [
                       TableRow(
                         children: [
                           _btnCancel(),
-                          _btnAccion(),
+                          _btnAccion(projectData),
                         ]
                       )
                     ],
@@ -161,17 +148,18 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
       )
     );
   }
-
-  Widget _titulo(){
+  String nTitulo;
+  Widget _titulo(DocumentSnapshot proyecto){
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: TextFormField(
+        initialValue: proyecto['titulo'],
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           icon: Icon(Icons.content_paste),
           labelText: 'Titulo del proyecto',
         ),
-      onSaved: (value) => project.titulo = value,
+      onSaved: (value) => nTitulo = value,
       validator: (value){
         if(value.length < 5){
           return 'Ingresa un nombre para el proyecto';
@@ -183,10 +171,12 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
       ),
     );
   }
-  Widget _descripcion(){
+  String nDesc;
+  Widget _descripcion(DocumentSnapshot proyecto){
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: TextFormField(
+        initialValue: proyecto['descripcion'],
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           icon: Icon(Icons.description),
@@ -194,7 +184,7 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
           border: OutlineInputBorder()
         ),
         maxLines: 5,
-      onSaved: (value) => project.descripcion = value,
+      onSaved: (value) => nDesc = value,
       validator: (value){
         if(value.length < 5){
           return 'Es necesaria una descripción';
@@ -206,16 +196,18 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
       ),
     );
   }
-  Widget _contacto(){
+  String nContacto;
+  Widget _contacto(DocumentSnapshot proyecto){
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: TextFormField(
+        initialValue: proyecto['contacto'],
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           icon: Icon(Icons.person_pin),
           labelText: 'Contacto',
         ),
-      onSaved: (value) => project.contacto = value,
+      onSaved: (value) => nContacto = value,
       validator: (value){
         if(value.length < 5){
           return 'Ingresa medio por el cual se puedan poner en contacto contigo';
@@ -227,24 +219,26 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
       ),
     );
   }
-  Widget _remuneracion(){
-    return SwitchListTile(
-      value:  project.tipoRemuneracion,
-      title: Text('Remuneración económica'),
-      onChanged: (value) => setState((){
-        project.tipoRemuneracion = value;
-      }),
-    );
-  }
-  Widget _duracion(){
+  // bool nTRemuneracion;
+  // Widget _remuneracion(DocumentSnapshot proyecto){
+  //   return SwitchListTile(
+  //     value:  proyecto['tipoRemuneracion'],
+  //     title: Text('Remuneración económica'),
+  //     onChanged: (value) => setState((){
+  //       nTRemuneracion = value;
+  //     }),
+  //   );
+  // }
+  int nDuracion; 
+  Widget _duracion(DocumentSnapshot proyecto){
     return TextFormField(
       keyboardType: TextInputType.number,
-      initialValue: project.duracion.toString(),
+      initialValue: proyecto['duracion'].toString(),
       decoration: InputDecoration(
         icon: Icon(Icons.calendar_today),
         labelText: 'Duracion aproximada (días)',
       ),
-      onSaved: (value) => project.duracion = int.parse(value),
+      onSaved: (value) => nDuracion = int.parse(value),
       validator: (value){
         if(utils.isNumber(value)){
           return null;
@@ -255,7 +249,7 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
       },
     );
   }
-  Widget _btnAccion(){
+  Widget _btnAccion(DocumentSnapshot project){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
       child: RaisedButton(
@@ -265,7 +259,7 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
         textColor: Colors.white,
         color: Colors.blueAccent,
         child: Text('Aceptar'),
-        onPressed: _submit,
+        onPressed: () => _submit(project),
       ),
     );
   }
@@ -283,32 +277,26 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
       ),
     );
   }
-  void _submit(){
+  void _submit(DocumentSnapshot project){
     if(formKey.currentState.validate()){
-      // Dispara los onsave
       formKey.currentState.save();
-      if(project.id == null){
-        projectsProvider.createProject(project);
-      }
+      Map ar = project['areas'];
       Map<String, bool> areas = {
-        'Humanidades': humanidades,
-        'Ingeniería': ingenieria,
-        'Ciencias sociales': csociales,
-        'Artes': artes,
-        'Tecnología': tecnologia,
+        "Artes": ar['Artes'],
+        "Ciencias sociales": ar['Ciencias sociales'],
+        "Humanidades": ar['Humanidades'],
+        "Ingeniería": ar['Ingeniería'],
+        "Tecnología": ar['Tecnología'],
       };
       Map<String, dynamic> datos = {
-        "autor": prefs.name,
-        "usuario_id": prefs.uid,
-        "titulo": project.titulo,
-        "descripcion": project.descripcion,
-        "contacto": project.contacto,
-        "tipoRemuneracion": project.tipoRemuneracion,
-        "duracion": project.duracion,
-        "areas": areas,
-      };
-      Firestore.instance.collection('proyectos').add(datos);
-      Toast.show("Creación exitosa", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM, backgroundColor: Colors.blue);
+        "titulo": nTitulo,
+        "descripcion": nDesc,
+        "contacto": nContacto,
+        "duracion": nDuracion,
+        "areas": areas
+      }; 
+      Firestore.instance.collection('proyectos').document(project.documentID).updateData(datos);
+      Toast.show("Actualización exitosa", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM, backgroundColor: Colors.blue);
       Navigator.pop(context);
     }
   }

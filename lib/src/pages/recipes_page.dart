@@ -49,12 +49,12 @@ Widget _tarjetas(BuildContext context){
                   _tarjeta('Postres', 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fcdn-image.foodandwine.com%2Fsites%2Fdefault%2Ffiles%2FHD-200912-r-raspberry-macarons.jpg&w=400&q=85', context, 'recipes_list', 'cake', 'Postres'),
                 ]
               ),
-              TableRow(
-                children: [
-                  _tarjeta('Sopas', 'https://media.olivegarden.com/en_us/images/product/soup-array-dpv-590x365.jpg', context, 'recipes_list', 'whatshot', 'Sopas'),
-                  _tarjeta('Explorar', 'https://www.idealhomeshow.co.uk/images/2019/03/b0e2ee2121.jpg', context, 'recipes_list', 'search', 'Explorar'),
-                ]
-              ),
+              // TableRow(
+              //   children: [
+              //     _tarjeta('Sopas', 'https://media.olivegarden.com/en_us/images/product/soup-array-dpv-590x365.jpg', context, 'recipes_list', 'whatshot', 'Sopas'),
+              //     _tarjeta2('Explorar', 'https://www.idealhomeshow.co.uk/images/2019/03/b0e2ee2121.jpg', context, 'recipes_list', 'search', 'Explorar'),
+              //   ]
+              // ),
             ]
           )
         ],
@@ -99,3 +99,41 @@ Widget _tarjetas(BuildContext context){
       )
     );
   }
+  // Widget _tarjeta2(String texto, String rutaImagen, BuildContext context, String pantalla, String icono, String categoria){
+  //   return Container(
+  //     height: 145.0,
+  //     margin: EdgeInsets.all(15.0),
+  //     child: Card(
+  //       color: Colors.transparent,
+  //       clipBehavior: Clip.antiAlias,
+  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+  //       elevation: 0.0,
+  //       child: Stack(
+  //         fit: StackFit.expand,
+  //         children: <Widget>[
+  //           // Image(
+  //           //   image: NetworkImage(rutaImagen),
+  //           //   fit: BoxFit.cover,
+  //           // ),
+  //           Container(
+  //             height: double.infinity,
+  //             width: double.infinity,
+  //             // color: Colors.white24,
+  //             child: Column(
+  //               mainAxisAlignment: MainAxisAlignment.center,
+  //               children: <Widget>[
+  //                 // getIcon(icono),
+  //                 // SizedBox(height: 10.0,),
+  //                 // Text(texto, style: TextStyle(color: Colors.white, fontSize: 17.5, fontWeight: FontWeight.bold)),
+  //               ],
+  //             )
+  //           ),
+  //           // FlatButton(
+  //           //   child: SizedBox(),
+  //           //   onPressed: () => Navigator.pushNamed(context, pantalla, arguments: categoria),
+  //           // ),
+  //         ],
+  //       ),
+  //     )
+  //   );
+  // }

@@ -109,7 +109,7 @@ Widget _login(context){
             ),
           ),
           _botonAlt('Crear cuenta', context, 'register'),
-          _botonAlt('¿Olvidaste tu contraseña?', context, 'definirruta')
+          // _botonAlt('¿Olvidaste tu contraseña?', context, 'definirruta')
           // SizedBox(height: 60.0),
         ],
       ),
@@ -184,7 +184,7 @@ Widget _login(context){
           prefs.score = userData['puntuacion'].toString();
         }
         else{
-          mostrarAlerta(context, info['mensaje']);
+          mostrarAlerta(context, (info['mensaje'] == "INVALID_PASSWORD" || info['mensaje'] == "MISSING_PASSWORD") ? 'Contraseña incorrecta' : 'Correo incorrecto');
         }
       }
 

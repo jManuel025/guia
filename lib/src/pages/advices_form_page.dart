@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:guiaestudiante/src/models/advices_model.dart';
 import 'package:guiaestudiante/src/providers/advice_provider.dart';
+import 'package:toast/toast.dart';
 
 class AdvicesFormPage extends StatefulWidget {
   @override
@@ -111,19 +113,26 @@ class _AdvicesFormPageState extends State<AdvicesFormPage> {
   }
   void _submit(){
     if(formKey.currentState.validate()){
-      // Dispara los onsave
-      advice.usuario = prefs.name;
       formKey.currentState.save();
       if(advice.id == null){
-        advicesProvider.createAdvice(advice);
+        // advicesProvider.createAdvice(advice);
         showSnackbar("Consejo creado exitosamente");
+        Map<String, dynamic> datos = {
+          "detalle": advice.detalle,
+          "usuario": prefs.name,
+          "usuario_id": prefs.uid
+        };
+        Firestore.instance.collection('consejos').add(datos);
       }
       else{
         advicesProvider.updateAdvice(advice);
         showSnackbar("Consejo actualizado exitosamente");
       }
+      
       Navigator.pop(context);
+      Toast.show("Creación exitosa", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM, backgroundColor: Colors.blue);
     }
+    
   }
 
   void showSnackbar(String mensaje){

@@ -33,7 +33,7 @@ class _RecipesListPageState extends State<RecipesListPage> {
                 return ListView(
                   children: snapshot.data.documents.map<Widget>((DocumentSnapshot document){
                     return Container(
-                      child: _cardReceta(document['foto_url'], document['nombreReceta'], document['autor'], "$document", document),
+                      child: _cardReceta(document['foto_url'], document['nombreReceta'], document['autor'], document.documentID, document),
                     );
                   }).toList(),
                 );

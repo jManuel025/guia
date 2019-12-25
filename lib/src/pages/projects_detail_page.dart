@@ -11,7 +11,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
     
     dynamic proyecto = ModalRoute.of(context).settings.arguments;
     // Map areas = proyecto['areas'].cast<String, dynamic>();
-
+    Map areas = proyecto['areas'];
     return Scaffold(
       appBar: AppBar(
         title: Text('Información'),
@@ -43,7 +43,33 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                 (proyecto['tipoRemuneracion']) ? Text('Económica') : Text('Desarrollo personal'), 
                 Divider(height: 25.0),
                 Text('Areas', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.5)),
-                
+                Wrap(
+                  direction: Axis.horizontal,
+                  alignment: WrapAlignment.center,
+                  spacing: 5.0,
+                  children: <Widget>[
+                    Chip(
+                      label: Text('Artes', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                      backgroundColor: (areas['Artes']) ? Colors.blue : Colors.grey,
+                    ),
+                    Chip(
+                      label: Text('Ciencias sociales', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                      backgroundColor: (areas['Ciencias sociales']) ? Colors.blue : Colors.grey,
+                    ),
+                    Chip(
+                      label: Text('Humanidades', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                      backgroundColor: (areas['Humanidades']) ? Colors.blue : Colors.grey,
+                    ),
+                    Chip(
+                      label: Text('Ingeniería', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                      backgroundColor: (areas['Ingeniería']) ? Colors.blue : Colors.grey,
+                    ),
+                    Chip(
+                      label: Text('Tecnología', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                      backgroundColor: (areas['Tecnología']) ? Colors.blue : Colors.grey,
+                    ),
+                  ],
+                ),
               ],
             ),
           )

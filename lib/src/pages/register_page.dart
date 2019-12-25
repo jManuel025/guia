@@ -122,6 +122,16 @@ Widget _registro(context){
                   SizedBox(height: 10.0,),
                   _birthday(context),
                   SizedBox(height: 20.0,),
+                  Container(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text('Selecciona tu sexo', textAlign: TextAlign.left),
+                        _sexo(),
+                      ],
+                    ),
+                  ),
                   _boton(context, bloc),
                 ],
               ),
@@ -217,7 +227,6 @@ Widget _registro(context){
         decoration: InputDecoration(
           icon: Icon(Icons.calendar_today, color: Color.fromRGBO(20, 136, 204, 1.0)),
           labelText: 'Fecha de nacimiento',
-          // hintText: 'DD/MM/AAAA'
         ),
         onSaved: (value) => user.fechaNacimiento = value,
         validator: (value){
@@ -253,6 +262,42 @@ Widget _registro(context){
         });
       }
     }
+  
+  bool masculino = false;
+  bool femenino = true;
+  Widget _sexo(){
+    if(masculino){
+      femenino = !masculino;
+    }
+    return Wrap(
+      spacing: 50.0,
+      children: <Widget>[
+        ChoiceChip(
+          label: Text('Masculino', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          selected: masculino,
+          onSelected: (valor){
+            setState(() {
+              masculino = valor;
+              print(masculino);
+            });
+          },
+          selectedColor: Colors.blue,
+        ),
+        ChoiceChip(
+          label: Text('Femenino', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          selected: femenino,
+          onSelected: (x){
+            setState(() {
+              femenino = x;
+              print(femenino);
+            });
+          },
+          selectedColor: Colors.blue,
+          
+        )
+      ],
+    );
+  }
 
   Widget _boton(BuildContext context, RegisterBloc bloc){
     return StreamBuilder(
@@ -282,28 +327,37 @@ Widget _registro(context){
       _submit();
     }
     else{
-      mostrarAlerta(context, info['mensaje']);
+      mostrarAlerta(context, (info['mensaje'] == "EMAIL_EXISTS") ? 'Correo no disponible': Container());
     }
   }
 
   _submit(){
     if(!formKey.currentState.validate()) return;
     formKey.currentState.save();
-    // userProvider.createUser(user);
-    // Agrega a firestore --sin modelo--
     Map<String, dynamic> datos = {
       'nombre': user.nombre,
       'correo': user.correo,
       'fechaNacimiento': user.fechaNacimiento,
-      // 'correoAlt': '',
       "expediente": '',
       "universidad": '',
       "carrera": '',
-      "sexo": false, //mujer
-      "habilidades": {},
-      "intereses": {},
+      "sexo": masculino,
+      "habilidades": {
+        "Comunicacion": false,
+        "Creatividad": false,
+        "Escucha": false,
+        "Liderazgo": false,
+        "Razonamiento": false,
+      },
+      "intereses": {
+        "Arte": false,
+        "Ciencia": false,
+        "Deportes": false,
+        "Tecnología": false,
+        "Historia": false,
+      },
       "tipoUsuario": false, //normal
-      "puntuacion": 5.0
+      // "puntuacion": 5.0
     };
     Firestore.instance.collection('usuarios').document(prefs.uid).setData(datos);
   }
