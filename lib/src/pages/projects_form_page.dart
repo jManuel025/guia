@@ -26,143 +26,147 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
 
   @override
   Widget build(BuildContext context) {
-
     final ProjectModel projectData = ModalRoute.of(context).settings.arguments;
-    if(projectData != null){
+    if (projectData != null) {
       project = projectData;
     }
     return Scaffold(
-      key: scaffolkey,
-      appBar: AppBar(
-        title: Text('Nuevo proyecto'),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(20.0),
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: <Widget>[
-                  // TITULO DEL PROYECTO
-                  Container(
-                    padding: EdgeInsets.only(bottom: 10.0),
-                    child: _titulo()
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(bottom: 10.0),
-                    child: _descripcion()
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(bottom: 10.0),
-                    child: _contacto()
-                  ),
-                  _remuneracion(),
-                  // Divider(thickness: 1.0),
-                  _duracion(),
-                  // CATEGORIAS
-                  // Divider(thickness: 1.0),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10.0),
-                    child: Column(
+        key: scaffolkey,
+        appBar: AppBar(
+          title: Text('Nuevo proyecto'),
+          centerTitle: true,
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.all(20.0),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: <Widget>[
+                    // TITULO DEL PROYECTO
+                    Container(
+                        padding: EdgeInsets.only(bottom: 10.0),
+                        child: _titulo()),
+                    Container(
+                        padding: EdgeInsets.only(bottom: 10.0),
+                        child: _descripcion()),
+                    Container(
+                        padding: EdgeInsets.only(bottom: 10.0),
+                        child: _contacto()),
+                    _remuneracion(),
+                    // Divider(thickness: 1.0),
+                    _duracion(),
+                    // CATEGORIAS
+                    // Divider(thickness: 1.0),
+                    Container(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.symmetric(vertical: 10.0),
+                              width: double.infinity,
+                              child: Text(
+                                  'Selecciona las áreas a las que pertenece',
+                                  style: TextStyle(fontSize: 15.0)),
+                            ),
+                          ],
+                        )),
+                    Wrap(
+                      spacing: 10.0,
+                      runSpacing: 2.0,
                       children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 10.0),
-                          width: double.infinity,
-                          child: Text('Selecciona las áreas a las que pertenece', style: TextStyle(fontSize: 15.0)),
+                        FilterChip(
+                          label: Text('Humanidades'),
+                          labelStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(24, 128, 192, 1.0)),
+                          selected: humanidades,
+                          backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                          onSelected: (valor) {
+                            setState(() {
+                              humanidades = valor;
+                            });
+                          },
+                          selectedColor: Color.fromRGBO(24, 128, 192, .30),
+                        ),
+                        FilterChip(
+                          label: Text('Ingeniería'),
+                          labelStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(24, 128, 192, 1.0)),
+                          selected: ingenieria,
+                          backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                          onSelected: (valor) {
+                            setState(() {
+                              ingenieria = valor;
+                            });
+                          },
+                          selectedColor: Color.fromRGBO(24, 128, 192, .30),
+                        ),
+                        FilterChip(
+                          label: Text('Ciencias sociales'),
+                          labelStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(24, 128, 192, 1.0)),
+                          selected: csociales,
+                          backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                          onSelected: (valor) {
+                            setState(() {
+                              csociales = valor;
+                            });
+                          },
+                          selectedColor: Color.fromRGBO(24, 128, 192, .30),
+                        ),
+                        FilterChip(
+                          label: Text('Artes'),
+                          labelStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(24, 128, 192, 1.0)),
+                          selected: artes,
+                          backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                          onSelected: (valor) {
+                            setState(() {
+                              artes = valor;
+                            });
+                          },
+                          selectedColor: Color.fromRGBO(24, 128, 192, .30),
+                        ),
+                        FilterChip(
+                          label: Text('Tecnología'),
+                          labelStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(24, 128, 192, 1.0)),
+                          selected: tecnologia,
+                          backgroundColor: Color.fromRGBO(24, 128, 192, .30),
+                          onSelected: (valor) {
+                            setState(() {
+                              tecnologia = valor;
+                            });
+                          },
+                          selectedColor: Color.fromRGBO(24, 128, 192, .30),
                         ),
                       ],
-                    )
-                  ),
-                  Wrap(
-                    spacing: 10.0,
-                    runSpacing: 2.0,
-                    children: <Widget>[
-                      FilterChip(
-                        label: Text('Humanidades'),
-                        labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                        selected: humanidades,
-                        backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                        onSelected: (valor){
-                          setState(() {
-                            humanidades = valor;
-                          });
-                        },
-                        selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                      ),
-                      FilterChip(
-                        label: Text('Ingeniería'),
-                        labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                        selected: ingenieria,
-                        backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                        onSelected: (valor){
-                          setState(() {
-                            ingenieria = valor;
-                          });
-                        },
-                        selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                      ),
-                      FilterChip(
-                        label: Text('Ciencias sociales'),
-                        labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                        selected: csociales,
-                        backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                        onSelected: (valor){
-                          setState(() {
-                            csociales = valor;
-                          });
-                        },
-                        selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                      ),
-                      FilterChip(
-                        label: Text('Artes'),
-                        labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                        selected: artes,
-                        backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                        onSelected: (valor){
-                          setState(() {
-                            artes = valor;
-                          });
-                        },
-                        selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                      ),
-                      FilterChip(
-                        label: Text('Tecnología'),
-                        labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                        selected: tecnologia,
-                        backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                        onSelected: (valor){
-                          setState(() {
-                            tecnologia = valor;
-                          });
-                        },
-                        selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                      ),
-                    ],
-                  ),
-                  // BOTONES ACEPTAR - CANCELAR
-                  Divider(height: 0.0, thickness: 1.0),
-                  Table(
-                    children: [
-                      TableRow(
-                        children: [
+                    ),
+                    // BOTONES ACEPTAR - CANCELAR
+                    Divider(height: 0.0, thickness: 1.0),
+                    Table(
+                      children: [
+                        TableRow(children: [
                           _btnCancel(),
                           _btnAccion(),
-                        ]
-                      )
-                    ],
-                  )
-                ],
+                        ])
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      )
-    );
+        ));
   }
 
-  Widget _titulo(){
+  Widget _titulo() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: TextFormField(
@@ -171,42 +175,41 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
           icon: Icon(Icons.content_paste),
           labelText: 'Titulo del proyecto',
         ),
-      onSaved: (value) => project.titulo = value,
-      validator: (value){
-        if(value.length < 5){
-          return 'Ingresa un nombre para el proyecto';
-        }
-        else{
-          return null;
-        }
-      },
+        onSaved: (value) => project.titulo = value,
+        validator: (value) {
+          if (value.length < 5) {
+            return 'Ingresa un nombre para el proyecto';
+          } else {
+            return null;
+          }
+        },
       ),
     );
   }
-  Widget _descripcion(){
+
+  Widget _descripcion() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: TextFormField(
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
-          icon: Icon(Icons.description),
-          labelText: 'Describe el proyecto',
-          border: OutlineInputBorder()
-        ),
+            icon: Icon(Icons.description),
+            labelText: 'Describe el proyecto',
+            border: OutlineInputBorder()),
         maxLines: 5,
-      onSaved: (value) => project.descripcion = value,
-      validator: (value){
-        if(value.length < 5){
-          return 'Es necesaria una descripción';
-        }
-        else{
-          return null;
-        }
-      },
+        onSaved: (value) => project.descripcion = value,
+        validator: (value) {
+          if (value.length < 5) {
+            return 'Es necesaria una descripción';
+          } else {
+            return null;
+          }
+        },
       ),
     );
   }
-  Widget _contacto(){
+
+  Widget _contacto() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: TextFormField(
@@ -215,28 +218,29 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
           icon: Icon(Icons.person_pin),
           labelText: 'Contacto',
         ),
-      onSaved: (value) => project.contacto = value,
-      validator: (value){
-        if(value.length < 5){
-          return 'Ingresa medio por el cual se puedan poner en contacto contigo';
-        }
-        else{
-          return null;
-        }
-      },
+        onSaved: (value) => project.contacto = value,
+        validator: (value) {
+          if (value.length < 5) {
+            return 'Ingresa medio por el cual se puedan poner en contacto contigo';
+          } else {
+            return null;
+          }
+        },
       ),
     );
   }
-  Widget _remuneracion(){
+
+  Widget _remuneracion() {
     return SwitchListTile(
-      value:  project.tipoRemuneracion,
+      value: project.tipoRemuneracion,
       title: Text('Remuneración económica'),
-      onChanged: (value) => setState((){
+      onChanged: (value) => setState(() {
         project.tipoRemuneracion = value;
       }),
     );
   }
-  Widget _duracion(){
+
+  Widget _duracion() {
     return TextFormField(
       keyboardType: TextInputType.number,
       initialValue: project.duracion.toString(),
@@ -245,49 +249,51 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
         labelText: 'Duracion aproximada (días)',
       ),
       onSaved: (value) => project.duracion = int.parse(value),
-      validator: (value){
-        if(utils.isNumber(value)){
+      validator: (value) {
+        if (utils.isNumber(value)) {
           return null;
-        }
-        else{
+        } else {
           return 'Solo numeros';
         }
       },
     );
   }
-  Widget _btnAccion(){
+
+  Widget _btnAccion() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        textColor: Colors.white,
-        color: Colors.blueAccent,
+      child: ElevatedButton(
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(10.0),
+        // ),
+        // textColor: Colors.white,
+        // color: Colors.blueAccent,
         child: Text('Aceptar'),
         onPressed: _submit,
       ),
     );
   }
-  Widget _btnCancel(){
+
+  Widget _btnCancel() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        textColor: Colors.white,
-        color: Colors.blueAccent,
+      child: ElevatedButton(
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(10.0),
+        // ),
+        // textColor: Colors.white,
+        // color: Colors.blueAccent,
         child: Text('Cancelar'),
         onPressed: () => Navigator.pop(context),
       ),
     );
   }
-  void _submit(){
-    if(formKey.currentState.validate()){
+
+  void _submit() {
+    if (formKey.currentState.validate()) {
       // Dispara los onsave
       formKey.currentState.save();
-      if(project.id == null){
+      if (project.id == null) {
         projectsProvider.createProject(project);
       }
       Map<String, bool> areas = {
@@ -308,7 +314,10 @@ class _ProjectsFormPageState extends State<ProjectsFormPage> {
         "areas": areas,
       };
       Firestore.instance.collection('proyectos').add(datos);
-      Toast.show("Creación exitosa", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM, backgroundColor: Colors.blue);
+      Toast.show("Creación exitosa", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM,
+          backgroundColor: Colors.blue);
       Navigator.pop(context);
     }
   }

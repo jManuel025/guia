@@ -17,269 +17,283 @@ class _RecipesUpdtFormState extends State<RecipesUpdtForm> {
   // RecipeModel recipe = RecipeModel();
   File foto;
 
-  // bool saludable = false;
-  // bool facil = false;
-  // bool barato = false;
-  // bool rapido = false;
-  // bool inusual = false;
-
-  
-
-  List<String> _categorias = ['Categorías', 'Desayuno', 'Comida', 'Cena', 'Bebidas', 'Ensaladas', 'Postres'];
-  String _slctdOpt = 'Categorías';
+  List<String> _categorias = [
+    'Categorías',
+    'Desayuno',
+    'Comida',
+    'Cena',
+    'Bebidas',
+    'Ensaladas',
+    'Postres'
+  ];
 
   @override
   Widget build(BuildContext context) {
-
     DocumentSnapshot recipeData = ModalRoute.of(context).settings.arguments;
     Map etiquetas = recipeData['etiquetas'];
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Editar receta'),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(20.0),
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: <Widget>[
-                  _showPhoto(recipeData),
-                  // FOTOGRAFÍA photo_size_select_actual
-                  // Container(
-                  //   child: Table(
-                  //     children: [
-                  //       TableRow(
-                  //         children: [
-                  //           Container(
-                  //             padding: EdgeInsets.symmetric(horizontal: 5.0),
-                  //             child: _fotografiaSlc(),
-                  //           ),
-                  //           Container(
-                  //             padding: EdgeInsets.symmetric(horizontal: 5.0),
-                  //             child: _fotografiaCam(),
-                  //           )
-                  //         ]
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  // NOMBRE DE RECETA
-                  Container(
-                    padding: EdgeInsets.only(bottom: 10.0),
-                    child: _nombreReceta(recipeData)
-                  ),
-                  // INGREDIENTES
-                  Divider(height: 0.0, thickness: 1.0),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10.0),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(top: 10.0),
-                          width: double.infinity,
-                          child: Text('Ingredientes', style: TextStyle(fontSize: 15)),
-                        ),
-                        _ingrediente(recipeData),
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              // _elemento('Ingrediente','remove'),
-                              // _elemento('Ingrediente', 'add'),
-                            ],
+        appBar: AppBar(
+          title: Text('Editar receta'),
+          centerTitle: true,
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.all(20.0),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: <Widget>[
+                    _showPhoto(recipeData),
+                    // FOTOGRAFÍA photo_size_select_actual
+                    // Container(
+                    //   child: Table(
+                    //     children: [
+                    //       TableRow(
+                    //         children: [
+                    //           Container(
+                    //             padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    //             child: _fotografiaSlc(),
+                    //           ),
+                    //           Container(
+                    //             padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    //             child: _fotografiaCam(),
+                    //           )
+                    //         ]
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // NOMBRE DE RECETA
+                    Container(
+                        padding: EdgeInsets.only(bottom: 10.0),
+                        child: _nombreReceta(recipeData)),
+                    // INGREDIENTES
+                    Divider(height: 0.0, thickness: 1.0),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.only(top: 10.0),
+                            width: double.infinity,
+                            child: Text('Ingredientes',
+                                style: TextStyle(fontSize: 15)),
                           ),
-                        )
-                      ],
+                          _ingrediente(recipeData),
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                // _elemento('Ingrediente','remove'),
+                                // _elemento('Ingrediente', 'add'),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  // PASOS
-                  Divider(height: 0.0, thickness: 1.0),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10.0),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(top: 10.0),
-                          width: double.infinity,
-                          child: Text('Procedimiento', style: TextStyle(fontSize: 15)),
-                        ),
-                        _procedimiento(recipeData),
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              // _elemento('Paso','remove'),
-                              // _elemento('Paso', 'add'),
-                            ],
+                    // PASOS
+                    Divider(height: 0.0, thickness: 1.0),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.only(top: 10.0),
+                            width: double.infinity,
+                            child: Text('Procedimiento',
+                                style: TextStyle(fontSize: 15)),
                           ),
-                        )
-                      ],
+                          _procedimiento(recipeData),
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                // _elemento('Paso','remove'),
+                                // _elemento('Paso', 'add'),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  // Divider(height: 0.0, thickness: 1.0),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10.0),
-                    child: Column(
-                      children: <Widget>[
-                        // Container(
-                        //   padding: EdgeInsets.only(top: 10.0),
-                        //   width: double.infinity,
-                        //   child: Text('Selecciona una categoría', style: TextStyle(fontSize: 15)),
-                        // ),
-                        // _categoria(recipeData),
-                        // Container(
-                        //   padding: EdgeInsets.symmetric(vertical: 10.0),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //     children: <Widget>[
-                        //       // _elemento('Paso','remove'),
-                        //       // _elemento('Paso', 'add'),
-                        //     ],
-                        //   ),
-                        // )
-                      ],
+                    // Divider(height: 0.0, thickness: 1.0),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                      child: Column(
+                        children: <Widget>[
+                          // Container(
+                          //   padding: EdgeInsets.only(top: 10.0),
+                          //   width: double.infinity,
+                          //   child: Text('Selecciona una categoría', style: TextStyle(fontSize: 15)),
+                          // ),
+                          // _categoria(recipeData),
+                          // Container(
+                          //   padding: EdgeInsets.symmetric(vertical: 10.0),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          //     children: <Widget>[
+                          //       // _elemento('Paso','remove'),
+                          //       // _elemento('Paso', 'add'),
+                          //     ],
+                          //   ),
+                          // )
+                        ],
+                      ),
                     ),
-                  ),
-                  // TIEMPO DE PREPARACION COSTO PORCIONES
-                  Divider(height: 0.0, thickness: 1.0),
-                  Container(
-                    padding: EdgeInsets.only(bottom: 10.0),
-                    width: double.infinity,
-                    child: Table(
-                      children: [
-                        TableRow(
+                    // TIEMPO DE PREPARACION COSTO PORCIONES
+                    Divider(height: 0.0, thickness: 1.0),
+                    Container(
+                        padding: EdgeInsets.only(bottom: 10.0),
+                        width: double.infinity,
+                        child: Table(
                           children: [
-                            Column(
-                              children: <Widget>[
-                                // Text('Porciones', style: TextStyle(fontSize: 15.0)),
-                                _porciones(recipeData),
-                              ],
-                            ),
-                            Column(
-                              children: <Widget>[
-                                // Text('Tiempo', style: TextStyle(fontSize: 15.0)),
-                                _tiempoPreparacion(recipeData),
-                              ],
-                            ),
-                            Column(
-                              children: <Widget>[
-                                // Text('Costo', style: TextStyle(fontSize: 15.0)),
-                                _costo(recipeData),
-                              ],
-                            ),
-                          ]
-                        )
-                      ],
-                    )
-                  ),
-                  // CATEGORIAS
-                  Divider(thickness: 1.0),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10.0),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 10.0),
-                          width: double.infinity,
-                          child: Text('Marca las etiquetas que consideres adecuadas', style: TextStyle(fontSize: 15.0)),
-                        ),
-                        Wrap(
-                          spacing: 10.0,
-                          runSpacing: 2.0,
-                          children: <Widget>[
-                            FilterChip(
-                              label: Text('Saludable'),
-                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                              selected: etiquetas['Saludable'],
-                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                              onSelected: (valor){
-                                setState(() {
-                                  etiquetas['Saludable'] = valor;
-                                });
-                              },
-                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                            ),
-                            FilterChip(
-                              label: Text('Fácil'),
-                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                              selected: etiquetas['Fácil'],
-                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                              onSelected: (valor){
-                                setState(() {
-                                  etiquetas['Fácil'] = valor;
-                                });
-                              },
-                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                            ),
-                            FilterChip(
-                              label: Text('Barato'),
-                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                              selected: etiquetas['Barato'],
-                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                              onSelected: (valor){
-                                setState(() {
-                                  etiquetas['Barato'] = valor;
-                                });
-                              },
-                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                            ),
-                            FilterChip(
-                              label: Text('Rápido'),
-                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                              selected: etiquetas['Rápido'],
-                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                              onSelected: (valor){
-                                setState(() {
-                                  etiquetas['Rápido'] = valor;
-                                });
-                              },
-                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                            ),
-                            FilterChip(
-                              label: Text('Inusual'),
-                              labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(24, 128, 192, 1.0)),
-                              selected: etiquetas['Inusual'],
-                              backgroundColor: Color.fromRGBO(24, 128, 192, .30),
-                              onSelected: (valor){
-                                setState(() {
-                                  etiquetas['Inusual'] = valor;
-                                });
-                              },
-                              selectedColor: Color.fromRGBO(24, 128, 192, .30),
-                            ),
+                            TableRow(children: [
+                              Column(
+                                children: <Widget>[
+                                  // Text('Porciones', style: TextStyle(fontSize: 15.0)),
+                                  _porciones(recipeData),
+                                ],
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  // Text('Tiempo', style: TextStyle(fontSize: 15.0)),
+                                  _tiempoPreparacion(recipeData),
+                                ],
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  // Text('Costo', style: TextStyle(fontSize: 15.0)),
+                                  _costo(recipeData),
+                                ],
+                              ),
+                            ])
                           ],
-                        )
-                      ],
-                    )
-                  ),
-                  // BOTONES ACEPTAR - CANCELAR
-                   Divider(height: 0.0, thickness: 1.0),
-                  Table(
-                    children: [
-                      TableRow(
-                        children: [
+                        )),
+                    // CATEGORIAS
+                    Divider(thickness: 1.0),
+                    Container(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.symmetric(vertical: 10.0),
+                              width: double.infinity,
+                              child: Text(
+                                  'Marca las etiquetas que consideres adecuadas',
+                                  style: TextStyle(fontSize: 15.0)),
+                            ),
+                            Wrap(
+                              spacing: 10.0,
+                              runSpacing: 2.0,
+                              children: <Widget>[
+                                FilterChip(
+                                  label: Text('Saludable'),
+                                  labelStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromRGBO(24, 128, 192, 1.0)),
+                                  selected: etiquetas['Saludable'],
+                                  backgroundColor:
+                                      Color.fromRGBO(24, 128, 192, .30),
+                                  onSelected: (valor) {
+                                    setState(() {
+                                      etiquetas['Saludable'] = valor;
+                                    });
+                                  },
+                                  selectedColor:
+                                      Color.fromRGBO(24, 128, 192, .30),
+                                ),
+                                FilterChip(
+                                  label: Text('Fácil'),
+                                  labelStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromRGBO(24, 128, 192, 1.0)),
+                                  selected: etiquetas['Fácil'],
+                                  backgroundColor:
+                                      Color.fromRGBO(24, 128, 192, .30),
+                                  onSelected: (valor) {
+                                    setState(() {
+                                      etiquetas['Fácil'] = valor;
+                                    });
+                                  },
+                                  selectedColor:
+                                      Color.fromRGBO(24, 128, 192, .30),
+                                ),
+                                FilterChip(
+                                  label: Text('Barato'),
+                                  labelStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromRGBO(24, 128, 192, 1.0)),
+                                  selected: etiquetas['Barato'],
+                                  backgroundColor:
+                                      Color.fromRGBO(24, 128, 192, .30),
+                                  onSelected: (valor) {
+                                    setState(() {
+                                      etiquetas['Barato'] = valor;
+                                    });
+                                  },
+                                  selectedColor:
+                                      Color.fromRGBO(24, 128, 192, .30),
+                                ),
+                                FilterChip(
+                                  label: Text('Rápido'),
+                                  labelStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromRGBO(24, 128, 192, 1.0)),
+                                  selected: etiquetas['Rápido'],
+                                  backgroundColor:
+                                      Color.fromRGBO(24, 128, 192, .30),
+                                  onSelected: (valor) {
+                                    setState(() {
+                                      etiquetas['Rápido'] = valor;
+                                    });
+                                  },
+                                  selectedColor:
+                                      Color.fromRGBO(24, 128, 192, .30),
+                                ),
+                                FilterChip(
+                                  label: Text('Inusual'),
+                                  labelStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromRGBO(24, 128, 192, 1.0)),
+                                  selected: etiquetas['Inusual'],
+                                  backgroundColor:
+                                      Color.fromRGBO(24, 128, 192, .30),
+                                  onSelected: (valor) {
+                                    setState(() {
+                                      etiquetas['Inusual'] = valor;
+                                    });
+                                  },
+                                  selectedColor:
+                                      Color.fromRGBO(24, 128, 192, .30),
+                                ),
+                              ],
+                            )
+                          ],
+                        )),
+                    // BOTONES ACEPTAR - CANCELAR
+                    Divider(height: 0.0, thickness: 1.0),
+                    Table(
+                      children: [
+                        TableRow(children: [
                           _btnCancel(),
                           _btnAccion(recipeData),
-                        ]
-                      )
-                    ],
-                  )
-                ],
+                        ])
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      )
-    );
+        ));
   }
 
   // Widget _fotografiaSlc(){
-  //   return RaisedButton.icon(
+  //   return ElevatedButton.icon(
   //     shape: RoundedRectangleBorder(
   //       borderRadius: BorderRadius.circular(10.0),
   //     ),
@@ -291,7 +305,7 @@ class _RecipesUpdtFormState extends State<RecipesUpdtForm> {
   //   );
   // }
   // Widget _fotografiaCam(){
-  //   return RaisedButton.icon(
+  //   return ElevatedButton.icon(
   //     shape: RoundedRectangleBorder(
   //       borderRadius: BorderRadius.circular(10.0),
   //     ),
@@ -302,43 +316,44 @@ class _RecipesUpdtFormState extends State<RecipesUpdtForm> {
   //     onPressed: _takePhoto,
   //   );
   // }
-    Widget _showPhoto(dynamic recipeData){
-      if(recipeData['foto_url'] != null && recipeData['foto_url'] != ''){
-        return Container();
-      }
-      else{
-        return Card(
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-          child: Image(
-            image: AssetImage(foto?.path??'assets/no-image.png'),
-            height: 250.0,
-            width: double.infinity,
-            fit: BoxFit.cover,
-          ),
-        );
-      }
+  Widget _showPhoto(dynamic recipeData) {
+    if (recipeData['foto_url'] != null && recipeData['foto_url'] != '') {
+      return Container();
+    } else {
+      return Card(
+        clipBehavior: Clip.antiAlias,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+        child: Image(
+          image: AssetImage(foto?.path ?? 'assets/no-image.png'),
+          height: 250.0,
+          width: double.infinity,
+          fit: BoxFit.cover,
+        ),
+      );
     }
-    // _selectPhoto() async{
-    //   foto = await ImagePicker.pickImage(
-    //     source: ImageSource.gallery
-    //   );
-    //   if(foto != null){
-    //     // hacer limpieza
-    //   }
-    //   setState(() {});
-    // }
-    // _takePhoto() async{
-    //   foto = await ImagePicker.pickImage(
-    //     source: ImageSource.camera
-    //   );
-    //   if(foto != null){
-    //     // hacer limpieza
-    //   }
-    //   setState(() {});
-    // }
+  }
+
+  // _selectPhoto() async{
+  //   foto = await ImagePicker.pickImage(
+  //     source: ImageSource.gallery
+  //   );
+  //   if(foto != null){
+  //     // hacer limpieza
+  //   }
+  //   setState(() {});
+  // }
+  // _takePhoto() async{
+  //   foto = await ImagePicker.pickImage(
+  //     source: ImageSource.camera
+  //   );
+  //   if(foto != null){
+  //     // hacer limpieza
+  //   }
+  //   setState(() {});
+  // }
   String nNombre;
-  Widget _nombreReceta(DocumentSnapshot receta){
+  Widget _nombreReceta(DocumentSnapshot receta) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: TextFormField(
@@ -348,20 +363,20 @@ class _RecipesUpdtFormState extends State<RecipesUpdtForm> {
           icon: Icon(Icons.fastfood),
           labelText: 'Nombre del platillo',
         ),
-      onSaved: (value) => nNombre = value,
-      validator: (value){
-        if(value.length < 4){
-          return 'Ingresa el nombre de la receta';
-        }
-        else{
-          return null;
-        }
-      },
+        onSaved: (value) => nNombre = value,
+        validator: (value) {
+          if (value.length < 4) {
+            return 'Ingresa el nombre de la receta';
+          } else {
+            return null;
+          }
+        },
       ),
     );
   }
+
   String nIngrediente;
-  Widget _ingrediente(DocumentSnapshot receta){
+  Widget _ingrediente(DocumentSnapshot receta) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5.0),
       child: TextFormField(
@@ -371,20 +386,20 @@ class _RecipesUpdtFormState extends State<RecipesUpdtForm> {
           icon: Icon(Icons.list),
           labelText: 'Ingresa los ingredientes separados por comas',
         ),
-      onSaved: (value) => nIngrediente = value,
-      validator: (value){
-        if(value.length < 3){
-          return 'Ingresa al menos un ingrediente';
-        }
-        else{
-          return null;
-        }
-      },
+        onSaved: (value) => nIngrediente = value,
+        validator: (value) {
+          if (value.length < 3) {
+            return 'Ingresa al menos un ingrediente';
+          } else {
+            return null;
+          }
+        },
       ),
     );
   }
+
   String nProcedimiento;
-  Widget _procedimiento(DocumentSnapshot receta){
+  Widget _procedimiento(DocumentSnapshot receta) {
     return Container(
       child: TextFormField(
         initialValue: receta['procedimiento'],
@@ -396,21 +411,20 @@ class _RecipesUpdtFormState extends State<RecipesUpdtForm> {
           // border: OutlineInputBorder()
         ),
         onSaved: (value) => nProcedimiento = value,
-        validator: (value){
-        if(value.length < 10){
-          return 'es ncesaria una descripción';
-        }
-        else{
-          return null;
-        }
-      },
+        validator: (value) {
+          if (value.length < 10) {
+            return 'es ncesaria una descripción';
+          } else {
+            return null;
+          }
+        },
       ),
     );
   }
 
-  List<DropdownMenuItem<String>> getOpts(){
-    List<DropdownMenuItem<String>> lista = new List();
-    _categorias.forEach((categoria){
+  List<DropdownMenuItem<String>> getOpts() {
+    List<DropdownMenuItem<String>> lista = [];
+    _categorias.forEach((categoria) {
       lista.add(DropdownMenuItem(
         child: Text(categoria),
         value: categoria,
@@ -418,6 +432,7 @@ class _RecipesUpdtFormState extends State<RecipesUpdtForm> {
     });
     return lista;
   }
+
   // String nCat;
   // Widget _categoria(DocumentSnapshot receta){
   //   return DropdownButton(
@@ -433,7 +448,7 @@ class _RecipesUpdtFormState extends State<RecipesUpdtForm> {
   //   );
   // }
   double nCosto;
-  Widget _costo(DocumentSnapshot receta){
+  Widget _costo(DocumentSnapshot receta) {
     return TextFormField(
       keyboardType: TextInputType.number,
       initialValue: receta['costo'].toString(),
@@ -442,18 +457,18 @@ class _RecipesUpdtFormState extends State<RecipesUpdtForm> {
         labelText: 'Costo',
       ),
       onSaved: (value) => nCosto = double.parse(value),
-      validator: (value){
-        if(utils.isNumber(value)){
+      validator: (value) {
+        if (utils.isNumber(value)) {
           return null;
-        }
-        else{
+        } else {
           return 'Solo numeros';
         }
       },
     );
   }
+
   int nPorciones;
-  Widget _porciones(DocumentSnapshot receta){
+  Widget _porciones(DocumentSnapshot receta) {
     return TextFormField(
       keyboardType: TextInputType.number,
       initialValue: receta['porciones'].toString(),
@@ -462,18 +477,18 @@ class _RecipesUpdtFormState extends State<RecipesUpdtForm> {
         labelText: 'Porciones',
       ),
       onSaved: (value) => nPorciones = int.parse(value),
-      validator: (value){
-        if(utils.isNumber(value)){
+      validator: (value) {
+        if (utils.isNumber(value)) {
           return null;
-        }
-        else{
+        } else {
           return 'Solo numeros';
         }
       },
     );
   }
+
   int nTiempo;
-  Widget _tiempoPreparacion(DocumentSnapshot receta){
+  Widget _tiempoPreparacion(DocumentSnapshot receta) {
     return TextFormField(
       keyboardType: TextInputType.number,
       initialValue: receta['tiempo_preparacion'].toString(),
@@ -482,49 +497,50 @@ class _RecipesUpdtFormState extends State<RecipesUpdtForm> {
         labelText: 'Minutos',
       ),
       onSaved: (value) => nTiempo = int.parse(value),
-      validator: (value){
-        if(utils.isNumber(value)){
+      validator: (value) {
+        if (utils.isNumber(value)) {
           return null;
-        }
-        else{
+        } else {
           return 'Solo numeros';
         }
       },
     );
   }
-  Widget _btnAccion(DocumentSnapshot receta){
+
+  Widget _btnAccion(DocumentSnapshot receta) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        textColor: Colors.white,
-        color: Colors.blueAccent,
+      child: ElevatedButton(
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(10.0),
+        // ),
+        // textColor: Colors.white,
+        // color: Colors.blueAccent,
         child: Text('Aceptar'),
         onPressed: () => _submit(receta),
       ),
     );
   }
-  Widget _btnCancel(){
+
+  Widget _btnCancel() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        textColor: Colors.white,
-        color: Colors.blueAccent,
+      child: ElevatedButton(
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(10.0),
+        // ),
+        // textColor: Colors.white,
+        // color: Colors.blueAccent,
         child: Text('Cancelar'),
         onPressed: () => Navigator.pop(context),
       ),
     );
   }
 
-  void _submit(DocumentSnapshot receta) async{
+  void _submit(DocumentSnapshot receta) async {
     Map etiquetas = receta['etiquetas'];
     // String nFoto;
-    if(formKey.currentState.validate()){
+    if (formKey.currentState.validate()) {
       formKey.currentState.save();
       // if(nFoto != null){
       //   nFoto = await uploadImage(foto);
@@ -549,8 +565,14 @@ class _RecipesUpdtFormState extends State<RecipesUpdtForm> {
         "porciones": nPorciones,
         "etiquetas": tags,
       };
-      Firestore.instance.collection('recetas').document(receta.documentID).updateData(datos);
-      Toast.show("Actualización exitosa", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM, backgroundColor: Colors.blue);
+      Firestore.instance
+          .collection('recetas')
+          .document(receta.documentID)
+          .updateData(datos);
+      Toast.show("Actualización exitosa", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM,
+          backgroundColor: Colors.blue);
       Navigator.pop(context);
     }
   }

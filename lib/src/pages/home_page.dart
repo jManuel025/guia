@@ -11,59 +11,57 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   int currentIndex = 0;
   final prefs = new PreferenciasUsuario();
 
   @override
   Widget build(BuildContext context) {
-    prefs.ultimaPagina = 'home'; 
+    prefs.ultimaPagina = 'home';
     return Scaffold(
       body: _loadPage(currentIndex),
       bottomNavigationBar: _bottomBar(),
     );
   }
-  Widget _loadPage(int currentPage){
+
+  Widget _loadPage(int currentPage) {
     switch (currentPage) {
-      case 0: return ProfilePage();
-      case 1: return ProjectsPage();
-      case 2: return AdvicesPage();
-      default: 
+      case 0:
+        return ProfilePage();
+      case 1:
+        return ProjectsPage();
+      case 2:
+        return AdvicesPage();
+      default:
         return RecipesPage();
     }
   }
 
-  Widget _bottomBar(){
+  Widget _bottomBar() {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       currentIndex: currentIndex,
-      onTap: (index){
+      onTap: (index) {
         setState(() {
           currentIndex = index;
         });
       },
       items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          title: Text('Perfil')
+          icon: Icon(Icons.person), label: 'Perfil', // Text('Perfil')
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.work),
-          title: Text('Proyectos')
+          icon: Icon(Icons.work), label: 'Proyectos', // Text('Proyectos')
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.comment),
-          title: Text('Consejos')
+          icon: Icon(Icons.comment), label: 'Consejos', // Text('Consejos')
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.local_dining),
-          title: Text('Recetas')
+          icon: Icon(Icons.local_dining), label: 'Recetas', // Text('Recetas')
         )
       ],
     );
   }
 }
-  
 
 // Widget _tarjetas(BuildContext context){
 //   return SingleChildScrollView(
@@ -111,11 +109,11 @@ class _HomePageState extends State<HomePage> {
 //                   SizedBox(height: 5.0),
 //                 ],
 //               ),
-//             ), 
+//             ),
 //             Container(
 //               height: double.infinity,
 //               width: double.infinity,
-//               child: FlatButton(
+//               child: TextButton(
 //                 child: SizedBox(),
 //                 onPressed: () => Navigator.pushNamed(context, pantalla),
 //               ),

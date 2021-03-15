@@ -1,13 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:guiaestudiante/src/blocs/register_bloc.dart';
 import 'package:guiaestudiante/src/blocs/provider.dart';
 import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 import 'package:guiaestudiante/src/providers/user_provider.dart';
 import 'package:guiaestudiante/src/utils/utils.dart';
 
-class LoginPage extends StatelessWidget{
-
+class LoginPage extends StatelessWidget {
   final userProvider = new UserProvider();
   final prefs = new PreferenciasUsuario();
 
@@ -24,15 +23,16 @@ class LoginPage extends StatelessWidget{
     );
   }
 
-Widget _login(context){
-  return Stack(
-    children: <Widget>[
-      _fondo(),
-      _formulario(context),
-    ],
-  );
-}
-  Widget _fondo(){
+  Widget _login(context) {
+    return Stack(
+      children: <Widget>[
+        _fondo(),
+        _formulario(context),
+      ],
+    );
+  }
+
+  Widget _fondo() {
     final fondo = Container(
       width: double.infinity,
       height: double.infinity,
@@ -41,15 +41,14 @@ Widget _login(context){
       width: double.infinity,
       height: 300.0,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: FractionalOffset(0, 0),
-          end: FractionalOffset(1, 1),
-          colors: [
-            Color.fromRGBO(20, 136, 204, 1.0),
-            Color.fromRGBO(43, 50, 178, 1.0),
-          ],
-        )
-      ),
+          gradient: LinearGradient(
+        begin: FractionalOffset(0, 0),
+        end: FractionalOffset(1, 1),
+        colors: [
+          Color.fromRGBO(20, 136, 204, 1.0),
+          Color.fromRGBO(43, 50, 178, 1.0),
+        ],
+      )),
     );
     return Stack(
       children: <Widget>[
@@ -60,7 +59,13 @@ Widget _login(context){
           child: Column(
             children: <Widget>[
               Center(
-                child: Text('Guía del estudiante', style: TextStyle(color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.bold)),
+                child: Text(
+                  'Guía del estudiante',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold),
+                ),
               )
             ],
           ),
@@ -68,7 +73,8 @@ Widget _login(context){
       ],
     );
   }
-  Widget _formulario(BuildContext context){
+
+  Widget _formulario(BuildContext context) {
     final bloc = Provider.de(context);
     final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
@@ -84,26 +90,34 @@ Widget _login(context){
             margin: EdgeInsets.symmetric(vertical: 20.0),
             padding: EdgeInsets.symmetric(vertical: 40.0),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 3.0,
-                  offset: Offset(0.0, 5.0),
-                  spreadRadius: 3.0
-               )
-              ]
-            ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 3.0,
+                      offset: Offset(0.0, 5.0),
+                      spreadRadius: 3.0)
+                ]),
             child: Column(
               children: <Widget>[
-                Text('Iniciar sesión', style: TextStyle(color: Colors.blueGrey, fontSize: 20.0, )),
-                SizedBox(height: 30.0,),
+                Text('Iniciar sesión',
+                    style: TextStyle(
+                      color: Colors.blueGrey,
+                      fontSize: 20.0,
+                    )),
+                SizedBox(
+                  height: 30.0,
+                ),
                 // _username(bloc),
                 _email(bloc),
-                SizedBox(height: 30.0,),
+                SizedBox(
+                  height: 30.0,
+                ),
                 _password(bloc),
-                SizedBox(height: 30.0,),
+                SizedBox(
+                  height: 30.0,
+                ),
                 _boton(context, bloc),
               ],
             ),
@@ -116,82 +130,91 @@ Widget _login(context){
     );
   }
 
-    Widget _email(LoginBloc bloc){
-      return StreamBuilder(
-        stream: bloc.emailStream,
-        builder: (BuildContext context, AsyncSnapshot snapshot){
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                icon: Icon(Icons.alternate_email, color: Color.fromRGBO(20, 136, 204, 1.0)),
+  Widget _email(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.emailStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: TextField(
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+                icon: Icon(Icons.alternate_email,
+                    color: Color.fromRGBO(20, 136, 204, 1.0)),
                 labelText: 'Correo electrónico',
                 // counterText: snapshot.data,
-                errorText: snapshot.error
-              ),
-              onChanged: bloc.changeEmail,
+                errorText: snapshot.error),
+            onChanged: bloc.changeEmail,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _password(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.passwordStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: TextField(
+            obscureText: true,
+            decoration: InputDecoration(
+              icon: Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
+              labelText: 'Contraseña',
             ),
-          );
-        },
-      );
-    }
-    Widget _password(LoginBloc bloc){
-      return StreamBuilder(
-        stream: bloc.passwordStream,
-        builder: (BuildContext context, AsyncSnapshot snapshot){
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                icon: Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
-                labelText: 'Contraseña',
-              ),
-              onChanged: bloc.changePassword,
-            ),
-          );
-        },
-      );
-    }
-    Widget _boton(BuildContext context, LoginBloc bloc){
-      return StreamBuilder(
+            onChanged: bloc.changePassword,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _boton(BuildContext context, LoginBloc bloc) {
+    return StreamBuilder(
         stream: bloc.formValidStream,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return RaisedButton(
+          return ElevatedButton(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
               child: Text('Iniciar'),
             ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5.0),
-            ),
-            elevation: 0.0,
-            color: Color.fromRGBO(20, 136, 204, 1.0),
-            textColor: Colors.white,
-            onPressed: snapshot.hasData ? () => _signin(bloc, context): null,
-            // 
+            // shape: RoundedRectangleBorder(
+            //   borderRadius: BorderRadius.circular(5.0),
+            // ),
+            // elevation: 0.0,
+            // color: Color.fromRGBO(20, 136, 204, 1.0),
+            // textColor: Colors.white,
+            onPressed: snapshot.hasData ? () => _signin(bloc, context) : null,
+            //
           );
-        }
-      );
-    }
-      _signin(LoginBloc bloc, BuildContext context) async {
-        Map info = await userProvider.login(bloc.email, bloc.password);
-        if(info['ok']){
-          Navigator.pushReplacementNamed(context, 'home');
-          final userData = await Firestore.instance.collection('usuarios').document(prefs.uid).get();
-          prefs.name = userData['nombre'];
-          prefs.score = userData['puntuacion'].toString();
-        }
-        else{
-          mostrarAlerta(context, (info['mensaje'] == "INVALID_PASSWORD" || info['mensaje'] == "MISSING_PASSWORD") ? 'Contraseña incorrecta' : 'Correo incorrecto');
-        }
-      }
+        });
+  }
 
-    Widget _botonAlt(String accion, BuildContext context, String pantalla){
-      return FlatButton(
-        child: Text(accion, style: TextStyle(color: Colors.blueGrey)),
-        onPressed: () => Navigator.pushNamed(context, pantalla),
-      );
+  _signin(LoginBloc bloc, BuildContext context) async {
+    Map info = await userProvider.login(bloc.email, bloc.password);
+    if (info['ok']) {
+      Navigator.pushReplacementNamed(context, 'home');
+      final userData = await Firestore.instance
+          .collection('usuarios')
+          .document(prefs.uid)
+          .get();
+      prefs.name = userData['nombre'];
+      prefs.score = userData['puntuacion'].toString();
+    } else {
+      mostrarAlerta(
+          context,
+          (info['mensaje'] == "INVALID_PASSWORD" ||
+                  info['mensaje'] == "MISSING_PASSWORD")
+              ? 'Contraseña incorrecta'
+              : 'Correo incorrecto');
     }
+  }
+
+  Widget _botonAlt(String accion, BuildContext context, String pantalla) {
+    return TextButton(
+      child: Text(accion, style: TextStyle(color: Colors.blueGrey)),
+      onPressed: () => Navigator.pushNamed(context, pantalla),
+    );
+  }
 }

@@ -17,104 +17,105 @@ class _AdvicesFormPageState extends State<AdvicesFormPage> {
 
   @override
   Widget build(BuildContext context) {
-
     final AdviceModel adviceData = ModalRoute.of(context).settings.arguments;
-    if(adviceData != null){
+    if (adviceData != null) {
       advice = adviceData;
     }
     return Scaffold(
-      key: scaffoldKey,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(20.0),
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 30.0),
-                    width: double.infinity,
-                    child: Text('Nuevo consejo', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.blueGrey)),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(bottom: 10.0),
-                    child: _detalle()
-                  ),
-                  Table(
-                    children: [
-                      TableRow(
-                        children: [
+        key: scaffoldKey,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.all(20.0),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 30.0),
+                      width: double.infinity,
+                      child: Text('Nuevo consejo',
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blueGrey)),
+                    ),
+                    Container(
+                        padding: EdgeInsets.only(bottom: 10.0),
+                        child: _detalle()),
+                    Table(
+                      children: [
+                        TableRow(children: [
                           _btnCancel(),
                           _btnAccion(),
-                        ]
-                      )
-                    ],
-                  )
-                ],
+                        ])
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      )
-    );
+        ));
   }
-  Widget _detalle(){
+
+  Widget _detalle() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: TextFormField(
         initialValue: advice.detalle,
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
-          icon: Icon(Icons.description),
-          labelText: 'Describe aqui tu consejo',
-          border: OutlineInputBorder()
-        ),
+            icon: Icon(Icons.description),
+            labelText: 'Describe aqui tu consejo',
+            border: OutlineInputBorder()),
         maxLines: 3,
-      onSaved: (value) => advice.detalle = value,
-      validator: (value){
-        if(value.length < 15){
-          return 'Es necesaria una descripción mas larga';
-        }
-        else{
-          return null;
-        }
-      },
+        onSaved: (value) => advice.detalle = value,
+        validator: (value) {
+          if (value.length < 15) {
+            return 'Es necesaria una descripción mas larga';
+          } else {
+            return null;
+          }
+        },
       ),
     );
   }
-  Widget _btnAccion(){
+
+  Widget _btnAccion() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        textColor: Colors.white,
-        color: Colors.blueAccent,
+      child: ElevatedButton(
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(10.0),
+        // ),
+        // textColor: Colors.white,
+        // color: Colors.blueAccent,
         child: Text('Aceptar'),
         onPressed: _submit,
       ),
     );
   }
-  Widget _btnCancel(){
+
+  Widget _btnCancel() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        textColor: Colors.white,
-        color: Colors.blueAccent,
+      child: ElevatedButton(
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(10.0),
+        // ),
+        // textColor: Colors.white,
+        // color: Colors.blueAccent,
         child: Text('Cancelar'),
         onPressed: () => Navigator.pop(context),
       ),
     );
   }
-  void _submit(){
-    if(formKey.currentState.validate()){
+
+  void _submit() {
+    if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      if(advice.id == null){
+      if (advice.id == null) {
         // advicesProvider.createAdvice(advice);
         showSnackbar("Consejo creado exitosamente");
         Map<String, dynamic> datos = {
@@ -123,23 +124,26 @@ class _AdvicesFormPageState extends State<AdvicesFormPage> {
           "usuario_id": prefs.uid
         };
         Firestore.instance.collection('consejos').add(datos);
-      }
-      else{
+      } else {
         advicesProvider.updateAdvice(advice);
         showSnackbar("Consejo actualizado exitosamente");
       }
-      
+
       Navigator.pop(context);
-      Toast.show("Creación exitosa", context, duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM, backgroundColor: Colors.blue);
+      Toast.show("Creación exitosa", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM,
+          backgroundColor: Colors.blue);
     }
-    
   }
 
-  void showSnackbar(String mensaje){
+  void showSnackbar(String mensaje) {
     final snackbar = SnackBar(
       content: Text(mensaje),
       duration: Duration(milliseconds: 1500),
     );
-    scaffoldKey.currentState.showSnackBar(snackbar);
+    // scaffoldKey.currentState.showSnackBar(snackbar);
+    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    // ScaffoldMessenger.showSnackbar(snackbar);
   }
 }
