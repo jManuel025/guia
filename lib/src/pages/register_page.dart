@@ -1,12 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:guiaestudiante/src/models/advices_model.dart';
+// import 'package:guiaestudiante/src/models/advices_model.dart';
 import 'package:guiaestudiante/src/models/users_model.dart';
-import 'package:intl/intl.dart';
-import 'package:guiaestudiante/src/blocs/register_bloc.dart';
-import 'package:guiaestudiante/src/blocs/provider.dart';
-import 'package:guiaestudiante/src/providers/user_provider.dart';
-import 'package:guiaestudiante/src/utils/utils.dart';
+// import 'package:intl/intl.dart';
+// import 'package:guiaestudiante/src/blocs/register_bloc.dart';
+// import 'package:guiaestudiante/src/blocs/provider.dart';
+// import 'package:guiaestudiante/src/providers/user_provider.dart';
+// import 'package:guiaestudiante/src/utils/utils.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -14,10 +14,10 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  String _fecha = '';
-  final userProvider = new UserProvider();
+  // String _fecha = '';
+  // final userProvider = new UserProvider();
 
-  TextEditingController _dateInputController = new TextEditingController();
+  // TextEditingController _dateInputController = new TextEditingController();
 
   final formKey = GlobalKey<FormState>();
   UserModel user = new UserModel();
@@ -84,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget _formRegistro(context) {
-    final bloc = Provider.of(context);
+    // final bloc = Provider.of(context);
     final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
@@ -120,19 +120,19 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(
                       height: 10.0,
                     ),
-                    _username(bloc),
+                    // _username(bloc),
                     SizedBox(
                       height: 10.0,
                     ),
-                    _email(bloc),
+                    // _email(bloc),
                     SizedBox(
                       height: 10.0,
                     ),
-                    _password(bloc),
+                    // _password(bloc),
                     SizedBox(
                       height: 10.0,
                     ),
-                    _birthday(context),
+                    // _birthday(context),
                     SizedBox(
                       height: 20.0,
                     ),
@@ -142,251 +142,251 @@ class _RegisterPageState extends State<RegisterPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text('Selecciona tu sexo', textAlign: TextAlign.left),
-                          _sexo(),
+                          // _sexo(),
                         ],
                       ),
                     ),
-                    _boton(context, bloc),
+                    // _boton(context, bloc),
                   ],
                 ),
               )),
-          _botonAlt('Ya tengo una cuenta', context, 'login'),
+          // _botonAlt('Ya tengo una cuenta', context, 'login'),
         ],
       ),
     );
   }
 
-  Widget _username(RegisterBloc bloc) {
-    return StreamBuilder(
-        stream: bloc.usernameStream,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextFormField(
-              initialValue: user.nombre,
-              decoration: InputDecoration(
-                icon: Icon(Icons.person,
-                    color: Color.fromRGBO(20, 136, 204, 1.0)),
-                labelText: 'Nombre de usuario',
-                // counterText: snapshot.data,
-              ),
-              onSaved: (value) => user.nombre = value,
-              validator: (value) {
-                if (value.length < 3) {
-                  return 'Ingresa un nombre';
-                } else {
-                  return null;
-                }
-              },
-              onChanged: bloc.changeUsername,
-            ),
-          );
-        });
-  }
+//   Widget _username(RegisterBloc bloc) {
+//     return StreamBuilder(
+//         stream: bloc.usernameStream,
+//         builder: (BuildContext context, AsyncSnapshot snapshot) {
+//           return Container(
+//             padding: EdgeInsets.symmetric(horizontal: 20.0),
+//             child: TextFormField(
+//               initialValue: user.nombre,
+//               decoration: InputDecoration(
+//                 icon: Icon(Icons.person,
+//                     color: Color.fromRGBO(20, 136, 204, 1.0)),
+//                 labelText: 'Nombre de usuario',
+//                 // counterText: snapshot.data,
+//               ),
+//               onSaved: (value) => user.nombre = value,
+//               validator: (value) {
+//                 if (value.length < 3) {
+//                   return 'Ingresa un nombre';
+//                 } else {
+//                   return null;
+//                 }
+//               },
+//               onChanged: bloc.changeUsername,
+//             ),
+//           );
+//         });
+//   }
 
-  Widget _password(RegisterBloc bloc) {
-    return StreamBuilder(
-      stream: bloc.passwordStream,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: TextFormField(
-            // initialValue: user.password,
-            obscureText: true,
-            decoration: InputDecoration(
-                icon:
-                    Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
-                labelText: 'Contraseña',
-                // counterText: snapshot.data,
-                errorText: snapshot.error),
-            // onSaved: (value) => user.password = value,
-            onChanged: bloc.changePassword,
-          ),
-        );
-      },
-    );
-  }
+//   Widget _password(RegisterBloc bloc) {
+//     return StreamBuilder(
+//       stream: bloc.passwordStream,
+//       builder: (BuildContext context, AsyncSnapshot snapshot) {
+//         return Container(
+//           padding: EdgeInsets.symmetric(horizontal: 20.0),
+//           child: TextFormField(
+//             // initialValue: user.password,
+//             obscureText: true,
+//             decoration: InputDecoration(
+//                 icon:
+//                     Icon(Icons.lock, color: Color.fromRGBO(20, 136, 204, 1.0)),
+//                 labelText: 'Contraseña',
+//                 // counterText: snapshot.data,
+//                 errorText: snapshot.error),
+//             // onSaved: (value) => user.password = value,
+//             onChanged: bloc.changePassword,
+//           ),
+//         );
+//       },
+//     );
+//   }
 
-  Widget _email(RegisterBloc bloc) {
-    return StreamBuilder(
-      stream: bloc.emailStream,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: TextFormField(
-            initialValue: user.correo,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-                icon: Icon(Icons.alternate_email,
-                    color: Color.fromRGBO(20, 136, 204, 1.0)),
-                labelText: 'Correo electrónico',
-                // counterText: snapshot.data,
-                errorText: snapshot.error),
-            onSaved: (value) => user.correo = value,
-            onChanged: bloc.changeEmail,
-          ),
-        );
-      },
-    );
-  }
+//   Widget _email(RegisterBloc bloc) {
+//     return StreamBuilder(
+//       stream: bloc.emailStream,
+//       builder: (BuildContext context, AsyncSnapshot snapshot) {
+//         return Container(
+//           padding: EdgeInsets.symmetric(horizontal: 20.0),
+//           child: TextFormField(
+//             initialValue: user.correo,
+//             keyboardType: TextInputType.emailAddress,
+//             decoration: InputDecoration(
+//                 icon: Icon(Icons.alternate_email,
+//                     color: Color.fromRGBO(20, 136, 204, 1.0)),
+//                 labelText: 'Correo electrónico',
+//                 // counterText: snapshot.data,
+//                 errorText: snapshot.error),
+//             onSaved: (value) => user.correo = value,
+//             onChanged: bloc.changeEmail,
+//           ),
+//         );
+//       },
+//     );
+//   }
 
-  Widget _birthday(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: TextFormField(
-        enableInteractiveSelection: false,
-        controller: _dateInputController,
-        decoration: InputDecoration(
-          icon: Icon(Icons.calendar_today,
-              color: Color.fromRGBO(20, 136, 204, 1.0)),
-          labelText: 'Fecha de nacimiento',
-        ),
-        onSaved: (value) => user.fechaNacimiento = value,
-        validator: (value) {
-          if (value == null || value == '') {
-            return 'Ingresa tu fecha de nacimiento';
-          } else {
-            return null;
-          }
-        },
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-          _selectDate(context);
-        },
-      ),
-    );
-  }
+//   Widget _birthday(BuildContext context) {
+//     return Container(
+//       padding: EdgeInsets.symmetric(horizontal: 20.0),
+//       child: TextFormField(
+//         enableInteractiveSelection: false,
+//         controller: _dateInputController,
+//         decoration: InputDecoration(
+//           icon: Icon(Icons.calendar_today,
+//               color: Color.fromRGBO(20, 136, 204, 1.0)),
+//           labelText: 'Fecha de nacimiento',
+//         ),
+//         onSaved: (value) => user.fechaNacimiento = value,
+//         validator: (value) {
+//           if (value == null || value == '') {
+//             return 'Ingresa tu fecha de nacimiento';
+//           } else {
+//             return null;
+//           }
+//         },
+//         onTap: () {
+//           FocusScope.of(context).requestFocus(new FocusNode());
+//           _selectDate(context);
+//         },
+//       ),
+//     );
+//   }
 
-  _selectDate(BuildContext context) async {
-    DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: new DateTime.now(),
-      firstDate: new DateTime(1950),
-      lastDate: new DateTime(2020),
-      locale: Locale('es', 'ES'),
-    );
+//   _selectDate(BuildContext context) async {
+//     DateTime picked = await showDatePicker(
+//       context: context,
+//       initialDate: new DateTime.now(),
+//       firstDate: new DateTime(1950),
+//       lastDate: new DateTime(2020),
+//       locale: Locale('es', 'ES'),
+//     );
 
-    if (picked != null) {
-      setState(() {
-        final _formatdate = DateFormat('dd/MM/yyyy');
-        _fecha = _formatdate.format(picked);
-        _dateInputController.text = _fecha;
-      });
-    }
-  }
+//     if (picked != null) {
+//       setState(() {
+//         final _formatdate = DateFormat('dd/MM/yyyy');
+//         _fecha = _formatdate.format(picked);
+//         _dateInputController.text = _fecha;
+//       });
+//     }
+//   }
 
-  bool masculino = false;
-  bool femenino = true;
-  Widget _sexo() {
-    if (masculino) {
-      femenino = !masculino;
-    }
-    return Wrap(
-      spacing: 50.0,
-      children: <Widget>[
-        ChoiceChip(
-          label: Text('Masculino',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          selected: masculino,
-          onSelected: (valor) {
-            setState(() {
-              masculino = valor;
-              print(masculino);
-            });
-          },
-          selectedColor: Colors.blue,
-        ),
-        ChoiceChip(
-          label: Text('Femenino',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          selected: femenino,
-          onSelected: (x) {
-            setState(() {
-              femenino = x;
-              print(femenino);
-            });
-          },
-          selectedColor: Colors.blue,
-        )
-      ],
-    );
-  }
+//   bool masculino = false;
+//   bool femenino = true;
+//   Widget _sexo() {
+//     if (masculino) {
+//       femenino = !masculino;
+//     }
+//     return Wrap(
+//       spacing: 50.0,
+//       children: <Widget>[
+//         ChoiceChip(
+//           label: Text('Masculino',
+//               style:
+//                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+//           selected: masculino,
+//           onSelected: (valor) {
+//             setState(() {
+//               masculino = valor;
+//               print(masculino);
+//             });
+//           },
+//           selectedColor: Colors.blue,
+//         ),
+//         ChoiceChip(
+//           label: Text('Femenino',
+//               style:
+//                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+//           selected: femenino,
+//           onSelected: (x) {
+//             setState(() {
+//               femenino = x;
+//               print(femenino);
+//             });
+//           },
+//           selectedColor: Colors.blue,
+//         )
+//       ],
+//     );
+//   }
 
-  Widget _boton(BuildContext context, RegisterBloc bloc) {
-    return StreamBuilder(
-        stream: bloc.formValidStream,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return ElevatedButton(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-              child: Text('Registrarme'),
-            ),
-            // shape: RoundedRectangleBorder(
-            //   borderRadius: BorderRadius.circular(5.0),
-            // ),
-            // elevation: 0.0,
-            // color: Color.fromRGBO(20, 136, 204, 1.0),
-            // textColor: Colors.white,
-            onPressed: snapshot.hasData ? () => _signup(bloc, context) : null,
-          );
-        });
-  }
+//   Widget _boton(BuildContext context, RegisterBloc bloc) {
+//     return StreamBuilder(
+//         stream: bloc.formValidStream,
+//         builder: (BuildContext context, AsyncSnapshot snapshot) {
+//           return ElevatedButton(
+//             child: Container(
+//               padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+//               child: Text('Registrarme'),
+//             ),
+//             // shape: RoundedRectangleBorder(
+//             //   borderRadius: BorderRadius.circular(5.0),
+//             // ),
+//             // elevation: 0.0,
+//             // color: Color.fromRGBO(20, 136, 204, 1.0),
+//             // textColor: Colors.white,
+//             onPressed: snapshot.hasData ? () => _signup(bloc, context) : null,
+//           );
+//         });
+//   }
 
-  _signup(RegisterBloc bloc, BuildContext context) async {
-    Map info =
-        await userProvider.newUser(bloc.username, bloc.email, bloc.password);
-    if (info['ok']) {
-      Navigator.pushReplacementNamed(context, 'login');
-      _submit();
-    } else {
-      mostrarAlerta(
-          context,
-          (info['mensaje'] == "EMAIL_EXISTS")
-              ? 'Correo no disponible'
-              : Container());
-    }
-  }
+//   _signup(RegisterBloc bloc, BuildContext context) async {
+//     Map info =
+//         await userProvider.newUser(bloc.username, bloc.email, bloc.password);
+//     if (info['ok']) {
+//       Navigator.pushReplacementNamed(context, 'login');
+//       _submit();
+//     } else {
+//       mostrarAlerta(
+//           context,
+//           (info['mensaje'] == "EMAIL_EXISTS")
+//               ? 'Correo no disponible'
+//               : Container());
+//     }
+//   }
 
-  _submit() {
-    if (!formKey.currentState.validate()) return;
-    formKey.currentState.save();
-    Map<String, dynamic> datos = {
-      'nombre': user.nombre,
-      'correo': user.correo,
-      'fechaNacimiento': user.fechaNacimiento,
-      "expediente": '',
-      "universidad": '',
-      "carrera": '',
-      "sexo": masculino,
-      "habilidades": {
-        "Comunicacion": false,
-        "Creatividad": false,
-        "Escucha": false,
-        "Liderazgo": false,
-        "Razonamiento": false,
-      },
-      "intereses": {
-        "Arte": false,
-        "Ciencia": false,
-        "Deportes": false,
-        "Tecnología": false,
-        "Historia": false,
-      },
-      "tipoUsuario": false, //normal
-      // "puntuacion": 5.0
-    };
-    Firestore.instance
-        .collection('usuarios')
-        .document(prefs.uid)
-        .setData(datos);
-  }
+//   _submit() {
+//     if (!formKey.currentState.validate()) return;
+//     formKey.currentState.save();
+//     Map<String, dynamic> datos = {
+//       'nombre': user.nombre,
+//       'correo': user.correo,
+//       'fechaNacimiento': user.fechaNacimiento,
+//       "expediente": '',
+//       "universidad": '',
+//       "carrera": '',
+//       "sexo": masculino,
+//       "habilidades": {
+//         "Comunicacion": false,
+//         "Creatividad": false,
+//         "Escucha": false,
+//         "Liderazgo": false,
+//         "Razonamiento": false,
+//       },
+//       "intereses": {
+//         "Arte": false,
+//         "Ciencia": false,
+//         "Deportes": false,
+//         "Tecnología": false,
+//         "Historia": false,
+//       },
+//       "tipoUsuario": false, //normal
+//       // "puntuacion": 5.0
+//     };
+//     Firestore.instance
+//         .collection('usuarios')
+//         .document(prefs.uid)
+//         .setData(datos);
+//   }
 
-  Widget _botonAlt(String accion, BuildContext context, String pantalla) {
-    return TextButton(
-      child: Text(accion, style: TextStyle(color: Colors.blueGrey)),
-      onPressed: () => Navigator.pushReplacementNamed(context, pantalla),
-    );
-  }
+//   Widget _botonAlt(String accion, BuildContext context, String pantalla) {
+//     return TextButton(
+//       child: Text(accion, style: TextStyle(color: Colors.blueGrey)),
+//       onPressed: () => Navigator.pushReplacementNamed(context, pantalla),
+//     );
+//   }
 }

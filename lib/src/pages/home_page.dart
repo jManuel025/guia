@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:guiaestudiante/src/pages/advices_page.dart';
+// import 'package:guiaestudiante/src/pages/advices_page.dart';
 import 'package:guiaestudiante/src/pages/profile_page.dart';
-import 'package:guiaestudiante/src/pages/projects_page.dart';
+// import 'package:guiaestudiante/src/pages/projects_page.dart';
 import 'package:guiaestudiante/src/pages/recipes_page.dart';
-import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
+// import 'package:guiaestudiante/src/preferencias_usuario/preferencias_usuario.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,14 +12,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
-  final prefs = new PreferenciasUsuario();
+  // final prefs = new PreferenciasUsuario();
 
   @override
   Widget build(BuildContext context) {
-    prefs.ultimaPagina = 'home';
+    // prefs.ultimaPagina = 'home';
     return Scaffold(
       body: _loadPage(currentIndex),
-      bottomNavigationBar: _bottomBar(),
+      // bottomNavigationBar: _bottomBar(),
     );
   }
 
@@ -27,41 +27,41 @@ class _HomePageState extends State<HomePage> {
     switch (currentPage) {
       case 0:
         return ProfilePage();
-      case 1:
-        return ProjectsPage();
-      case 2:
-        return AdvicesPage();
-      default:
-        return RecipesPage();
+      // case 1:
+      //   return ProjectsPage();
+      // case 2:
+      //   return AdvicesPage();
+      // default:
+      //   return RecipesPage();
     }
   }
 
-  Widget _bottomBar() {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      currentIndex: currentIndex,
-      onTap: (index) {
-        setState(() {
-          currentIndex = index;
-        });
-      },
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person), label: 'Perfil', // Text('Perfil')
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.work), label: 'Proyectos', // Text('Proyectos')
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.comment), label: 'Consejos', // Text('Consejos')
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.local_dining), label: 'Recetas', // Text('Recetas')
-        )
-      ],
-    );
-  }
-}
+//   Widget _bottomBar() {
+//     return BottomNavigationBar(
+//       type: BottomNavigationBarType.fixed,
+//       currentIndex: currentIndex,
+//       onTap: (index) {
+//         setState(() {
+//           currentIndex = index;
+//         });
+//       },
+//       items: [
+//         BottomNavigationBarItem(
+//           icon: Icon(Icons.person), label: 'Perfil', // Text('Perfil')
+//         ),
+//         BottomNavigationBarItem(
+//           icon: Icon(Icons.work), label: 'Proyectos', // Text('Proyectos')
+//         ),
+//         BottomNavigationBarItem(
+//           icon: Icon(Icons.comment), label: 'Consejos', // Text('Consejos')
+//         ),
+//         BottomNavigationBarItem(
+//           icon: Icon(Icons.local_dining), label: 'Recetas', // Text('Recetas')
+//         )
+//       ],
+//     );
+//   }
+// }
 
 // Widget _tarjetas(BuildContext context){
 //   return SingleChildScrollView(
@@ -122,4 +122,4 @@ class _HomePageState extends State<HomePage> {
 //         ),
 //       )
 //     );
-//   }
+}
